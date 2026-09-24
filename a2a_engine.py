@@ -102,62 +102,167 @@ def run_a2a_collaboration(user_prompt: str) -> dict:
     Simulates / executes a multi-agent collaborative session where 3 agents
     debate, criticize, and refine a viral short-form concept into a proven script.
     """
+def _detect_niche_and_product(prompt: str) -> tuple[str, str, str, list[str]]:
+    """Detects product niche, name, hook style, and USPs dynamically from user prompt."""
+    p_lower = prompt.lower()
+    
+    # 1. F&B / Food Niche
+    if any(k in p_lower for k in ["donut", "doh-nut", "dohnut", "roti", "sourdough", "salted egg", "pandan", "durian", "nutella", "burger", "sambal", "makan", "kek", "kopi", "teh"]):
+        niche = "Makanan & Minuman (F&B)"
+        hook_style = "CRAVING_SENSORY"
+        if "sambal" in p_lower:
+            product = "Doh-Nut Sambal Bilis Burger Donut"
+            usps = ["Doh brioche gebu", "Sambal bilis garing manis-pedas", "Timun rangup segar"]
+        elif "durian" in p_lower:
+            product = "Doh-Nut Musang King Sourdough Bomb"
+            usps = ["100% isi durian Raub asli", "Doh sourdough 48 jam", "Limpahan puri berkrim"]
+        elif "pandan" in p_lower:
+            product = "Doh-Nut Pandan Gula Melaka Crème"
+            usps = ["Ekstrak pandan wangi asli", "Karamel gula Melaka pekat", "Topping kelapa parut panggang"]
+        elif "kopi" in p_lower:
+            product = "Hainanese Kopi-O Glaze Sourdough"
+            usps = ["Kopi O pekat kaw aroma wangi", "Kerak glazes berkilat", "Kurang manis seimbang"]
+        else:
+            product = "Doh-Nut Salted Egg Lava Brioche"
+            usps = ["Sourdough fermentasi 48 jam", "Lava salted egg meleleh panas", "Rangup di luar gebu di dalam"]
+        return niche, product, hook_style, usps
+
+    # 2. Skincare / Beauty Niche
+    elif any(k in p_lower for k in ["serum", "jerawat", "kulit", "skincare", "glow", "sunscreen", "muka", "parut", "pencuci"]):
+        niche = "Kecantikan & Penjagaan Kulit"
+        hook_style = "PROBLEM_AGITATION"
+        product = "GlowFix Niacinamide Barrier Serum"
+        usps = ["Pudarkan parut dalam 7 hari", "5% Niacinamide gred farmasi", "Tekstur ringan meresap sepantas 3 saat"]
+        return niche, product, hook_style, usps
+
+    # 3. Fashion / Streetwear
+    elif any(k in p_lower for k in ["baju", "sneakers", "hoodie", "tshirt", "oversized", "streetwear", "kasut", "seluar"]):
+        niche = "Fesyen & Streetwear"
+        hook_style = "HYPE_DROP"
+        product = "Heavyweight 280GSM Boxy Tee (Drop 01)"
+        usps = ["Kain kapas 100% 280 GSM tebal", "Potongan boxy drop-shoulder moden", "Kolar rib tahan regang 2 tahun"]
+        return niche, product, hook_style, usps
+
+    # 4. Tech / Gadget
+    elif any(k in p_lower for k in ["powerbank", "earbuds", "fon", "gadget", "keyboard", "laptop", "mic", "case"]):
+        niche = "Teknologi & Gajet"
+        hook_style = "CURIOSITY_GAP"
+        product = "MagSnap 65W GaN Fast Charger"
+        usps = ["Saiz separuh tapak tangan", "Cas iPhone 0 ke 50% dalam 20 minit", "Sistem penyejuk GaN generasi ke-3"]
+        return niche, product, hook_style, usps
+
+    # 5. General Niche
+    else:
+        words = prompt.strip().split()
+        product = " ".join(words[:4]).title() if words else "Produk Viral Inovatif"
+        niche = "Produk Pengguna Inovatif"
+        hook_style = "PROBLEM_AGITATION"
+        usps = ["Inovasi reka bentuk terkini", "Mudah diguna setiap hari", "Jaminan kualiti premium"]
+        return niche, product, hook_style, usps
+
+
+def run_a2a_collaboration(user_prompt: str) -> dict:
+    """
+    Executes a multi-agent collaborative session where 3 agents
+    debate, audit, and refine a viral short-form concept into a proven script.
+    """
     t0 = time.perf_counter()
-    prompt_lower = user_prompt.lower()
-    is_dohnut = "doh-nut" in prompt_lower or "donut" in prompt_lower or "dohnut" in prompt_lower
+    niche, product, hook_style, usps = _detect_niche_and_product(user_prompt)
+    is_dohnut = "doh-nut" in product.lower() or "dohnut" in product.lower()
 
-    product = "Doh-Nut Salted Egg Lava Sourdough" if is_dohnut else "Produk Viral Premium"
-    if "sambal" in prompt_lower:
-        product = "Doh-Nut Sambal Bilis Burger Donut" if is_dohnut else "Sambal Garing Berapi"
-    elif "pandan" in prompt_lower:
-        product = "Doh-Nut Pandan Gula Melaka Crème"
-    elif "durian" in prompt_lower:
-        product = "Doh-Nut Musang King Sourdough"
+    # Step 1: Agent A (Strategist Zara) drafts concept hook
+    if hook_style == "CRAVING_SENSORY":
+        draft_hook = f"Tengok bila kita tekan {product} ni, inti panas dia membuak-buak meleleh keluar!"
+        rationale = "Pola Khairul Aming Video #1 (43.7M views): Visual pekat meleleh dalam 800ms pertama memaksa retensi visual."
+    elif hook_style == "PROBLEM_AGITATION":
+        draft_hook = f"Korang dah cuba macam-macam tapi masalah masih tak selesai? Ini sebab kenapa korang wajib tengok video ni!"
+        rationale = "Pola Psikologi Masalah-Penyelesaian: Menyerang titik kesakitan (pain point) audiens serta-merta."
+    elif hook_style == "HYPE_DROP":
+        draft_hook = f"Korang bayangkan beli barang limited edition yang sold out dalam masa 3 minit je!"
+        rationale = "Pola FOMO & Eksklusiviti: Membina rasa terdesak untuk menekan beg kuning sebelum kehabisan."
+    else:
+        draft_hook = f"Rahsia paling ramai orang tak tahu pasal {product} yang ubah rutin harian aku!"
+        rationale = "Pola Jurang Rasa Ingin Tahu (Curiosity Gap): Menahan penonton menonton sehingga fasa pengungkapan."
 
-    # Step 1: Agent A (Strategist Zara) proposes draft hook
     agent_a_thought = (
-        f"Menganalisis permintaan: '{user_prompt}'. Berdasarkan bedah siasat 363 video Khairul Aming, "
-        f"video No. 1 tular (43.7M views) dipacu oleh CRAVING_SENSORY dengan visual meleleh dalam 800ms pertama. "
-        f"Saya cadangkan draf pembuka deria untuk {product}."
+        f"Menganalisis permintaan: '{user_prompt}'. Niche dikesan: {niche}. "
+        f"Strategi sasaran: {rationale} "
+        f"Mencadangkan draf pembuka awal untuk {product}."
     )
-    draft_hook = f"Tengok bila kita tekan donat sourdough ni, lava salted egg dia membuak-buak meleleh keluar panas-panas!"
 
     # Step 2: Agent B (Jev Critic Tariq) audits using Jev System One
     eval_result = evaluate_script(draft_hook)
     critic_score = eval_result["virality_score"]
+    
+    # Critique logic based on genuine audit
+    critique_points = []
+    if len(draft_hook.split()) > 10:
+        critique_points.append("Ayat terlalu panjang — potong bawah 10 patah perkataan untuk pacuan pantas")
+    if hook_style == "CRAVING_SENSORY" and "krup" not in draft_hook and "bunyi" not in draft_hook:
+        critique_points.append("Suntik elemen onomatopoeia deria ('krup krap' atau 'panas meleleh')")
+    if "hey" not in draft_hook.lower() and "tengok" not in draft_hook.lower():
+        critique_points.append("Gunakan kata arahan visual terus ('Tengok', 'Dengar')")
+
+    critic_feedback = " & ".join(critique_points) if critique_points else "Perkemaskan impak visual dalam 1 saat pertama"
     critic_critique = (
-        f"Audit Jev System One: Hook ini mendapat skor {critic_score}/10 ({eval_result['tier']}). "
-        f"Elemen deria sangat kuat ('lava meleleh', 'panas-panas'), tetapi ayat agak panjang. "
-        f"Saya arahkan potong kepada 9 patah perkataan dan pastikan ada perkataan 'krup krap' atau tekstur berongga sourdough."
+        f"Audit Jev System One: Draf mendapat skor {critic_score}/10 ({eval_result['tier']}). "
+        f"Kelemahan dikesan: {critic_feedback}. "
+        f"Saya arahkan padatkan rentak dan kunci fokus visual tanpa membuang masa audiens."
     )
 
-    # Agent A refines hook based on Agent B's ruthless critique
-    refined_hook = "Hey what's up guys! Tengok lava salted egg panas ni membuak meleleh krup krap!"
+    # Agent A refines hook based on Tariq's critique
+    if hook_style == "CRAVING_SENSORY":
+        refined_hook = f"Tengok lava panas {product} ni membuak meleleh krup krap!"
+    elif hook_style == "PROBLEM_AGITATION":
+        refined_hook = f"Stop bazir duit! Ini rahsia 7 hari parut hilang berkesan!"
+    elif hook_style == "HYPE_DROP":
+        refined_hook = f"Drop terhad 100 helai je! Tekan beg kuning sebelum sold out!"
+    else:
+        refined_hook = f"Ramai tak tahu trick ni! Tengok sampai habis kalau nak jimat!"
+
     refined_eval = evaluate_script(refined_hook)
-    final_score = max(9.2, refined_eval["virality_score"] + 1.2)
+    final_score = round(min(10.0, refined_eval["virality_score"]), 1)
 
     # Step 3: Agent C (Production Director Sam) designs cinematic storyboard
+    if hook_style == "CRAVING_SENSORY":
+        camera = "Extreme Close-Up (ECU) 4K 60fps dengan lensa makro 45 darjah untuk tangkap lelehan."
+        lighting = "Key light warm 3200K dari arah belakang (backlight) untuk kilauan tekstur keemasan."
+        audio_sfx = "SFX: Bunyi kerak pecah (crunch) dimuatkan tepat pada saat 0.3s tanpa muzik latar."
+    elif hook_style == "PROBLEM_AGITATION":
+        camera = "Medium Close-Up (MCU) bersudut rata paras mata audiens untuk bina kepercayaan intim."
+        lighting = "Pencahayaan softbox lembut 5600K siang hari dengan pantulan ring-light di mata."
+        audio_sfx = "SFX: Bunyi 'whoosh' pantas pada saat 0.8s ketika teks masalah terpapar."
+    elif hook_style == "HYPE_DROP":
+        camera = "Low-Angle tracking shot bergerak dinamik dari bawah ke atas menonjolkan siluet produk."
+        lighting = "Kontras tinggi (moody contrast) dengan rim light neon kebiruan di sisi tepi."
+        audio_sfx = "SFX: Bass drop bergetar berat pada saat 0.5s serentak dengan teks tajuk."
+    else:
+        camera = "Point-Of-View (POV) atas meja (overhead flat lay) berputar 15 darjah secara perlahan."
+        lighting = "Cahaya ambien terang sekata bebas bayang-bayang tajam."
+        audio_sfx = "SFX: Bunyi klik mekanikal berfrekuensi tinggi."
+
     director_direction = {
-        "camera": "Extreme Close-Up (ECU) 4K 60fps dengan macro lens. Sudut 45 darjah untuk tangkap limpahan lava.",
-        "lighting": "Lampu key light warm 3200K dari arah belakang (backlight) untuk kilauan minyak dan keemasan kerak donat.",
-        "audio_sfx": "SFX: Bunyi kerak sourdough pecah (crunch) dimuatkan tepat pada saat 0.4s tanpa muzik latar.",
-        "teleprompter_cue": "Sebut dengan intonasi teruja, jangan terlalu laju. Jump cut sebaik sahaja lava menyentuh pinggan."
+        "camera": camera,
+        "lighting": lighting,
+        "audio_sfx": audio_sfx,
+        "teleprompter_cue": "Sebut dengan intonasi yakin bertenaga. Berhenti 0.2 saat pada kata kunci penting."
     }
 
     # Final Generated 4-Phase Script
     final_script = generate_viral_script(
         product_name=product,
-        niche="Makanan / F&B",
-        hook_style="CRAVING_SENSORY",
-        target_audience="Peminat Makanan Viral & Pencinta Donat Malaysia",
-        usp_points=["Sourdough fermentasi 48 jam", "Lava meleleh tak kedekut", "Rangup di luar gebu di dalam"],
-        include_catchphrase=True
+        niche=niche,
+        hook_style=hook_style,
+        target_audience=f"Pengguna & Pencinta {niche} Malaysia",
+        usp_points=usps,
+        include_catchphrase=is_dohnut
     )
 
     # Override phase 1 hook with the A2A refined hook
-    final_script["structure"][0]["spoken_text"] = refined_hook
-    final_script["structure"][0]["camera_direction"] = director_direction["camera"]
-    final_script["structure"][0]["audio_sfx"] = director_direction["audio_sfx"]
+    if final_script.get("structure"):
+        final_script["structure"][0]["spoken_text"] = refined_hook
+        final_script["structure"][0]["camera_direction"] = director_direction["camera"]
+        final_script["structure"][0]["audio_sfx"] = director_direction["audio_sfx"]
 
     duration_ms = round((time.perf_counter() - t0) * 1000, 2)
 
@@ -176,22 +281,22 @@ def run_a2a_collaboration(user_prompt: str) -> dict:
             "avatar": "⚡",
             "color": "amber",
             "message": critic_critique,
-            "artifact": f"Ujian Jev System One: {critic_score}/10 ➔ Syarat: Kuncikan 9 perkataan & tekstur deria!"
+            "artifact": f"Ujian Jev System One: {critic_score}/10 ➔ Syarat: {critic_feedback}!"
         },
         {
             "agent": "Strategist Zara",
             "role": "Short-Form Content Strategist",
             "avatar": "🧠",
             "color": "rose",
-            "message": f"Draf diperhalusi mengikut saranan Tariq. Ayat kini dipadatkan dengan rangsangan bunyi & visual lelehan.",
-            "artifact": f"Hook SOTA Siap: \"{refined_hook}\" (Skor Jev: {final_score}/10)"
+            "message": f"Draf berjaya diperkemas mengikut audit Tariq. Ayat kini dipadatkan dengan kuasa retensi maksimum.",
+            "artifact": f"Hook SOTA Siap: \"{refined_hook}\" (Skor Jev Sebenar: {final_score}/10)"
         },
         {
             "agent": "Director Sam",
             "role": "Cinematography & Audio Director",
             "avatar": "🎬",
             "color": "purple",
-            "message": "Papan cerita sinematik siap disusun. Pencahayaan warm backlight sedia untuk menonjolkan tekstur kerak sourdough.",
+            "message": "Papan cerita sinematik dan arahan audio sedia dilaksana.",
             "artifact": f"Syot: {director_direction['camera']} | SFX: {director_direction['audio_sfx']}"
         }
     ]
@@ -199,7 +304,9 @@ def run_a2a_collaboration(user_prompt: str) -> dict:
     return {
         "status": "success",
         "topic": user_prompt,
+        "niche_detected": niche,
         "product_selected": product,
+        "hook_style": hook_style,
         "collaboration_time_ms": duration_ms,
         "final_virality_score": final_score,
         "dialogue": dialogue_thread,

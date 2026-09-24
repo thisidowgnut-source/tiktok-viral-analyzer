@@ -17,8 +17,8 @@ from models.domain import JobModel
 
 router = APIRouter(prefix="/api/jobs", tags=["Jobs"])
 
-async def execute_project_render_job(job_id: str, project_id: str, voice: str, bg_video: str):
-    """Background worker executing speech synthesis and FFmpeg composition."""
+async def execute_project_render_job(job_id: str, project_id: str, voice: str, bg_video: str, aspect_ratio: str = "9:16"):
+    """Background worker executing speech synthesis and multi-aspect FFmpeg composition."""
     try:
         JobService.update_job_progress(job_id, 0.1, state="RUNNING")
 
@@ -40,7 +40,7 @@ async def execute_project_render_job(job_id: str, project_id: str, voice: str, b
 
         JobService.update_job_progress(job_id, 0.3)
 
-        # 1. Synthesize Speech
+        # 1. Synthesize Speech with boundary synchronization
         tts_res = await synthesize_speech(text=combined_script, voice=voice)
         audio_path = tts_res["audio_path"]
 
@@ -50,12 +50,13 @@ async def execute_project_render_job(job_id: str, project_id: str, voice: str, b
 
         JobService.update_job_progress(job_id, 0.6)
 
-        # 2. Render Vertical Video in separate worker thread
+        # 2. Render Video with aspect_ratio in separate worker thread
         render_res = await asyncio.to_thread(
             render_vertical_video,
             audio_path,
             bg_video,
-            combined_script
+            combined_script,
+            aspect_ratio=aspect_ratio
         )
 
         JobService.update_job_progress(job_id, 0.95)
@@ -106,15 +107,16 @@ async def enqueue_project_render(
 
     voice = payload.get("voice", "ms-MY-YasminNeural")
     bg_video = payload.get("bg_video", "dohnut-hands-making-donut.mp4")
+    aspect_ratio = payload.get("aspect_ratio") or getattr(proj, "aspect_ratio", "9:16") or "9:16"
 
     job = JobService.create_job(
         job_type="render_video",
-        input_payload={"project_id": project_id, "voice": voice, "bg_video": bg_video},
+        input_payload={"project_id": project_id, "voice": voice, "bg_video": bg_video, "aspect_ratio": aspect_ratio},
         project_id=project_id
     )
 
     # Launch background task
-    background_tasks.add_task(execute_project_render_job, job.id, project_id, voice, bg_video)
+    background_tasks.add_task(execute_project_render_job, job.id, project_id, voice, bg_video, aspect_ratio)
 
     return {
         "status": "queued",

@@ -38,8 +38,8 @@
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
     }
 
-    /* Realistic iPhone 16 Pro mockup frame */
-    .iphone-frame {
+    /* Realistic Phone Mockup Frame & Responsive Multi-Aspect Bezel */
+    .iphone-frame, .phone-bezel {
       width: 320px;
       height: 640px;
       background: #090d14;
@@ -48,6 +48,17 @@
       box-shadow: 0 0 0 2px #374151, 0 30px 70px -15px rgba(0,0,0,0.9), 0 0 40px rgba(245, 158, 11, 0.15);
       position: relative;
       overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .phone-bezel.aspect-1-1 {
+      width: 340px;
+      height: 340px;
+      border-radius: 28px;
+    }
+    .phone-bezel.aspect-16-9 {
+      width: 480px;
+      height: 270px;
+      border-radius: 20px;
     }
     .iphone-dynamic-island {
       width: 95px;
@@ -206,7 +217,7 @@
                 <input id="briefTitle" type="text" class="w-full glass-input px-3.5 py-2 text-sm" placeholder="Contoh: Kempen Donut Salted Egg Lava Merdeka">
               </div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Produk / Perisa</label>
                   <select id="briefProduct" class="w-full glass-input px-3 py-2 text-xs">
@@ -216,6 +227,14 @@
                     <option value="Sira Kuih Keria">Sira Kuih Keria Gula Melaka (RM 4.90)</option>
                     <option value="Kuih Burger Malaysia">Kuih Burger Sambal Bilis (RM 5.50)</option>
                     <option value="Pandan Gula Melaka">Pandan Gula Melaka (RM 4.90)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Nisbah Aspek (Format)</label>
+                  <select id="briefAspectRatio" onchange="updatePreviewAspectRatio(this.value)" class="w-full glass-input px-3 py-2 text-xs">
+                    <option value="9:16">📱 9:16 Menegak (TikTok / Reels)</option>
+                    <option value="1:1">🟦 1:1 Segi Empat (Instagram Feed)</option>
+                    <option value="16:9">🖥️ 16:9 Landskap (YouTube / Web)</option>
                   </select>
                 </div>
                 <div>
@@ -451,11 +470,11 @@
         <div class="lg:col-span-5 flex flex-col items-center">
           <div class="sticky top-20 space-y-3">
             <div class="text-center">
-              <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Pratonton Langsung 9:16 Vertikal</span>
+              <span id="previewAspectLabel" class="text-xs font-mono uppercase tracking-wider text-slate-400">Pratonton Langsung 9:16 Menegak</span>
             </div>
 
             <!-- IPHONE 16 PRO MOCKUP -->
-            <div class="phone-bezel">
+            <div id="phoneBezelContainer" class="phone-bezel">
               <!-- DYNAMIC ISLAND -->
               <div class="absolute top-3 inset-x-0 mx-auto w-24 h-6 rounded-full bg-black border border-neutral-800 z-30 flex items-center justify-between px-2.5">
                 <div class="w-2.5 h-2.5 rounded-full bg-neutral-900 border border-neutral-700"></div>
@@ -724,11 +743,11 @@
             <p class="text-xs text-slate-400">Paksi-Y Skala Logaritma (100k hingga 50M views) bagi membezakan anomali viral secara jelas.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2 text-xs">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Craving Sensory</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Signature Greeting</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Story Curiosity</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Direct Value</span>
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Empathy Relatable</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Craving Sensory (31%)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-cyan-500"></span> Visual Travel Vlog (43%)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Behind Scenes (17%)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Quick Tutorial (8%)</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-full font-medium"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Shock Challenge (1%)</span>
           </div>
         </div>
         <div class="h-80 w-full">
@@ -755,12 +774,12 @@
           <div class="flex flex-wrap items-center gap-3">
             <input type="text" id="searchInput" oninput="filterVideos()" placeholder="Cari tajuk atau perkataan..." class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-red-500 w-60">
             <select id="hookFilter" onchange="filterVideos()" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-red-500">
-              <option value="ALL">Semua Jenis Hook</option>
-              <option value="CRAVING_SENSORY">CRAVING_SENSORY</option>
-              <option value="SIGNATURE_GREETING">SIGNATURE_GREETING</option>
-              <option value="STORY_CURIOSITY">STORY_CURIOSITY</option>
-              <option value="DIRECT_VALUE">DIRECT_VALUE</option>
-              <option value="EMPATHY_RELATABLE">EMPATHY_RELATABLE</option>
+              <option value="ALL">Semua Jenis Hook (363)</option>
+              <option value="CRAVING_SENSORY">🍩 Craving Sensory (113)</option>
+              <option value="VISUAL_TRAVEL_VLOG">✈️ Visual Travel Vlog (155)</option>
+              <option value="BEHIND_SCENES_STORY">🎬 Behind Scenes Story (62)</option>
+              <option value="QUICK_TUTORIAL_HACK">⚡ Quick Tutorial Hack (29)</option>
+              <option value="SHOCK_CHALLENGE">🔥 Shock Challenge (4)</option>
             </select>
           </div>
         </div>
@@ -1599,9 +1618,13 @@
     // (Tab switching handled by master switchTab at bottom of script)
 
 
-    // Hook Color Mapping
+    // Hook Color Mapping (Authentic 5 Classes + Legacy)
     const HOOK_COLORS = {
-      'CRAVING_SENSORY': '#10b981',
+      'CRAVING_SENSORY': '#10b981',      // Emerald (31%)
+      'VISUAL_TRAVEL_VLOG': '#06b6d4',   // Cyan (43%)
+      'BEHIND_SCENES_STORY': '#a855f7',  // Purple (17%)
+      'QUICK_TUTORIAL_HACK': '#f59e0b',  // Amber (8%)
+      'SHOCK_CHALLENGE': '#f43f5e',      // Rose (1%)
       'SIGNATURE_GREETING': '#3b82f6',
       'STORY_CURIOSITY': '#a855f7',
       'DIRECT_VALUE': '#f59e0b',
@@ -1612,7 +1635,7 @@
     function initChart() {
       const ctx = document.getElementById('scatterChart').getContext('2d');
       const points = RAW_VIDEOS.map((v, i) => {
-        const ht = v.hook_analysis ? v.hook_analysis.hook_type : 'DIRECT_VALUE';
+        const ht = (v.hook_analysis && v.hook_analysis.hook_type) || v.hook_type || 'CRAVING_SENSORY';
         return {
           x: i + 1,
           y: Math.max(10000, v.views),
@@ -1652,11 +1675,12 @@
                 },
                 label: function(item) {
                   const v = item.raw.video;
+                  const hookLabel = (v.hook_analysis && v.hook_analysis.hook_type) || v.hook_type || 'N/A';
                   return [
                     '👁️ Tontonan: ' + Number(v.views).toLocaleString() + ' views',
                     '❤️ Suka: ' + Number(v.likes).toLocaleString(),
                     '🔄 Kongsi: ' + Number(v.shares).toLocaleString(),
-                    '🎯 Hook: ' + (v.hook_analysis ? v.hook_analysis.hook_type : 'N/A')
+                    '🎯 Hook: ' + hookLabel
                   ];
                 }
               }
@@ -1690,7 +1714,7 @@
     function renderTable(videos) {
       const tbody = document.getElementById('videoTableBody');
       tbody.innerHTML = videos.map((v, i) => {
-        const ht = v.hook_analysis ? v.hook_analysis.hook_type : 'DIRECT_VALUE';
+        const ht = (v.hook_analysis && v.hook_analysis.hook_type) || v.hook_type || 'CRAVING_SENSORY';
         const color = HOOK_COLORS[ht] || '#94a3b8';
         return `
           <tr class="hover:bg-slate-800/40 transition-colors">
@@ -1715,7 +1739,8 @@
       const hook = document.getElementById('hookFilter').value;
       currentFiltered = RAW_VIDEOS.filter(v => {
         const matchesQuery = !query || (v.title && v.title.toLowerCase().includes(query));
-        const matchesHook = (hook === 'ALL') || (v.hook_analysis && v.hook_analysis.hook_type === hook);
+        const vHook = (v.hook_analysis && v.hook_analysis.hook_type) || v.hook_type || '';
+        const matchesHook = (hook === 'ALL') || (vHook === hook);
         return matchesQuery && matchesHook;
       });
       renderTable(currentFiltered);
@@ -3135,6 +3160,23 @@
       }
     }
 
+    // Update Preview Aspect Ratio Mockup
+    function updatePreviewAspectRatio(ratio) {
+      const container = document.getElementById('phoneBezelContainer');
+      const label = document.getElementById('previewAspectLabel');
+      if (!container) return;
+      container.classList.remove('aspect-1-1', 'aspect-16-9');
+      if (ratio === '1:1') {
+        container.classList.add('aspect-1-1');
+        if (label) label.textContent = 'Pratonton Langsung 1:1 Segi Empat (Instagram Feed)';
+      } else if (ratio === '16:9') {
+        container.classList.add('aspect-16-9');
+        if (label) label.textContent = 'Pratonton Langsung 16:9 Landskap (YouTube / Web)';
+      } else {
+        if (label) label.textContent = 'Pratonton Langsung 9:16 Menegak (TikTok / Reels)';
+      }
+    }
+
     // Open Existing Project
     async function openProject(projectId) {
       try {
@@ -3148,6 +3190,13 @@
         document.getElementById('briefLanguage').value = proj.language || 'ms';
         if (proj.brief && proj.brief.product) document.getElementById('briefProduct').value = proj.brief.product;
         if (proj.brief && proj.brief.goal) document.getElementById('briefGoal').value = proj.brief.goal;
+        if (proj.brief && proj.brief.aspect_ratio) {
+          document.getElementById('briefAspectRatio').value = proj.brief.aspect_ratio;
+          updatePreviewAspectRatio(proj.brief.aspect_ratio);
+        } else {
+          document.getElementById('briefAspectRatio').value = '9:16';
+          updatePreviewAspectRatio('9:16');
+        }
 
         // Populate scenes
         if (proj.scenes && proj.scenes.length >= 4) {
@@ -3176,6 +3225,7 @@
       const product = document.getElementById('briefProduct').value;
       const lang = document.getElementById('briefLanguage').value;
       const goal = document.getElementById('briefGoal').value;
+      const aspect = document.getElementById('briefAspectRatio')?.value || '9:16';
 
       try {
         document.getElementById('studioSaveStatus').textContent = "Menyimpan...";
@@ -3186,7 +3236,7 @@
             title: title,
             language: lang,
             version: activeProjectVersion,
-            brief: { product: product, goal: goal }
+            brief: { product: product, goal: goal, aspect_ratio: aspect }
           })
         });
         if (res.ok) {
@@ -3323,6 +3373,7 @@
 
       const voice = document.getElementById('voiceSelect').value;
       const bgVideo = document.getElementById('bgVideoSelect').value;
+      const aspect = document.getElementById('briefAspectRatio')?.value || '9:16';
       const btn = document.getElementById('startRenderBtn');
       const progressContainer = document.getElementById('renderProgressContainer');
       const progressBar = document.getElementById('renderProgressBar');
@@ -3339,7 +3390,7 @@
         const res = await fetch(`/api/jobs/render-project/${activeProjectId}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ voice: voice, bg_video: bgVideo })
+          body: JSON.stringify({ voice: voice, bg_video: bgVideo, aspect_ratio: aspect })
         });
         const jobInit = await res.json();
         const jobId = jobInit.job_id;
