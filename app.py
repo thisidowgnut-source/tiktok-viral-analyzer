@@ -445,7 +445,10 @@ async def serve_ui():
     template_path = BASE_DIR / "templates" / "index.html"
     if template_path.exists():
         with open(template_path, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
+            content = f.read()
+        content = content.replace("/*__VIDEOS_JSON__*/[]", json.dumps(ALL_VIDEOS, ensure_ascii=False))
+        content = content.replace("/*__CAMPAIGNS_JSON__*/[]", json.dumps(DOHNUT_CAMPAIGNS, ensure_ascii=False))
+        return HTMLResponse(content=content)
     return HTMLResponse(content="<h1>ViralStudio Index Not Found</h1>", status_code=404)
 
 
