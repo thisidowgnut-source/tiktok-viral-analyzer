@@ -1,0 +1,1500 @@
+[
+  {
+    "video_id": "KA_001",
+    "topic_category": "RESEPI_RAMADAN",
+    "hook_analysis": {
+      "hook_type": "SIGNATURE_GREETING",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "HOOK",
+        "text": "Hari ini kita start Episod 1 daripada 30 Hari 30 Resepi untuk Ramadan tahun ni, and resipi pertama kita ialah Daging Masak Hitam Berempah yang sangat pekat, juicy dan pecah minyak elok."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "First sekali kita ambil daging lembu yang dipotong nipis, perap dengan kicap manis, kicap pekat dan sedikit sos tiram selama 30 minit."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Kemudian kita kisar bawang merah, bawang putih, halia, serai dan cili kering sampai lumat."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Panaskan minyak dalam kuali, tumis empat sekawan sampai naik bau wangi, lepas tu masukkan bahan kisar tadi dan tumis sampai garing dan terbit minyak."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Masukkan daging yang kita perap tadi berserta air perapan dia, kacau rata dan biarkan daging masak perlahan dengan api sederhana sampai empuk."
+      },
+      {
+        "order": 7,
+        "tag": "PAYOFF",
+        "text": "Bila kuah dah mula pekat berkilat, masukkan kerisik, air asam jawa dan gula melaka untuk seimbangkan rasa manis dan pedas."
+      },
+      {
+        "order": 8,
+        "tag": "PAYOFF",
+        "text": "Tengok kuah dia yang hitam berkilat melekat pada daging ni, aroma dia memang menusuk hidung!"
+      },
+      {
+        "order": 9,
+        "tag": "PAYOFF",
+        "text": "Bila dicedok atas nasi panas berasap, bismillah..."
+      },
+      {
+        "order": 10,
+        "tag": "PAYOFF",
+        "text": "rasa rempah dia meresap sampai ke dalam, daging lembut tak liat langsung, memang terangkat habis!"
+      },
+      {
+        "order": 11,
+        "tag": "SETUP",
+        "text": "Senang je nak buat kan?"
+      },
+      {
+        "order": 12,
+        "tag": "PITCH",
+        "text": "Jangan lupa save video ni untuk menu berbuka korang nanti, selamat mencuba!"
+      }
+    ],
+    "pacing_speed": "RAPID_FIRE",
+    "retention_mechanisms": [
+      "Jangkar pendengaran 'Hey what's up guys' mengekalkan penonton detik 0-3s.",
+      "Potongan pantas (1.5s per cut) berlatarkan desiran minyak mendidih ASMR.",
+      "Visual payoff awal (kuah pekat melekat) sebelum bahan diterangkan.",
+      "Reaksi jujur 'bismillah' dan ungkapan tempatan 'terangkat habis'."
+    ],
+    "closing_call_to_action": "Jangan lupa save video ni untuk menu berbuka korang nanti, selamat mencuba!",
+    "viral_factor_summary": "Menggabungkan ritual bermusim Ramadan dengan rangsangan sensori (craving). Penerangan langkah yang ringkas mendorong kadar simpanan (Saves) dan perkongsian keluarga yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 3504.023,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.62,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.0,
+        "EMPATHY_RELATABLE": 0.0,
+        "DIRECT_VALUE": 0.21,
+        "CRAVING_SENSORY": 0.09,
+        "SIGNATURE_GREETING": 0.7
+      }
+    }
+  },
+  {
+    "video_id": "KA_002",
+    "topic_category": "RESEPI_RAMADAN",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Kalau pergi bazar Ramadan mesti tercari-cari ayam percik yang kuah dia banjir pekat melekat atas ayam kan?"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Hari ini kita buat sendiri Ayam Percik Kelantan ori yang kuah dia lemak manis berlemak."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "First sekali kita perap ayam dengan garam, kunyit, serai dan halia ditumbuk lumat, kemudian bakar dalam air fryer atau atas arang sampai separuh masak."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Untuk kuah percik, kita kisar santan pekat, bawang merah, halia, serai dan sedikit cili kering untuk bagi warna kemerahan yang cantik."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Masak kuah dalam periuk atas api perlahan, masukkan asam keping, gula melaka dan garam secukup rasa sampai kuah mereneh pekat dan berkilat."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Celup ayam yang kita bakar tadi ke dalam kuah pekat ni, kemudian bakar balik selama 10 minit, lepas tu siram lagi lebihan kuah berkali-kali."
+      },
+      {
+        "order": 8,
+        "tag": "PAYOFF",
+        "text": "Tengok kuah percik yang melekat tebal pada kulit ayam yang garing beraroma arang ni."
+      },
+      {
+        "order": 9,
+        "tag": "PAYOFF",
+        "text": "Bila carik isi ayam yang berjus dan cicah kuah banjir, bismillah..."
+      },
+      {
+        "order": 10,
+        "tag": "SETUP",
+        "text": "rasa lemak santan dan manis rempah dia memang tak boleh bincang sedap dia!"
+      },
+      {
+        "order": 11,
+        "tag": "PITCH",
+        "text": "Korang wajib cuba buat untuk famili hujung minggu ni!"
+      }
+    ],
+    "pacing_speed": "RAPID_FIRE",
+    "retention_mechanisms": [
+      "Jangkar pendengaran 'Hey what's up guys' mengekalkan penonton detik 0-3s.",
+      "Potongan pantas (1.5s per cut) berlatarkan desiran minyak mendidih ASMR.",
+      "Visual payoff awal (kuah pekat melekat) sebelum bahan diterangkan.",
+      "Reaksi jujur 'bismillah' dan ungkapan tempatan 'terangkat habis'."
+    ],
+    "closing_call_to_action": "Korang wajib cuba buat untuk famili hujung minggu ni!",
+    "viral_factor_summary": "Menggabungkan ritual bermusim Ramadan dengan rangsangan sensori (craving). Penerangan langkah yang ringkas mendorong kadar simpanan (Saves) dan perkongsian keluarga yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 1837.152,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.97,
+      "hook_confidence": 0.59,
+      "hook_probabilities": {
+        "DIRECT_VALUE": 0.0,
+        "STORY_CURIOSITY": 0.01,
+        "EMPATHY_RELATABLE": 0.68,
+        "CRAVING_SENSORY": 0.29,
+        "SIGNATURE_GREETING": 0.02
+      }
+    }
+  },
+  {
+    "video_id": "KA_003",
+    "topic_category": "RESEPI_RAMADAN",
+    "hook_analysis": {
+      "hook_type": "SIGNATURE_GREETING",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Hari ini kita buat menu penambah selera berbuka yang boleh buat nasi seperiuk habis licin, Sambal Udang Petai Meletup!"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "First sekali kita bersihkan udang galah saiz sederhana, buang kotoran belakang tapi biarkan kulit dan kepala untuk bagi kuah sambal kita manis udang."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Goreng udang sekejap dalam minyak panas selama satu minit je supaya isi udang tak liat, lepas tu angkat dan toskan."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Guna minyak goreng udang tadi, kita tumis cili kisar, bawang besar hiris dan pes belacan bakar sampai garing dan pecah minyak merecik."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Masukkan air asam jawa, sedikit gula dan garam untuk naikkan seri sambal."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Akhir sekali campakkan petai padi yang rangup dan masukkan balik udang goreng tadi, gaul pantas selama dua minit dengan api besar."
+      },
+      {
+        "order": 8,
+        "tag": "SETUP",
+        "text": "Tengok sambal merah menyala bersalut elok pada petai hijau dan udang montok ni."
+      },
+      {
+        "order": 9,
+        "tag": "SETUP",
+        "text": "Makan dengan nasi putih panas-panas, petai crunchy dan isi udang manis berjus, fuhh memang terangkat peluh dahi!"
+      },
+      {
+        "order": 10,
+        "tag": "PITCH",
+        "text": "Selamat mencuba semua!"
+      }
+    ],
+    "pacing_speed": "RAPID_FIRE",
+    "retention_mechanisms": [
+      "Jangkar pendengaran 'Hey what's up guys' mengekalkan penonton detik 0-3s.",
+      "Potongan pantas (1.5s per cut) berlatarkan desiran minyak mendidih ASMR.",
+      "Visual payoff awal (kuah pekat melekat) sebelum bahan diterangkan.",
+      "Reaksi jujur 'bismillah' dan ungkapan tempatan 'terangkat habis'."
+    ],
+    "closing_call_to_action": "Selamat mencuba semua!",
+    "viral_factor_summary": "Menggabungkan ritual bermusim Ramadan dengan rangsangan sensori (craving). Penerangan langkah yang ringkas mendorong kadar simpanan (Saves) dan perkongsian keluarga yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 1783.114,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.85,
+      "hook_confidence": 0.31,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.0,
+        "SIGNATURE_GREETING": 0.45,
+        "DIRECT_VALUE": 0.19,
+        "CRAVING_SENSORY": 0.28,
+        "EMPATHY_RELATABLE": 0.08
+      }
+    }
+  },
+  {
+    "video_id": "KA_004",
+    "topic_category": "RESEPI_RAMADAN",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Tekak tengah panas haus bila berpuasa ni, bayangkan dapat teguk segelas air katira sejuk berais yang penuh dengan isi lazat!"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Hari ini saya tunjuk cara buat Air Katira Johor dan Air Jagung Ketagih ala bazar Ramadan."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Untuk air katira, kita rendam getah katira dan biji selasih sampai kembang semalaman."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Dalam balang besar, campurkan susu cair, susu pekat manis, perisa pandan wangi, buah kembang semangkok, kismis, badam cincang dan air gula batu."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Masukkan ais batu menggunung, kemudian kacau laju-laju sampai balang berpeluh sejuk."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Bila tuang dalam cawan, warna hijau lembut berselang-seli dengan tekstur getah katira yang kenyal berais."
+      },
+      {
+        "order": 8,
+        "tag": "SETUP",
+        "text": "Bila hirup waktu azan Maghrib berkumandang, sejuk nyaman lalu di kerongkong, manis lemak dia memang terus hilang dahaga seharian!"
+      },
+      {
+        "order": 9,
+        "tag": "PITCH",
+        "text": "Jangan lupa simpan resepi ni untuk hidangan tetamu nanti ya."
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Jangkar pendengaran 'Hey what's up guys' mengekalkan penonton detik 0-3s.",
+      "Potongan pantas (1.5s per cut) berlatarkan desiran minyak mendidih ASMR.",
+      "Visual payoff awal (kuah pekat melekat) sebelum bahan diterangkan.",
+      "Reaksi jujur 'bismillah' dan ungkapan tempatan 'terangkat habis'."
+    ],
+    "closing_call_to_action": "Jangan lupa simpan resepi ni untuk hidangan tetamu nanti ya.",
+    "viral_factor_summary": "Menggabungkan ritual bermusim Ramadan dengan rangsangan sensori (craving). Penerangan langkah yang ringkas mendorong kadar simpanan (Saves) dan perkongsian keluarga yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 7015.351,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.41,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.0,
+        "EMPATHY_RELATABLE": 0.53,
+        "SIGNATURE_GREETING": 0.03,
+        "DIRECT_VALUE": 0.0,
+        "CRAVING_SENSORY": 0.44
+      }
+    }
+  },
+  {
+    "video_id": "KA_005",
+    "topic_category": "RESEPI_VIRAL_HARIAN",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Tengah malam lapar tapi malas nak keluar rumah, jom kita buat Mac & Cheese terpaling creamy, berlemak dan cheese pull dia panjang sampai siling!"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "First sekali rebus makaroni dalam air mendidih bersama sedikit garam sampai al dente, kemudian toskan."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Dalam kuali leper, cairkan mentega berkualiti, masukkan tepung gandum dan kacau laju untuk buat roux asas."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Tuangkan susu segar suam sedikit demi sedikit sambil whisk sampai sos putih jadi pekat berkrim tanpa berketul."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Masukkan serbuk lada hitam, sedikit serbuk paprika dan garam, lepas tu campakkan empat jenis keju: cheddar pekat, mozzarella untuk tarikan keju, parmesan untuk aroma dan gouda."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Gaul makaroni ke dalam lautan keju cair ni, tabur serbuk roti dan bakar sekejap 10 minit."
+      },
+      {
+        "order": 8,
+        "tag": "SETUP",
+        "text": "Tengok bila saya sauk sesudu besar, keju dia bertali meleleh berkilau keemasan!"
+      },
+      {
+        "order": 9,
+        "tag": "SETUP",
+        "text": "Suapan pertama yang panas berkrim di mulut, rasa lemak masin keju dia betul-betul memuaskan jiwa."
+      },
+      {
+        "order": 10,
+        "tag": "PITCH",
+        "text": "Menu comfort food paling padu!"
+      }
+    ],
+    "pacing_speed": "RAPID_FIRE",
+    "retention_mechanisms": [
+      "Penceritaan proses R&D setahun membina antisipasi tinggi.",
+      "Visual macro-shot koyakan daging lembut berminyak.",
+      "Scarcity hook 80,000 unit batch pertama mencetuskan lonjakan FOMO."
+    ],
+    "closing_call_to_action": "Menu comfort food paling padu!",
+    "viral_factor_summary": "Membina antisipasi kukuh berasaskan kepercayaan jenama yang tinggi, mencetuskan penukaran jualan segera di TikTok Shop.",
+    "jev_telemetry": {
+      "jev_latency_ms": 802.304,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.99,
+      "hook_confidence": 0.81,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.01,
+        "CRAVING_SENSORY": 0.13,
+        "DIRECT_VALUE": 0.0,
+        "EMPATHY_RELATABLE": 0.85,
+        "SIGNATURE_GREETING": 0.01
+      }
+    }
+  },
+  {
+    "video_id": "KA_006",
+    "topic_category": "RESEPI_VIRAL_HARIAN",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Hujan-hujan lebat petang ni kalau dapat hirup semangkuk tomyam panas pedas masam berkrim mesti segar satu badan kan?"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Hari ini kita masak Tomyam Seafood Pekat ala kedai Krabi Thailand."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Rahsia kuah tomyam pekat manis bermula daripada rebusan kulit udang untuk dijadikan stok asas."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Dalam periuk tanah, panaskan stok udang, masukkan serai diketuk, lengkuas, daun limau purut dan akar ketumbar untuk aroma herba padu."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Masukkan pes tomyam kaw, pes cili nam prik pao thai, cili padi merah ditumbuk pecah, jus limau nipis segar dan sos ikan nam pla."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Bila mendidih bergelegak, masukkan sotong segar, udang galah dan cendawan tiram, akhir sekali curahkan susu cair untuk jadikan kuah dia pekat lemak kemerahan."
+      },
+      {
+        "order": 8,
+        "tag": "PAYOFF",
+        "text": "Tengok kuah merah membara yang mendidih wangi ni."
+      },
+      {
+        "order": 9,
+        "tag": "SETUP",
+        "text": "Hirupan pertama kuah dia masam pedas berlemak menusuk tekak, sotong rangup tak liat langsung, memang terus berpeluh puas hati!"
+      },
+      {
+        "order": 10,
+        "tag": "PITCH",
+        "text": "Cuba buat malam ni confirm repeat!"
+      }
+    ],
+    "pacing_speed": "RAPID_FIRE",
+    "retention_mechanisms": [
+      "Penceritaan proses R&D setahun membina antisipasi tinggi.",
+      "Visual macro-shot koyakan daging lembut berminyak.",
+      "Scarcity hook 80,000 unit batch pertama mencetuskan lonjakan FOMO."
+    ],
+    "closing_call_to_action": "Cuba buat malam ni confirm repeat!",
+    "viral_factor_summary": "Membina antisipasi kukuh berasaskan kepercayaan jenama yang tinggi, mencetuskan penukaran jualan segera di TikTok Shop.",
+    "jev_telemetry": {
+      "jev_latency_ms": 828.348,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.98,
+      "hook_confidence": 0.4,
+      "hook_probabilities": {
+        "SIGNATURE_GREETING": 0.02,
+        "EMPATHY_RELATABLE": 0.53,
+        "STORY_CURIOSITY": 0.0,
+        "CRAVING_SENSORY": 0.45,
+        "DIRECT_VALUE": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_007",
+    "topic_category": "RESEPI_VIRAL_HARIAN",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Siapa kat sini hantu mi segera Samyang pedas tapi perut tak tahan pedas melampau?"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Ni saya ajar hack Samyang Carbonara paling sedap dan berkrim guna bahan asas peti ais korang."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Rebus mi Samyang sampai tiga perempat masak, tinggalkan suku air rebusan dalam periuk."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Masukkan separuh pes pedas samyang, tuangkan 100ml susu penuh krim, sesudu mentega dan sekeping keju cheddar."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Pecahkan sebiji kuning telur mentah atas mi yang sedang mendidih perlahan, lepas tu kacau laju-laju supaya sos telur dan susu bersatu jadi emulsi pekat macam sos pasta Itali."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Taburkan serbuk perisa rumpai laut dan bijan bakar."
+      },
+      {
+        "order": 8,
+        "tag": "SETUP",
+        "text": "Bila digulung dengan garfu, sos berkrim pekat menyaluti setiap urat mi yang kenyal."
+      },
+      {
+        "order": 9,
+        "tag": "SETUP",
+        "text": "Rasa pedas menyengat cili api tapi diselaputi rasa lemak manis susu dan keju, balance elok tanpa sakit perut."
+      },
+      {
+        "order": 10,
+        "tag": "PITCH",
+        "text": "Resepi penyelamat lapar lewat malam yang wajib korang cuba!"
+      }
+    ],
+    "pacing_speed": "RAPID_FIRE",
+    "retention_mechanisms": [
+      "Penceritaan proses R&D setahun membina antisipasi tinggi.",
+      "Visual macro-shot koyakan daging lembut berminyak.",
+      "Scarcity hook 80,000 unit batch pertama mencetuskan lonjakan FOMO."
+    ],
+    "closing_call_to_action": "Resepi penyelamat lapar lewat malam yang wajib korang cuba!",
+    "viral_factor_summary": "Membina antisipasi kukuh berasaskan kepercayaan jenama yang tinggi, mencetuskan penukaran jualan segera di TikTok Shop.",
+    "jev_telemetry": {
+      "jev_latency_ms": 1918.77,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.95,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.0,
+        "SIGNATURE_GREETING": 0.03,
+        "DIRECT_VALUE": 0.0,
+        "EMPATHY_RELATABLE": 0.97,
+        "CRAVING_SENSORY": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_008",
+    "topic_category": "RESEPI_VIRAL_HARIAN",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Hey what's up guys!",
+      "word_count": 4,
+      "has_signature_catchphrase": true
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hey what's up guys!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Ramai yang mengadu bila buat puding karamel sendiri kat rumah, mesti bau hanyir telur kuat atau tekstur dia berlubang-lubang macam span kan?"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Hari ini saya kongsikan teknik puding karamel cermin yang licin sutera dan langsung tak hanyir."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "First sekali kita masak gula pasir atas kuali dengan api kecil sampai cair keemasan jadi karamel cair, tuang cepat-cepat dalam loyang bulat dan ratakan."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Untuk adunan puding, kita campurkan susu cair, susu pekat manis, esen vanila berkualiti dan telur ayam yang dikacau perlahan tanpa buih banyak."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Tapis adunan sebanyak tiga kali untuk buang tali pusat telur dan buih udara."
+      },
+      {
+        "order": 7,
+        "tag": "SETUP",
+        "text": "Kukus atas api paling kecil selama 35 minit dengan penutup periuk berbalut kain supaya air tak menitik."
+      },
+      {
+        "order": 8,
+        "tag": "SETUP",
+        "text": "Bila dah sejuk semalaman dalam peti ais, telangkupkan loyang atas pinggan."
+      },
+      {
+        "order": 9,
+        "tag": "SETUP",
+        "text": "Tengok permukaan dia licin berkilat macam cermin dan sos karamel jernih melimpah turun!"
+      },
+      {
+        "order": 10,
+        "tag": "SETUP",
+        "text": "Bila dipotong macam agar-agar sutera dan masuk mulut terus mencair sejuk."
+      },
+      {
+        "order": 11,
+        "tag": "PITCH",
+        "text": "Manis wangi karamel dia memang sempurna!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Penceritaan proses R&D setahun membina antisipasi tinggi.",
+      "Visual macro-shot koyakan daging lembut berminyak.",
+      "Scarcity hook 80,000 unit batch pertama mencetuskan lonjakan FOMO."
+    ],
+    "closing_call_to_action": "Manis wangi karamel dia memang sempurna!",
+    "viral_factor_summary": "Membina antisipasi kukuh berasaskan kepercayaan jenama yang tinggi, mencetuskan penukaran jualan segera di TikTok Shop.",
+    "jev_telemetry": {
+      "jev_latency_ms": 5030.442,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.97,
+      "hook_confidence": 0.98,
+      "hook_probabilities": {
+        "CRAVING_SENSORY": 0.0,
+        "SIGNATURE_GREETING": 0.01,
+        "STORY_CURIOSITY": 0.0,
+        "EMPATHY_RELATABLE": 0.99,
+        "DIRECT_VALUE": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_009",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Hari ini adalah hari paling bersejarah dalam hidup saya sepanjang bertahun-tahun berkongsi resepi video masakan di media sosial.",
+      "word_count": 18,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hari ini adalah hari paling bersejarah dalam hidup saya sepanjang bertahun-tahun berkongsi resepi video masakan di media sosial."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Secara rasminya hari ini saya melancarkan produk pertama keluaran syarikat kami sendiri, Sambal Nyet Berapi!"
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Bermula dari dapur rumah sewa kecil dengan menumbuk cili guna lesung batu dan menampal pelekat botol secara manual bersama beberapa orang rakan, hari ini kita berjaya hasilkan 10,000 botol pertama di premis pengeluaran sendiri di Kota Bharu."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Kita gunakan cili padi kampung terpilih, bawang merah rangup dan ikan bilis mata biru berkualiti tinggi yang dimasak perlahan selama berjam-jam sampai garing dan pecah minyak wangi."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Tiada jalan pintas, setiap botol diperiksa kualiti rasa dan ketahanan penutup kedap udara demi kepuasan korang."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Jualan rasmi akan dibuka jam 12 tengah hari ini di Shopee."
+      },
+      {
+        "order": 7,
+        "tag": "PITCH",
+        "text": "Saya nak ucapkan jutaan terima kasih kepada anda semua yang sentiasa menyokong perjalanan ini dari kosong."
+      },
+      {
+        "order": 8,
+        "tag": "PITCH",
+        "text": "Pautan belian ada di bio profil saya, selamat membeli dan terima kasih rakyat Malaysia!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Saya nak ucapkan jutaan terima kasih kepada anda semua yang sentiasa menyokong perjalanan ini dari kosong. Pautan belian ada di bio profil saya, selamat membeli dan terima kasih rakyat Malaysia!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 13055.296,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.97,
+      "hook_probabilities": {
+        "SIGNATURE_GREETING": 0.0,
+        "DIRECT_VALUE": 0.02,
+        "STORY_CURIOSITY": 0.98,
+        "EMPATHY_RELATABLE": 0.0,
+        "CRAVING_SENSORY": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_010",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Selepas setahun lebih kita simpan rahsia dalam makmal R&D, hari ini saya nak perkenalkan produk kedua daripada jenama kami, Dendeng Nyet Berapi.",
+      "word_count": 22,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Selepas setahun lebih kita simpan rahsia dalam makmal R&D, hari ini saya nak perkenalkan produk kedua daripada jenama kami, Dendeng Nyet Berapi."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Ramai yang tanya kenapa ambil masa lama sangat untuk keluarkan produk baru, sebab cabaran utama kami ialah nak pastikan daging dendeng ni kekal lembut basah dan tak kering macam dendeng pasaran biasa."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Kita gunakan daging lembu import berkualiti tinggi yang direbus empuk, dihiris halus dan ditumbuk manja sebelum digoreng rangup di luar tapi lembut di dalam."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Kemudian kita tumis dengan pes cili basah khas, bawang karamel dan rempah warisan sampai pecah minyak wangi."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Produk ini dimasak dan dipaketkan dalam retort pouch khas, kemudian disterilkan pada suhu 121 darjah Celsius supaya tahan selama 12 bulan tanpa sebarang bahan pengawet."
+      },
+      {
+        "order": 6,
+        "tag": "PAYOFF",
+        "text": "Korang tengok bila saya koyak daging ni, serat dia lembut sangat dan minyak cili dia pekat menyaluti setiap urat daging."
+      },
+      {
+        "order": 7,
+        "tag": "PAYOFF",
+        "text": "Bila gaul dengan nasi putih panas-panas, aroma rempah dan rasa pedas manis dia memang menggamit selera!"
+      },
+      {
+        "order": 8,
+        "tag": "SETUP",
+        "text": "Pelancaran rasmi bermula malam ini jam 9 malam secara eksklusif di TikTok Shop dengan kuota batch pertama sebanyak 80,000 unit."
+      },
+      {
+        "order": 9,
+        "tag": "PITCH",
+        "text": "Tekan pautan di bio untuk lock order korang sekarang dan terima kasih atas sokongan luar biasa korang selama ini!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Tekan pautan di bio untuk lock order korang sekarang dan terima kasih atas sokongan luar biasa korang selama ini!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 773.087,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.95,
+      "hook_probabilities": {
+        "DIRECT_VALUE": 0.03,
+        "STORY_CURIOSITY": 0.96,
+        "CRAVING_SENSORY": 0.0,
+        "EMPATHY_RELATABLE": 0.01,
+        "SIGNATURE_GREETING": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_011",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Alhamdulillah, hari ini impian yang saya idamkan selama tiga tahun akhirnya menjadi kenyataan, kita rasmi melangkah masuk ke kilang pengeluaran kedua kami yang berkeluasan 22,000 kaki persegi di Kota Bharu Kelantan.",
+      "word_count": 31,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Alhamdulillah, hari ini impian yang saya idamkan selama tiga tahun akhirnya menjadi kenyataan, kita rasmi melangkah masuk ke kilang pengeluaran kedua kami yang berkeluasan 22,000 kaki persegi di Kota Bharu Kelantan."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Bermula daripada ruang kedai lot biasa yang sempit, kilang baru ini dilengkapi dengan fasiliti industri bertaraf moden termasuk bilik pemprosesan makanan berhawa dingin bersih, mesin pengisian automatik berkapasiti tinggi dan gudang simpanan berpusat."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Pelaburan berjuta ringgit ini bukan untuk menunjuk kekayaan, tapi untuk memastikan bekalan sambal dan dendeng dapat dikeluarkan secara konsisten tanpa isu kehabisan stok serta membuka lebih banyak peluang pekerjaan untuk anak-anak muda tempatan di negeri Kelantan."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Saya terharu bila melihat anak-anak muda lepasan universiti dan kolej komuniti kini berkhidmat di bahagian kawalan kualiti, logistik dan kejuruteraan automasi di kilang ini."
+      },
+      {
+        "order": 5,
+        "tag": "PITCH",
+        "text": "Terima kasih kepada seluruh rakyat Malaysia yang membeli botol sambal kami setiap hari, kilang ini berdiri hasil kepercayaan korang semua!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Terima kasih kepada seluruh rakyat Malaysia yang membeli botol sambal kami setiap hari, kilang ini berdiri hasil kepercayaan korang semua!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 2415.974,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.68,
+      "hook_probabilities": {
+        "DIRECT_VALUE": 0.07,
+        "EMPATHY_RELATABLE": 0.05,
+        "STORY_CURIOSITY": 0.74,
+        "SIGNATURE_GREETING": 0.14,
+        "CRAVING_SENSORY": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_012",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Hari ini saya nak bawa korang masuk secara eksklusif ke bilik sterilisasi termal kilang kami untuk tunjukkan bagaimana makanan siap saji kami diproses dengan standard keselamatan antarabangsa.",
+      "word_count": 27,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hari ini saya nak bawa korang masuk secara eksklusif ke bilik sterilisasi termal kilang kami untuk tunjukkan bagaimana makanan siap saji kami diproses dengan standard keselamatan antarabangsa."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Ramai pengguna tertanya-tanya bagaimana Dendeng Nyet Berapi boleh tahan lebih 12 bulan pada suhu bilik tanpa meletakkan walau setitik bahan pengawet tiruan."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Jawapannya terletak pada teknologi mesin retort canggih ini yang beroperasi menggunakan tekanan wap panas melampau pada suhu 121 darjah Celsius."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Pouch makanan yang telah diseal kedap dimasukkan ke dalam ruang kebuk retort, dipanaskan tepat pada graf masa mikrobiologi untuk mematikan semua spora bakteria tanpa merosakkan tekstur kelembutan daging lembu."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Setiap batch menjalani ujian makmal swab kebersihan dan ujian kebocoran tekanan udara sebelum diluluskan untuk penghantaran."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Sebagai usahawan Muslim, tanggungjawab menyediakan makanan yang bersih, selamat dan patuh halal adalah amanah paling berat yang tidak boleh dikompromi."
+      },
+      {
+        "order": 7,
+        "tag": "PITCH",
+        "text": "Kualiti adalah janji kami kepada setiap pembeli."
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Kualiti adalah janji kami kepada setiap pembeli.",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 2702.993,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.25,
+      "hook_probabilities": {
+        "SIGNATURE_GREETING": 0.12,
+        "STORY_CURIOSITY": 0.39,
+        "DIRECT_VALUE": 0.39,
+        "CRAVING_SENSORY": 0.01,
+        "EMPATHY_RELATABLE": 0.09
+      }
+    }
+  },
+  {
+    "video_id": "KA_013",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "DIRECT_VALUE",
+      "hook_verbatim": "Hari ini kita buat keputusan untuk tutup kilang Sambal Nyet selama seminggu, sebab kita nak bawa kesemua 60 orang staf kilang kami bercuti dan enjoy di resort lima bintang di Pulau Pinang.",
+      "word_count": 32,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hari ini kita buat keputusan untuk tutup kilang Sambal Nyet selama seminggu, sebab kita nak bawa kesemua 60 orang staf kilang kami bercuti dan enjoy di resort lima bintang di Pulau Pinang."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Sepanjang tahun staf bekerja keras tanpa henti membungkus jutaan botol sambal, jadi ini masa terbaik untuk mereka rehat dan bergembira bersama keluarga."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Kita tempah dua buah bas persiaran mewah untuk bawa semua staf dari Kota Bharu ke Pulau Pinang."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Sampai di hotel, setiap staf dapat bilik penginapan mewah dengan pemandangan laut yang cantik, siap ada private pool untuk anak-anak mandi."
+      },
+      {
+        "order": 5,
+        "tag": "PAYOFF",
+        "text": "Malam ini kita sediakan majlis makan malam buffet seafood bertaraf lima bintang untuk meraikan titik peluh mereka."
+      },
+      {
+        "order": 6,
+        "tag": "PAYOFF",
+        "text": "Kemuncak majlis malam ini, kita serahkan sampul bonus tahunan berserta duit poket perbelanjaan khas untuk setiap seorang staf sebagai tanda penghargaan atas kesetiaan mereka."
+      },
+      {
+        "order": 7,
+        "tag": "PAYOFF",
+        "text": "Tengok senyuman di wajah mereka dan tangisan kegembiraan bila terima penghargaan ni, rasa hilang segala penat lelah berniaga selama bertahun-tahun."
+      },
+      {
+        "order": 8,
+        "tag": "PAYOFF",
+        "text": "Kejayaan ini bukan milik saya seorang, tapi hasil keringat setiap staf di kilang dan sokongan ikhlas daripada korang semua pelanggan di Malaysia."
+      },
+      {
+        "order": 9,
+        "tag": "PITCH",
+        "text": "Terima kasih banyak rakyat Malaysia kerana sentiasa mempercayai jenama tempatan ini, semoga kita terus berkembang bersama!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Terima kasih banyak rakyat Malaysia kerana sentiasa mempercayai jenama tempatan ini, semoga kita terus berkembang bersama!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 3405.42,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.89,
+      "hook_confidence": 0.36,
+      "hook_probabilities": {
+        "CRAVING_SENSORY": 0.01,
+        "SIGNATURE_GREETING": 0.0,
+        "STORY_CURIOSITY": 0.49,
+        "EMPATHY_RELATABLE": 0.01,
+        "DIRECT_VALUE": 0.49
+      }
+    }
+  },
+  {
+    "video_id": "KA_014",
+    "topic_category": "COMMUNITY_CSR",
+    "hook_analysis": {
+      "hook_type": "DIRECT_VALUE",
+      "hook_verbatim": "Minggu terakhir sebelum Ramadan tamat, kita bawa kesemua staf kilang keluar beramai-ramai ke pusat beli-belah untuk shopping baju raya dan kelengkapan Aidilfitri sepuas hati mereka.",
+      "word_count": 25,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Minggu terakhir sebelum Ramadan tamat, kita bawa kesemua staf kilang keluar beramai-ramai ke pusat beli-belah untuk shopping baju raya dan kelengkapan Aidilfitri sepuas hati mereka."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Setiap staf diberi bajet bebas untuk pilih sendiri sepasang baju kurung, baju melayu, kasut dan kuih raya untuk dibawa pulang ke kampung halaman masing-masing."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Melihat kegembiraan mereka memilih warna baju sedondon bersama rakan sekerja memberi satu kepuasan yang tidak ternilai dengan wang ringgit."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Selesai sesi membeli-belah, kita berkumpul di dewan untuk sesi penyerahan bonus raya khas dalam sampul tebal supaya mereka dapat menyambut hari raya dengan tenang tanpa bebanan kewangan."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Tiada apa yang lebih membahagiakan selain melihat orang-orang yang setia membanting tulang bersama kita dapat berkongsi rezeki yang melimpah ruah ini bersama ibu bapa dan anak-anak di kampung."
+      },
+      {
+        "order": 6,
+        "tag": "PITCH",
+        "text": "Selamat Hari Raya Aidilfitri daripada kami sekeluarga besar kilang Sambal Nyet!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Selamat Hari Raya Aidilfitri daripada kami sekeluarga besar kilang Sambal Nyet!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 15970.938,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.64,
+      "hook_confidence": 0.37,
+      "hook_probabilities": {
+        "SIGNATURE_GREETING": 0.01,
+        "DIRECT_VALUE": 0.5,
+        "STORY_CURIOSITY": 0.37,
+        "CRAVING_SENSORY": 0.02,
+        "EMPATHY_RELATABLE": 0.1
+      }
+    }
+  },
+  {
+    "video_id": "KA_015",
+    "topic_category": "COMMUNITY_CSR",
+    "hook_analysis": {
+      "hook_type": "EMPATHY_RELATABLE",
+      "hook_verbatim": "Bila air banjir mula naik menenggelamkan rumah penduduk di beberapa kawasan di Kelantan dan Terengganu, pasukan kilang kami segera menghentikan aktiviti biasa untuk turun padang menggerakkan misi bantuan kilat.",
+      "word_count": 29,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Bila air banjir mula naik menenggelamkan rumah penduduk di beberapa kawasan di Kelantan dan Terengganu, pasukan kilang kami segera menghentikan aktiviti biasa untuk turun padang menggerakkan misi bantuan kilat."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Kita ubah ruang depan premis menjadi dapur rakyat untuk memasak lebih 3,000 pek makanan panas setiap hari merangkumi nasi berlauk daging, ayam goreng dan air mineral bersih."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Bersama rakan-rakan sukarelawan berjiwa kental, kita menaiki bot meredah arus air deras untuk mengagihkan makanan panas terus ke tingkap rumah mangsa yang terkandas di tingkat atas."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Dalam situasi bencana yang mencengkam emosi begini, makanan panas yang segar bukan sekadar mengisi perut yang lapar tapi memberi suntikan moral bahawa mereka tidak pernah keseorangan mengharungi ujian getir ini."
+      },
+      {
+        "order": 5,
+        "tag": "PITCH",
+        "text": "Terima kasih kepada semua penyumbang dan wira sukarelawan yang tidak tidur malam membantu saudara kita."
+      },
+      {
+        "order": 6,
+        "tag": "PITCH",
+        "text": "Semoga banjir segera surut dan urusan mangsa dipermudahkan."
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Terima kasih kepada semua penyumbang dan wira sukarelawan yang tidak tidur malam membantu saudara kita. Semoga banjir segera surut dan urusan mangsa dipermudahkan.",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 3636.445,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.4,
+      "hook_probabilities": {
+        "CRAVING_SENSORY": 0.01,
+        "DIRECT_VALUE": 0.02,
+        "STORY_CURIOSITY": 0.44,
+        "EMPATHY_RELATABLE": 0.53,
+        "SIGNATURE_GREETING": 0.0
+      }
+    }
+  },
+  {
+    "video_id": "KA_016",
+    "topic_category": "TRAVELOG_VLOG",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Pagi ni kita bangun seawal 5 pagi di tepi tasik Lake Tekapo dengan suhu 2 darjah Celsius, semata-mata nak masak sarapan telur mata dan secawan kopi panas berlatarbelakangkan gunung bersalji.",
+      "word_count": 30,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Pagi ni kita bangun seawal 5 pagi di tepi tasik Lake Tekapo dengan suhu 2 darjah Celsius, semata-mata nak masak sarapan telur mata dan secawan kopi panas berlatarbelakangkan gunung bersalji."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Bila buka pintu belakang campervan, angin sejuk gunung terus menusuk ke tulang, tapi pemandangan air tasik yang membeku dan gunung salji di depan mata ni betul-betul memukau fikiran."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Saya keluarkan dapur gas kecil, panaskan sedikit mentega dalam kuali mini, dan pecahkan dua biji telur ayam segar."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Bunyi desiran mentega panas di tengah keheningan alam sunyi ni memberi satu ketenangan yang sukar digambarkan dengan kata-kata."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Selepas telur garing di tepi dan kuningnya masih goyang, saya bancuh kopi hitam panas dan bakar sekeping roti sourdough."
+      },
+      {
+        "order": 6,
+        "tag": "PAYOFF",
+        "text": "Duduk di atas kerusi lipat sambil hirup kopi panas berasap dan nikmati sarapan sederhana ini, saya terfikir betapa indahnya jika kita dapat memperlahankan rentak hidup seketika."
+      },
+      {
+        "order": 7,
+        "tag": "PAYOFF",
+        "text": "Dalam kesibukan mengejar dunia, kadang-kadang kita cuma perlukan ruang tenang macam ni untuk bermuhasabah dan bersyukur dengan apa yang ada."
+      },
+      {
+        "order": 8,
+        "tag": "PITCH",
+        "text": "Jangan lupa luangkan masa untuk rehatkan minda korang juga ya, kita jumpa esok untuk destinasi kembara yang seterusnya!"
+      }
+    ],
+    "pacing_speed": "NARRATIVE_SLOW",
+    "retention_mechanisms": [
+      "Sinematografi lanskap 4K dan bunyi ambien alam semula jadi.",
+      "Monolog reflektif tentang ketenangan dan memperlahankan rentak hidup.",
+      "Kontras visual sarapan ringkas di tengah keheningan tasik beku."
+    ],
+    "closing_call_to_action": "Jangan lupa luangkan masa untuk rehatkan minda korang juga ya, kita jumpa esok untuk destinasi kembara yang seterusnya!",
+    "viral_factor_summary": "Menawarkan elemen 'escapism' kepada audiens yang penat dengan rutin bandar, mendorong kadar tontonan berulang (rewatch loop) yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 900.35,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.31,
+      "hook_probabilities": {
+        "SIGNATURE_GREETING": 0.01,
+        "STORY_CURIOSITY": 0.44,
+        "CRAVING_SENSORY": 0.44,
+        "EMPATHY_RELATABLE": 0.02,
+        "DIRECT_VALUE": 0.09
+      }
+    }
+  },
+  {
+    "video_id": "KA_017",
+    "topic_category": "TRAVELOG_VLOG",
+    "hook_analysis": {
+      "hook_type": "CRAVING_SENSORY",
+      "hook_verbatim": "Bila dah seminggu berjalan di kota London dengan suhu dingin musim luruh, tekak Melayu kita ni memang rindu tebal nak makan nasi lemak panas dengan sambal pedas berapi.",
+      "word_count": 28,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Bila dah seminggu berjalan di kota London dengan suhu dingin musim luruh, tekak Melayu kita ni memang rindu tebal nak makan nasi lemak panas dengan sambal pedas berapi."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Pagi ini saya singgah ke pasar raya tempatan di Bayswater untuk beli beras basmathi, santan kotak, timun dan telur ayam, manakala sambal bilis kita bawa khas sebotol dari Malaysia."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Dalam dapur kecil apartment sewa, bau wangi daun pandan dan santan mula memenuhi segenap ruang masa nasi lemak mendidih."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Kita goreng kacang tanah dan ikan bilis sampai garing rangup, rebus telur mata dan panaskan Sambal Nyet atas kuali kecil."
+      },
+      {
+        "order": 5,
+        "tag": "PAYOFF",
+        "text": "Bila hidang atas pinggan berlapik daun pisang yang dibeli di pasar Asia, pergh aroma dia terus bawa ingatan balik ke tanah air tercinta."
+      },
+      {
+        "order": 6,
+        "tag": "SETUP",
+        "text": "Suapan pertama nasi berlemak wangi digaul sambal pedas pekat, rasa nikmat dia sampai buat kita tersenyum sendirian di bumi asing."
+      },
+      {
+        "order": 7,
+        "tag": "PITCH",
+        "text": "Di mana pun kaki kita melangkah di dunia ini, selera masakan Malaysia tetap nombor satu di hati!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Sinematografi lanskap 4K dan bunyi ambien alam semula jadi.",
+      "Monolog reflektif tentang ketenangan dan memperlahankan rentak hidup.",
+      "Kontras visual sarapan ringkas di tengah keheningan tasik beku."
+    ],
+    "closing_call_to_action": "Di mana pun kaki kita melangkah di dunia ini, selera masakan Malaysia tetap nombor satu di hati!",
+    "viral_factor_summary": "Menawarkan elemen 'escapism' kepada audiens yang penat dengan rutin bandar, mendorong kadar tontonan berulang (rewatch loop) yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 1166.602,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.96,
+      "hook_confidence": 0.4,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.02,
+        "SIGNATURE_GREETING": 0.0,
+        "DIRECT_VALUE": 0.0,
+        "CRAVING_SENSORY": 0.52,
+        "EMPATHY_RELATABLE": 0.46
+      }
+    }
+  },
+  {
+    "video_id": "KA_018",
+    "topic_category": "TRAVELOG_VLOG",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Menjejakkan kaki di kepulauan salji Hokkaido Jepun dengan suhu mencecah negatif 8 darjah Celsius, misi utama saya hari ini ialah mencari semangkuk mi ramen halal yang tulen untuk memanaskan badan yang menggigil.",
+      "word_count": 32,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Menjejakkan kaki di kepulauan salji Hokkaido Jepun dengan suhu mencecah negatif 8 darjah Celsius, misi utama saya hari ini ialah mencari semangkuk mi ramen halal yang tulen untuk memanaskan badan yang menggigil."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Berjalan meredah timbunan salji tebal setinggi paras lutut di celah lorong klasik bandar Otaru, akhirnya kita jumpa sebuah kedai ramen kecil milik seorang tukang masak tempatan yang mesra Muslim."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Kita pesan Ramen Miso Halal berserta jagung manis Hokkaido dan hirisan daging wagyu lembut."
+      },
+      {
+        "order": 4,
+        "tag": "PAYOFF",
+        "text": "Bila mangkuk ramen berasap tebal dihidangkan di depan mata, aroma sup miso yang direbus berjam-jam bersama herba segar terus membangkitkan selera."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Hirupan pertama sup panas dia pekat berlemak dengan rasa umami yang mendalam, mi kenyal buatan tangan disedut panas-panas, fuhh terasa hangat meresap dari hujung jari kaki sampai ke kepala."
+      },
+      {
+        "order": 6,
+        "tag": "PITCH",
+        "text": "Pengalaman merasai budaya kulinari tempatan sambil menghargai keindahan salji putih yang turun perlahan di luar tingkap kaca adalah memori manis yang tidak akan saya lupakan."
+      }
+    ],
+    "pacing_speed": "NARRATIVE_SLOW",
+    "retention_mechanisms": [
+      "Sinematografi lanskap 4K dan bunyi ambien alam semula jadi.",
+      "Monolog reflektif tentang ketenangan dan memperlahankan rentak hidup.",
+      "Kontras visual sarapan ringkas di tengah keheningan tasik beku."
+    ],
+    "closing_call_to_action": "Pengalaman merasai budaya kulinari tempatan sambil menghargai keindahan salji putih yang turun perlahan di luar tingkap kaca adalah memori manis yang tidak akan saya lupakan.",
+    "viral_factor_summary": "Menawarkan elemen 'escapism' kepada audiens yang penat dengan rutin bandar, mendorong kadar tontonan berulang (rewatch loop) yang tinggi.",
+    "jev_telemetry": {
+      "jev_latency_ms": 3313.635,
+      "jev_engine": "cloud",
+      "topic_confidence": 1.0,
+      "hook_confidence": 0.59,
+      "hook_probabilities": {
+        "STORY_CURIOSITY": 0.68,
+        "EMPATHY_RELATABLE": 0.09,
+        "SIGNATURE_GREETING": 0.0,
+        "DIRECT_VALUE": 0.06,
+        "CRAVING_SENSORY": 0.17
+      }
+    }
+  },
+  {
+    "video_id": "KA_019",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Malam ini di atas pentas berprestij TikTok Awards Malaysia 2023, satu anugerah yang tidak pernah saya mimpikan sepanjang lapan tahun berhempas pulas mencipta kandungan video di internet telah diumumkan sebagai milik kita, Creator of the Year.",
+      "word_count": 36,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Malam ini di atas pentas berprestij TikTok Awards Malaysia 2023, satu anugerah yang tidak pernah saya mimpikan sepanjang lapan tahun berhempas pulas mencipta kandungan video di internet telah diumumkan sebagai milik kita, Creator of the Year."
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Saya masih ingat lapan tahun lepas sewaktu merakam video masakan pertama menggunakan telefon pintar terpakai dengan pencahayaan lampu meja bilik tidur yang malap, sering kali dihujani kegagalan dan video yang tidak ditonton orang."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Malam ini berdiri di sini memegang trofi ini, ucapan terima kasih paling istimewa adalah untuk ibu tercinta yang sentiasa mendoakan kejayaan anaknya dalam setiap sujud solatnya, serta seluruh keluarga dan staf kilang yang tidak pernah lelah menyokong."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Kepada adik-adik dan anak muda di luar sana yang sedang berusaha membina impian, jangan sesekali mengabaikan pelajaran walau setinggi mana populariti yang dikejar di media sosial, kerana ilmu dan adab adalah asas yang akan memastikan anda kekal bernilai dalam industri ini."
+      },
+      {
+        "order": 5,
+        "tag": "PITCH",
+        "text": "Kemenangan ini adalah kemenangan kita bersama rakyat Malaysia, terima kasih atas kasih sayang korang!"
+      }
+    ],
+    "pacing_speed": "NARRATIVE_SLOW",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Kemenangan ini adalah kemenangan kita bersama rakyat Malaysia, terima kasih atas kasih sayang korang!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 795.342,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.29,
+      "hook_confidence": 0.73,
+      "hook_probabilities": {
+        "SIGNATURE_GREETING": 0.01,
+        "DIRECT_VALUE": 0.15,
+        "STORY_CURIOSITY": 0.78,
+        "EMPATHY_RELATABLE": 0.05,
+        "CRAVING_SENSORY": 0.01
+      }
+    }
+  },
+  {
+    "video_id": "KA_020",
+    "topic_category": "BEHIND_THE_SCENES_BISNES",
+    "hook_analysis": {
+      "hook_type": "STORY_CURIOSITY",
+      "hook_verbatim": "Hari ini saya berpeluang mengalami salah satu detik paling mendebarkan dan mengujakan dalam kerjaya masakan saya, apabila dijemput bertemu secara empat mata dengan chef bertaraf dunia yang paling disegani, Chef Gordon Ramsay!",
+      "word_count": 32,
+      "has_signature_catchphrase": false
+    },
+    "structure_breakdown": [
+      {
+        "order": 1,
+        "tag": "HOOK",
+        "text": "Hari ini saya berpeluang mengalami salah satu detik paling mendebarkan dan mengujakan dalam kerjaya masakan saya, apabila dijemput bertemu secara empat mata dengan chef bertaraf dunia yang paling disegani, Chef Gordon Ramsay!"
+      },
+      {
+        "order": 2,
+        "tag": "SETUP",
+        "text": "Bertempat di restoran mewah beliau di Sunway Resort, suasana di dapur profesional terasa begitu tegang dan berprestij dengan barisan cef elit antarabangsa."
+      },
+      {
+        "order": 3,
+        "tag": "SETUP",
+        "text": "Apabila Gordon Ramsay melangkah masuk dengan senyuman mesra dan menyapa, saya mengambil peluang untuk menghadiahkan sebotol Sambal Nyet Berapi buatan tempatan kita terus ke tangan beliau."
+      },
+      {
+        "order": 4,
+        "tag": "SETUP",
+        "text": "Beliau mencuba hidangan tradisional Malaysia dan kami berbincang secara mendalam mengenai keunikan rempah ratus warisan serta potensi masakan tempatan untuk menembusi selera kulinari global."
+      },
+      {
+        "order": 5,
+        "tag": "SETUP",
+        "text": "Dipuji dan menerima kata-kata perangsang daripada seorang ikon kulinari dunia yang sering kita tonton di kaca televisyen sejak zaman kanak-kanak membuktikan bahawa martabat masakan warisan Malaysia mampu berdiri megah setanding hidangan antarabangsa."
+      },
+      {
+        "order": 6,
+        "tag": "PITCH",
+        "text": "Kebanggaan ini saya dedikasikan untuk seluruh komuniti kulinari dan rakyat Malaysia!"
+      }
+    ],
+    "pacing_speed": "MODERATE_RHYTHMIC",
+    "retention_mechanisms": [
+      "Pembalikan ekspektasi awal: tutup kilang untuk bawa staf bercuti.",
+      "Naratif empati tulen tanpa rasa sombong atau menunjuk-nunjuk.",
+      "Kemuncak emosi: agihan sampul bonus dan air mata kegembiraan pekerja tempatan.",
+      "Ucapan terima kasih tulus mengiktiraf pembeli sebagai rakan kejayaan."
+    ],
+    "closing_call_to_action": "Kebanggaan ini saya dedikasikan untuk seluruh komuniti kulinari dan rakyat Malaysia!",
+    "viral_factor_summary": "Audiens Malaysia mempunyai sentimen sokongan yang sangat tinggi terhadap usahawan yang memuliakan kebajikan pekerja tempatan, menghasilkan Share Velocity maksimum.",
+    "jev_telemetry": {
+      "jev_latency_ms": 12762.368,
+      "jev_engine": "cloud",
+      "topic_confidence": 0.49,
+      "hook_confidence": 0.92,
+      "hook_probabilities": {
+        "CRAVING_SENSORY": 0.0,
+        "EMPATHY_RELATABLE": 0.0,
+        "STORY_CURIOSITY": 0.95,
+        "DIRECT_VALUE": 0.05,
+        "SIGNATURE_GREETING": 0.0
+      }
+    }
+  }
+]

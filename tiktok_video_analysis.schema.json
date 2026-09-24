@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "HookAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "hook_type": {
+          "$ref": "#/$defs/HookType",
+          "description": "Klasifikasi jenis hook pembuka (3-5 saat pertama)"
+        },
+        "hook_verbatim": {
+          "description": "Ayat pembuka penuh yang dituturkan",
+          "title": "Hook Verbatim",
+          "type": "string"
+        },
+        "word_count": {
+          "description": "Jumlah perkataan dalam ayat pembuka",
+          "title": "Word Count",
+          "type": "integer"
+        },
+        "has_signature_catchphrase": {
+          "description": "Mengandungi variasi Hey what's up guys atau frasa ikonik",
+          "title": "Has Signature Catchphrase",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "hook_type",
+        "hook_verbatim",
+        "word_count",
+        "has_signature_catchphrase"
+      ],
+      "title": "HookAnalysis",
+      "type": "object"
+    },
+    "HookType": {
+      "enum": [
+        "CRAVING_SENSORY",
+        "SIGNATURE_GREETING",
+        "STORY_CURIOSITY",
+        "DIRECT_VALUE",
+        "EMPATHY_RELATABLE"
+      ],
+      "title": "HookType",
+      "type": "string"
+    },
+    "PacingSpeed": {
+      "enum": [
+        "RAPID_FIRE",
+        "MODERATE_RHYTHMIC",
+        "NARRATIVE_SLOW"
+      ],
+      "title": "PacingSpeed",
+      "type": "string"
+    },
+    "StructureItem": {
+      "additionalProperties": false,
+      "properties": {
+        "order": {
+          "description": "Nombor turutan ayat bermula dari 1",
+          "title": "Order",
+          "type": "integer"
+        },
+        "tag": {
+          "$ref": "#/$defs/StructureTag",
+          "description": "Label peranan ayat: HOOK, SETUP, PAYOFF, atau PITCH"
+        },
+        "text": {
+          "description": "Teks ayat penuh",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "order",
+        "tag",
+        "text"
+      ],
+      "title": "StructureItem",
+      "type": "object"
+    },
+    "StructureTag": {
+      "enum": [
+        "HOOK",
+        "SETUP",
+        "PAYOFF",
+        "PITCH"
+      ],
+      "title": "StructureTag",
+      "type": "string"
+    },
+    "TopicCategory": {
+      "enum": [
+        "RESEPI_RAMADAN",
+        "RESEPI_VIRAL_HARIAN",
+        "TRAVELOG_VLOG",
+        "BEHIND_THE_SCENES_BISNES",
+        "COMMUNITY_CSR"
+      ],
+      "title": "TopicCategory",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "video_id": {
+      "description": "Pengenal unik video (contoh: KA_001)",
+      "title": "Video Id",
+      "type": "string"
+    },
+    "topic_category": {
+      "$ref": "#/$defs/TopicCategory",
+      "description": "Kategori topik kandungan video"
+    },
+    "hook_analysis": {
+      "$ref": "#/$defs/HookAnalysis",
+      "description": "Analisis terperinci ayat pembuka"
+    },
+    "structure_breakdown": {
+      "description": "Senarai pemecahan ayat demi ayat berlabel",
+      "items": {
+        "$ref": "#/$defs/StructureItem"
+      },
+      "title": "Structure Breakdown",
+      "type": "array"
+    },
+    "pacing_speed": {
+      "$ref": "#/$defs/PacingSpeed",
+      "description": "Rentak kelajuan suntingan dan lontaran suara"
+    },
+    "retention_mechanisms": {
+      "description": "Senarai faktor psikologi yang menahan penonton tidak swipe away",
+      "items": {
+        "type": "string"
+      },
+      "title": "Retention Mechanisms",
+      "type": "array"
+    },
+    "closing_call_to_action": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Teks seruan bertindak penutup atau null jika tiada",
+      "title": "Closing Call To Action"
+    },
+    "viral_factor_summary": {
+      "description": "Ringkasan 1-2 ayat mengapa struktur video ini berkesan",
+      "title": "Viral Factor Summary",
+      "type": "string"
+    }
+  },
+  "required": [
+    "video_id",
+    "topic_category",
+    "hook_analysis",
+    "structure_breakdown",
+    "pacing_speed",
+    "retention_mechanisms",
+    "viral_factor_summary"
+  ],
+  "title": "TikTokVideoAnalysis",
+  "type": "object"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "ViralStudio KA-363 | Khairul Aming Intelligence & Doh-Nut",
+  "short_name": "ViralStudio",
+  "description": "Short-Form Video Viral Retention Engine & Doh-Nut Proven Campaign Studio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080a0f",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "business", "multimedia"]
+}

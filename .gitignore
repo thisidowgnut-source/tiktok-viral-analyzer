@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Environment
+.env
+.venv/
+env/
+venv/
+
+# Render exports & temp files
+static/exports/render_*
+static/exports/*.mp4
+static/exports/*.mp3
+static/exports/*.srt
+temp/
+scratch/
