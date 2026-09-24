@@ -20,3 +20,7 @@ static/exports/*.mp3
 static/exports/*.srt
 temp/
 scratch/
+data/*.db
+data/*.db-wal
+data/*.db-shm
+

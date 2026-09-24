@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "viralstudio"
+version = "3.1.0"
+description = "ViralStudio KA-363: Short-Video Studio with 9:16 FFmpeg Exporter, Jev System One, and PWA Studio"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "pydantic>=2.8.0",
+    "edge-tts>=6.1.12",
+    "playwright>=1.40.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]

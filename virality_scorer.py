@@ -85,21 +85,26 @@ def evaluate_script(script_text: str, client: "TypeSafeClient" = None) -> dict:
                     "viral_score": v_score_prim
                 }
             )
-            h_out = resp.results.get("hook_type")
+            answers = getattr(resp, "answers", getattr(resp, "results", {}))
+            h_out = answers.get("hook_type")
             if h_out:
-                hook_type = getattr(h_out, "choice", hook_type)
+                hook_type = getattr(h_out, "value", getattr(h_out, "choice", hook_type))
                 hook_conf = getattr(h_out, "confidence", 0.85)
 
-            p_out = resp.results.get("pacing")
+            p_out = answers.get("pacing")
             if p_out:
-                pacing_speed = getattr(p_out, "choice", pacing_speed)
+                pacing_speed = getattr(p_out, "value", getattr(p_out, "choice", pacing_speed))
                 pacing_conf = getattr(p_out, "confidence", 0.80)
 
-            s_out = resp.results.get("viral_score")
+            s_out = answers.get("viral_score")
             if s_out:
-                base_score = float(getattr(s_out, "score", 7.5))
+                base_score = float(getattr(s_out, "score", getattr(s_out, "value", 7.5)))
 
-            engine_used = "JevCloudAdapter" if getattr(client, "cloud_adapter", None) else "NonAutoregressiveLocalEngine"
+            engine_used = getattr(client, "mode", "cloud" if getattr(client, "api_key", None) else "local")
+            if engine_used == "local":
+                engine_used = "NonAutoregressiveLocalEngine"
+            elif engine_used == "cloud":
+                engine_used = "JevCloudAdapter"
         except Exception as e:
             engine_used = f"local_fallback ({type(e).__name__})"
 

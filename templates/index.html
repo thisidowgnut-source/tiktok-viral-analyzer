@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViralStudio KA-363 | Studio Video Pendek SOTA</title>
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#dc2626">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/static/icon-192.png">
+
+  <!-- CDNs -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #07090e; color: #e2e8f0; }
+    .glass-card { background: rgba(15, 20, 32, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1rem; }
+    .glass-input { background: rgba(8, 12, 22, 0.8); border: 1px solid rgba(255, 255, 255, 0.12); color: #f8fafc; border-radius: 0.5rem; }
+    .glass-input:focus { border-color: #ef4444; outline: none; ring: 2px; ring-color: rgba(239, 68, 68, 0.3); }
+    .nav-tab.active { background: #dc2626; color: #ffffff; box-shadow: 0 0 15px rgba(220, 38, 38, 0.4); font-weight: 700; }
+    .step-pill.active { background: #ef4444; color: #fff; font-weight: 700; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    .phone-bezel { width: 320px; height: 640px; border-radius: 44px; border: 8px solid #27272a; position: relative; overflow: hidden; background: #000; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); }
+    @media (max-width: 768px) {
+      .phone-bezel { width: 100%; max-width: 320px; height: 560px; margin: 0 auto; }
+    }
+    .safe-zone-overlay { pointer-events: none; position: absolute; inset: 0; border: 2px dashed rgba(234, 179, 8, 0.4); margin: 60px 16px 80px 16px; border-radius: 16px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scroll">
+
+  <!-- TOP APP BAR -->
+  <header class="sticky top-0 z-50 glass-card rounded-none border-t-0 border-x-0 border-b border-slate-800/80 px-4 lg:px-8 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="switchNav('home')">
+        <span class="text-2xl">🍩</span>
+        <div>
+          <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-amber-400 via-rose-500 to-red-500 bg-clip-text text-transparent">ViralStudio</span>
+          <span class="text-xs font-mono text-slate-400 ml-1">KA-363 v3.1</span>
+        </div>
+      </div>
+      
+      <!-- NAV TABS -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800 ml-6">
+        <button onclick="switchNav('home')" id="tab-home" class="nav-tab active px-3.5 py-1.5 rounded-lg text-xs transition">🏠 Utama</button>
+        <button onclick="switchNav('projects')" id="tab-projects" class="nav-tab px-3.5 py-1.5 rounded-lg text-xs transition">📁 Projek</button>
+        <button onclick="switchNav('studio')" id="tab-studio" class="nav-tab px-3.5 py-1.5 rounded-lg text-xs transition">🎬 Studio Video</button>
+        <button onclick="switchNav('assets')" id="tab-assets" class="nav-tab px-3.5 py-1.5 rounded-lg text-xs transition">🗂️ Aset</button>
+        <button onclick="switchNav('analytics')" id="tab-analytics" class="nav-tab px-3.5 py-1.5 rounded-lg text-xs transition">📊 Analitik 363</button>
+      </nav>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- Quick Status -->
+      <div id="statusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>SQLite + Jev Sedia</span>
+      </div>
+
+      <!-- Action Button -->
+      <button onclick="createNewProject()" class="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-bold text-xs shadow-lg shadow-red-600/30 transition transform active:scale-95">
+        <span>⚡ Cipta Video</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-8 space-y-8">
+
+    <!-- ==================== VIEW 1: UTAMA (HOME) ==================== -->
+    <section id="view-home" class="space-y-8">
+      
+      <!-- HERO BANNER -->
+      <div class="glass-card p-6 lg:p-8 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border-amber-500/20 bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900">
+        <div class="space-y-3 z-10 max-w-xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
+            <span>🍩</span> DOH-NUT Artisanal Sourdough Co.
+          </div>
+          <h1 class="text-2xl lg:text-4xl font-extrabold text-white tracking-tight">Video apa yang nak dibuat hari ini?</h1>
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Hasilkan skrip berkuasa retensi tinggi, sintesis suara Microsoft Azure Neural, dan render video menegak 9:16 dengan sari kata terbakar dalam masa kurang 60 saat.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button onclick="createNewProject()" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm shadow-xl shadow-red-600/40 transition">
+              ⚡ Mulakan Projek Baharu
+            </button>
+            <button onclick="switchNav('projects')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition border border-slate-700">
+              📁 Buka Arkib Projek
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D DONUT CANVAS PREVIEW -->
+        <div id="donutHeroCanvas" class="w-56 h-56 relative rounded-2xl flex items-center justify-center cursor-grab active:cursor-grabbing">
+          <!-- Three.js Canvas mounts here -->
+        </div>
+      </div>
+
+      <!-- LAST MODIFIED / RESUME CARD -->
+      <div id="resumeCard" class="glass-card p-5 border-blue-500/30 bg-blue-950/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-2xl">
+            🎬
+          </div>
+          <div>
+            <div class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-wider">Sambung Projek Terakhir</div>
+            <div id="resumeTitle" class="text-base font-bold text-white">Memuatkan projek...</div>
+            <div id="resumeMeta" class="text-xs text-slate-400">Versi 1 • Dikemas kini baru-baru ini</div>
+          </div>
+        </div>
+        <button id="resumeBtn" onclick="resumeLastProject()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
+          Sambung Edit ➔
+        </button>
+      </div>
+
+      <!-- RECENT PROJECTS & RENDER QUEUE DUAL GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- RECENT PROJECTS (2 COLUMNS) -->
+        <div class="lg:col-span-2 glass-card p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="font-bold text-sm text-white flex items-center gap-2">
+              <span>📁</span> Projek Terkini (Disimpan dalam SQLite)
+            </h3>
+            <button onclick="switchNav('projects')" class="text-xs text-red-400 hover:underline">Lihat Semua</button>
+          </div>
+
+          <div id="homeProjectsList" class="space-y-2.5 max-h-80 overflow-y-auto custom-scroll pr-1">
+            <div class="text-center py-8 text-xs text-slate-500">Memuatkan projek daripada SQLite...</div>
+          </div>
+        </div>
+
+        <!-- RENDER QUEUE (1 COLUMN) -->
+        <div class="glass-card p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="font-bold text-sm text-white flex items-center gap-2">
+              <span>⚙️</span> Barisan Render (Queue)
+            </h3>
+            <span id="queueCount" class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">0 Job</span>
+          </div>
+
+          <div id="homeQueueList" class="space-y-3 max-h-80 overflow-y-auto custom-scroll">
+            <div class="text-center py-8 text-xs text-slate-500">Tiada job render aktif dalam barisan.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: PROJEK (PROJECTS) ==================== -->
+    <section id="view-projects" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-5">
+        <div>
+          <h2 class="text-xl font-bold text-white">Pengurusan Projek</h2>
+          <p class="text-xs text-slate-400">Semua draf, skrip, dan pilihan render disimpan secara kekal dalam pangkalan data SQLite tempatan.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openImportModal()" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+            📥 Import Bundle
+          </button>
+          <button onclick="createNewProject()" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition">
+            + Cipta Baharu
+          </button>
+        </div>
+      </div>
+
+      <!-- FULL PROJECTS TABLE -->
+      <div class="glass-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="bg-slate-900/80 text-slate-400 font-mono uppercase text-[10px] border-b border-slate-800">
+              <tr>
+                <th class="px-4 py-3">Tajuk Projek</th>
+                <th class="px-4 py-3">Status</th>
+                <th class="px-4 py-3">Babak</th>
+                <th class="px-4 py-3">Durasi</th>
+                <th class="px-4 py-3">Versi</th>
+                <th class="px-4 py-3">Tarikh Kemas Kini</th>
+                <th class="px-4 py-3 text-right">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody" class="divide-y divide-slate-800/60">
+              <tr>
+                <td colspan="7" class="text-center py-8 text-slate-500">Memuatkan senarai projek...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: STUDIO VIDEO (4-STEP WORKFLOW) ==================== -->
+    <section id="view-studio" class="hidden space-y-6">
+      
+      <!-- STEP INDICATOR -->
+      <div class="glass-card p-3 flex items-center justify-between overflow-x-auto custom-scroll">
+        <div class="flex items-center gap-2">
+          <button onclick="setStudioStep(1)" id="stepBtn-1" class="step-pill active px-3.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition">
+            <span class="w-4 h-4 rounded-full bg-white/20 text-[10px] flex items-center justify-center">1</span> Brief
+          </button>
+          <span class="text-slate-600">➔</span>
+          <button onclick="setStudioStep(2)" id="stepBtn-2" class="step-pill px-3.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 text-slate-400 hover:text-white transition">
+            <span class="w-4 h-4 rounded-full bg-slate-800 text-[10px] flex items-center justify-center">2</span> Skrip
+          </button>
+          <span class="text-slate-600">➔</span>
+          <button onclick="setStudioStep(3)" id="stepBtn-3" class="step-pill px-3.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 text-slate-400 hover:text-white transition">
+            <span class="w-4 h-4 rounded-full bg-slate-800 text-[10px] flex items-center justify-center">3</span> Edit & Pratonton
+          </button>
+          <span class="text-slate-600">➔</span>
+          <button onclick="setStudioStep(4)" id="stepBtn-4" class="step-pill px-3.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 text-slate-400 hover:text-white transition">
+            <span class="w-4 h-4 rounded-full bg-slate-800 text-[10px] flex items-center justify-center">4</span> Eksport
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs font-mono">
+          <span id="studioSaveStatus" class="text-slate-400">Autosave: Sedia</span>
+          <span class="text-slate-700">|</span>
+          <span id="activeProjectTitle" class="text-amber-400 font-bold truncate max-w-[200px]">Projek Tanpa Nama</span>
+        </div>
+      </div>
+
+      <!-- DUAL-PANE WORKSPACE: LEFT EDITOR, RIGHT 9:16 IPHONE MOCKUP -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT PANE: 4 STEPS (7 COLS) -->
+        <div class="lg:col-span-7 space-y-6">
+
+          <!-- STEP 1: BRIEF -->
+          <div id="studioStep-1" class="glass-card p-6 space-y-4">
+            <h3 class="font-bold text-base text-white flex items-center gap-2">
+              <span>📋</span> Langkah 1: Maklumat Brief Kempen
+            </h3>
+            
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Tajuk Projek Video</label>
+                <input id="briefTitle" type="text" class="w-full glass-input px-3.5 py-2 text-sm" placeholder="Contoh: Kempen Donut Salted Egg Lava Merdeka">
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Produk / Perisa</label>
+                  <select id="briefProduct" class="w-full glass-input px-3 py-2 text-xs">
+                    <option value="Doh-Nut Salted Egg Lava">Doh-Nut Salted Egg Lava (RM 5.20)</option>
+                    <option value="Doh-Nut Nutella Hazelnut Lava">Doh-Nut Nutella Hazelnut Lava (RM 5.20)</option>
+                    <option value="Musang King Durian Bomb">Musang King Durian Bomb (RM 6.50)</option>
+                    <option value="Sira Kuih Keria">Sira Kuih Keria Gula Melaka (RM 4.90)</option>
+                    <option value="Kuih Burger Malaysia">Kuih Burger Sambal Bilis (RM 5.50)</option>
+                    <option value="Pandan Gula Melaka">Pandan Gula Melaka (RM 4.90)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Bahasa Kandungan</label>
+                  <select id="briefLanguage" class="w-full glass-input px-3 py-2 text-xs">
+                    <option value="ms">Bahasa Melayu (Malaysia)</option>
+                    <option value="en">English (Global/Urban)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Objektif Kempen & Sasaran Penonton</label>
+                <textarea id="briefGoal" rows="2" class="w-full glass-input px-3 py-2 text-xs" placeholder="Contoh: Sasarkan peminat manisan petang pejabat untuk memesan melalui GrabFood/ShopeeFood sebelum jam 4 petang."></textarea>
+              </div>
+
+              <div class="pt-2 flex justify-end">
+                <button onclick="saveBriefAndNext()" class="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition">
+                  Simpan & Teruskan ke Skrip ➔
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: SKRIP -->
+          <div id="studioStep-2" class="hidden glass-card p-6 space-y-5">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-base text-white flex items-center gap-2">
+                <span>✍️</span> Langkah 2: Pilihan & Pengeditan Skrip
+              </h3>
+              <button onclick="generateScriptVariations()" class="px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold hover:bg-amber-500/30 transition">
+                ⚡ Jana Variasi Baru
+              </button>
+            </div>
+
+            <!-- SCRIPT VARIATIONS BUTTONS -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button onclick="selectScriptVariation(0)" id="varBtn-0" class="p-2.5 rounded-xl border border-red-500/50 bg-red-950/20 text-left text-xs space-y-1">
+                <div class="font-bold text-white">Variasi A: ASMR</div>
+                <div class="text-[10px] text-slate-400">Tekstur deria & lelehan lava panas.</div>
+              </button>
+              <button onclick="selectScriptVariation(1)" id="varBtn-1" class="p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left text-xs space-y-1">
+                <div class="font-bold text-white">Variasi B: Drop</div>
+                <div class="text-[10px] text-slate-400">Gaya unboxing sneaker streetwear.</div>
+              </button>
+              <button onclick="selectScriptVariation(2)" id="varBtn-2" class="p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left text-xs space-y-1">
+                <div class="font-bold text-white">Variasi C: Slump 3PM</div>
+                <div class="text-[10px] text-slate-400">Penyelamat mengantuk pejabat.</div>
+              </button>
+            </div>
+
+            <!-- SCENE SEQUENCER -->
+            <div class="space-y-3 pt-2">
+              <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
+                <span>Susunan 4 Babak Garis Masa</span>
+                <span id="totalScriptWords" class="font-mono text-amber-400">0 perkataan (~0 saat)</span>
+              </div>
+
+              <!-- Scene 1: Hook -->
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-bold text-rose-400">
+                  <span>BABAK 1: HOOK (0 - 3s)</span>
+                  <span class="text-slate-500 font-normal">Kritikal untuk retensi</span>
+                </div>
+                <textarea id="sceneScript-1" rows="2" oninput="onScriptEdited()" class="w-full glass-input px-3 py-1.5 text-xs font-mono" placeholder="Ayat pembuka 3 saat..."></textarea>
+              </div>
+
+              <!-- Scene 2: Setup -->
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-bold text-amber-400">
+                  <span>BABAK 2: SETUP & AGITATION (3 - 15s)</span>
+                  <span class="text-slate-500 font-normal">Perkenalkan masalah & produk</span>
+                </div>
+                <textarea id="sceneScript-2" rows="2" oninput="onScriptEdited()" class="w-full glass-input px-3 py-1.5 text-xs font-mono" placeholder="Penerangan tekstur/kelebihan..."></textarea>
+              </div>
+
+              <!-- Scene 3: Payoff -->
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-bold text-emerald-400">
+                  <span>BABAK 3: PAYOFF & BUKTI (15 - 45s)</span>
+                  <span class="text-slate-500 font-normal">Tunjukkan hasil/keaslian</span>
+                </div>
+                <textarea id="sceneScript-3" rows="2" oninput="onScriptEdited()" class="w-full glass-input px-3 py-1.5 text-xs font-mono" placeholder="Klimaks visual lelehan..."></textarea>
+              </div>
+
+              <!-- Scene 4: CTA -->
+              <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] font-bold text-blue-400">
+                  <span>BABAK 4: CALL TO ACTION (45 - 60s)</span>
+                  <span class="text-slate-500 font-normal">Arahkan tindakan pembelian</span>
+                </div>
+                <textarea id="sceneScript-4" rows="2" oninput="onScriptEdited()" class="w-full glass-input px-3 py-1.5 text-xs font-mono" placeholder="Seruan bertindak tekan beg kuning..."></textarea>
+              </div>
+            </div>
+
+            <!-- JEV SCORER EMBED -->
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between gap-4">
+              <div>
+                <div class="text-[10px] font-mono uppercase text-slate-400">Skor Potensi Retensi (Jev System One)</div>
+                <div id="liveJevScore" class="text-2xl font-black text-amber-400">8.7 / 10</div>
+                <div id="liveJevTier" class="text-xs text-slate-300">⚡ High Performer Tier</div>
+              </div>
+              <button onclick="evaluateCurrentScript()" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition">
+                🔍 Nilaikan Semula
+              </button>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <button onclick="setStudioStep(1)" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 transition">
+                ⬅️ Kembali ke Brief
+              </button>
+              <button onclick="saveScenesAndNext()" class="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition">
+                Sahkan & Pratonton Video ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: EDIT & PRATONTON -->
+          <div id="studioStep-3" class="hidden glass-card p-6 space-y-5">
+            <h3 class="font-bold text-base text-white flex items-center gap-2">
+              <span>🎛️</span> Langkah 3: Tetapan Suara, Video Latar & Sari Kata
+            </h3>
+
+            <div class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Pilihan Suara Latar AI</label>
+                  <select id="voiceSelect" onchange="updatePreviewVoice()" class="w-full glass-input px-3 py-2 text-xs">
+                    <option value="ms-MY-YasminNeural">Yasmin (Wanita - Melayu Standard)</option>
+                    <option value="ms-MY-OsmanNeural">Osman (Lelaki - Melayu Standard)</option>
+                    <option value="en-US-JennyNeural">Jenny (English - Friendly US)</option>
+                    <option value="en-US-GuyNeural">Guy (English - Professional US)</option>
+                  </select>
+                  <p class="text-[10px] text-slate-400 mt-1">Menggunakan Microsoft Azure Neural (Awan - Sifar Kos Kunci API).</p>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Pilihan Video Latar Belakang</label>
+                  <select id="bgVideoSelect" onchange="updatePreviewBgVideo()" class="w-full glass-input px-3 py-2 text-xs">
+                    <option value="dohnut-hands-making-donut.mp4">dohnut-hands-making-donut.mp4 (POV Buat Donat)</option>
+                    <option value="dohnut-commercial.mp4">dohnut-commercial.mp4 (Iklan Komersial)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- SAFE AREA & TIMING CONTROLS -->
+              <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs">
+                <span class="text-slate-300">Papar Panduan Had Selamat Media Sosial (Safe-Area Overlay)</span>
+                <input id="safeZoneToggle" type="checkbox" onchange="toggleSafeZone(this.checked)" class="w-4 h-4 accent-red-600 rounded">
+              </div>
+
+              <!-- SCRIPT SUBTITLE PREVIEW BOX -->
+              <div class="space-y-1.5">
+                <label class="block text-xs font-semibold text-slate-300">Teks Sari Kata Kinetik (Dibakar pada MP4)</label>
+                <div id="fullScriptDisplay" class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 leading-relaxed max-h-32 overflow-y-auto custom-scroll">
+                  Memuatkan teks skrip...
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <button onclick="setStudioStep(2)" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 transition">
+                ⬅️ Kembali ke Skrip
+              </button>
+              <button onclick="setStudioStep(4)" class="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition">
+                Teruskan ke Eksport ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: EKSPORT -->
+          <div id="studioStep-4" class="hidden glass-card p-6 space-y-5">
+            <h3 class="font-bold text-base text-white flex items-center gap-2">
+              <span>🚀</span> Langkah 4: Eksport Video MP4 9:16
+            </h3>
+
+            <!-- CHECKLIST -->
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
+              <div class="font-bold text-slate-300 mb-1">Senarai Semak Pra-Render:</div>
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Skrip 4-fasa lengkap sedia
+              </div>
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Video latar belakang disahkan (H.264 720x1280)
+              </div>
+              <div class="flex items-center gap-2 text-emerald-400">
+                <span>✓</span> Penapis FFmpeg sari kata kinetik kuning tebal sedia
+              </div>
+            </div>
+
+            <!-- RENDER BUTTON & PROGRESS -->
+            <div class="space-y-3">
+              <button id="startRenderBtn" onclick="startRenderJob()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-black text-sm shadow-xl shadow-red-600/40 transition transform active:scale-98">
+                🎬 Mulakan Render Video 9:16 Sekarang
+              </button>
+
+              <div id="renderProgressContainer" class="hidden space-y-2 p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <div class="flex items-center justify-between text-xs font-mono">
+                  <span id="renderStatusText" class="text-amber-400">Memproses sintesis suara & render video...</span>
+                  <span id="renderPercent" class="text-white font-bold">10%</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                  <div id="renderProgressBar" class="h-full bg-gradient-to-r from-red-500 to-amber-500 transition-all duration-300" style="width: 10%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RESULT CONTAINER -->
+            <div id="renderResultContainer" class="hidden space-y-3 p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/40">
+              <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm">
+                <span>🎉</span> Video Berjaya Dirender!
+              </div>
+              <div class="flex items-center gap-3">
+                <a id="downloadVideoBtn" href="#" download class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                  ⬇️ Muat Turun Fail MP4
+                </a>
+                <button onclick="previewFinalVideo()" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                  Pratonton Penuh
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button onclick="setStudioStep(3)" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 transition">
+                ⬅️ Kembali ke Edit
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANE: IPHONE 16 PRO VERTICAL PREVIEW (5 COLS) -->
+        <div class="lg:col-span-5 flex flex-col items-center">
+          <div class="sticky top-20 space-y-3">
+            <div class="text-center">
+              <span class="text-xs font-mono uppercase tracking-wider text-slate-400">Pratonton Langsung 9:16 Vertikal</span>
+            </div>
+
+            <!-- IPHONE 16 PRO MOCKUP -->
+            <div class="phone-bezel">
+              <!-- DYNAMIC ISLAND -->
+              <div class="absolute top-3 inset-x-0 mx-auto w-24 h-6 rounded-full bg-black border border-neutral-800 z-30 flex items-center justify-between px-2.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-neutral-900 border border-neutral-700"></div>
+                <div id="dynamicAudioVisualizer" class="hidden flex items-center gap-0.5">
+                  <span class="w-1 h-2 bg-emerald-400 animate-pulse"></span>
+                  <span class="w-1 h-3 bg-emerald-400 animate-pulse delay-75"></span>
+                  <span class="w-1 h-1.5 bg-emerald-400 animate-pulse delay-150"></span>
+                </div>
+              </div>
+
+              <!-- SAFE ZONE OVERLAY (TOGGLEABLE) -->
+              <div id="safeZoneOverlay" class="safe-zone-overlay hidden z-20">
+                <span class="text-[9px] font-mono text-amber-300 bg-black/60 px-1 py-0.5 rounded absolute top-2 left-2">Safe Area 9:16</span>
+              </div>
+
+              <!-- VIDEO ELEMENT -->
+              <video id="phoneVideoPlayer" loop playsinline muted class="w-full h-full object-cover">
+                <source src="/videos/dohnut-hands-making-donut.mp4" type="video/mp4">
+              </video>
+
+              <!-- LIVE BURNED-IN SUBTITLES TELEPROMPTER OVERLAY -->
+              <div class="absolute bottom-24 inset-x-3 z-20 text-center pointer-events-none">
+                <div id="phoneSubtitleText" class="inline-block px-3 py-1.5 rounded bg-black/40 backdrop-blur-sm text-yellow-300 font-extrabold text-base tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,1)] uppercase">
+                  Doh-Nut Salted Egg Lava Sourdough!
+                </div>
+              </div>
+
+              <!-- TIKTOK UI OVERLAYS -->
+              <!-- Right Action Bar -->
+              <div class="absolute right-2 bottom-20 z-20 flex flex-col items-center gap-3 text-white text-xs">
+                <div class="flex flex-col items-center">
+                  <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur border border-white/40 flex items-center justify-center text-sm">❤️</div>
+                  <span class="text-[10px] font-mono mt-0.5 font-bold">18.7K</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur border border-white/40 flex items-center justify-center text-sm">💬</div>
+                  <span class="text-[10px] font-mono mt-0.5 font-bold">1,350</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur border border-white/40 flex items-center justify-center text-sm">↗️</div>
+                  <span class="text-[10px] font-mono mt-0.5 font-bold">4.2K</span>
+                </div>
+                <!-- Spinning Music Disc -->
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-400 to-rose-600 border-2 border-white/60 animate-spin flex items-center justify-center text-[10px]">
+                  🍩
+                </div>
+              </div>
+
+              <!-- Bottom Meta & Shop Bag -->
+              <div class="absolute bottom-4 inset-x-3 z-20 flex items-end justify-between">
+                <div class="space-y-1 max-w-[200px]">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-bold text-xs text-white">@thisisdohnut</span>
+                    <span class="w-3.5 h-3.5 rounded-full bg-blue-500 text-[8px] flex items-center justify-center font-bold text-white">✓</span>
+                  </div>
+                  <p class="text-[11px] text-slate-200 line-clamp-2">Lava Salted Egg leleh krup krap panas-panas! Free delivery > RM25 🛵</p>
+                </div>
+                <!-- Yellow TikTok Shop Bag CTA -->
+                <div class="px-2.5 py-1.5 rounded-lg bg-yellow-400 text-black font-extrabold text-[10px] flex items-center gap-1 shadow-lg shadow-yellow-400/40">
+                  <span>🛍️</span> Beg Kuning
+                </div>
+              </div>
+            </div>
+
+            <!-- CONTROLS -->
+            <div class="flex items-center justify-center gap-2 pt-2">
+              <button onclick="togglePhonePlayback()" id="phonePlayBtn" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition">
+                ▶️ Main Video
+              </button>
+              <button onclick="togglePhoneAudio()" id="phoneAudioBtn" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition">
+                🔇 Buka Suara
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: ASET (ASSETS) ==================== -->
+    <section id="view-assets" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-5">
+        <div>
+          <h2 class="text-xl font-bold text-white">Perpustakaan Aset Media</h2>
+          <p class="text-xs text-slate-400">Muat naik klip video, fail audio, atau render 3D untuk digunakan dalam babak video.</p>
+        </div>
+        <div>
+          <label class="cursor-pointer px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition inline-flex items-center gap-1.5">
+            <span>📤 Muat Naik Aset</span>
+            <input type="file" id="assetUploadInput" onchange="uploadMediaFile(this.files[0])" class="hidden" accept="video/*,image/*,audio/*">
+          </label>
+        </div>
+      </div>
+
+      <div id="assetGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Asset Cards will render here -->
+        <div class="text-center py-12 col-span-full text-slate-500 text-xs">Memuatkan aset...</div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: ANALITIK 363 ==================== -->
+    <section id="view-analytics" class="hidden space-y-6">
+      <div class="glass-card p-5 space-y-2">
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>📊</span> Analitik Khairul Aming 363 Video Benchmark
+        </h2>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          <strong class="text-amber-400">Ketelusan Provenance Data:</strong> Daripada 363 rekod yang dituai daripada profil @khairulaming, tepat <strong>67 rekod</strong> mempunyai angka tontonan lengkap (> 0) dengan jumlah terkumpul 213,389,111 tontonan. Baki <strong>296 rekod</strong> dilabelkan sebagai data asas profil (tontonan tidak dituai).
+        </p>
+      </div>
+
+      <!-- SCATTER PLOT -->
+      <div class="glass-card p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-sm text-white">Taburan Tontonan Mengikut Jenis Hook (Skala Logaritma)</h3>
+          <span class="text-xs font-mono text-slate-400">67 Video Bertontonan</span>
+        </div>
+        <div class="h-80 w-full">
+          <canvas id="scatterChartCanvas"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State management
+    let currentNav = 'home';
+    let currentStudioStep = 1;
+    let activeProjectId = null;
+    let activeProjectVersion = 1;
+    let currentScriptVariationIndex = 0;
+    let isPhonePlaying = false;
+    let isPhoneAudioMuted = true;
+    let scriptTimer = null;
+
+    // Default template scripts
+    const SCRIPT_VARIATIONS = [
+      {
+        name: "ASMR Sensory Craving",
+        scenes: [
+          "Sound on! Dengar bunyi krup-krap kerak doh panas ni sebelum lava salted egg dia memancut!",
+          "Tengok bila kita picit lembut je donat brioche DOH-NUT ni, inti salted egg pekat meleleh melimpah ruah panas-panas.",
+          "Doh brioche sourdough fermentasi 48 jam yang sangat gebu, rangup di luar dan lembut di dalam.",
+          "Free delivery kalau order atas RM25! Tekan beg kuning kat bawah sekarang sebelum habis!"
+        ]
+      },
+      {
+        name: "Hypebeast Streetwear Drop",
+        scenes: [
+          "Korang bayangkan beli donut tapi rasa macam tengah unbox sneaker limited edition!",
+          "Ini DOH-NUT! Bukan donut biasa yang liat atau manis leting. Tengok doh dia melantun macam kapas.",
+          "Paling gila perisa Musang King Durian Bomb ni... guna 100% puri durian Raub asli, filling melimpah tak kedekut!",
+          "DOH NUT WAIT, tekan beg kuning kat bawah sekarang sebelum drop hari ni sold out!"
+        ]
+      },
+      {
+        name: "Penyelamat 3 Petang Pejabat",
+        scenes: [
+          "Setiap kali pukul 3 petang kat office, mata confirm layu dan craving benda manis...",
+          "Terus kitorang order Doh-Nut 2 dozen panas-panas sampai semerbak satu office!",
+          "Bau wangi pandan gula Melaka dan teh tarik kaw terus bagi booster tenaga nak siapkan kerja.",
+          "Order sekarang kat beg kuning, rider hantar panas-panas terus sampai lobi!"
+        ]
+      }
+    ];
+
+    // Navigation Switcher
+    function switchNav(tabName) {
+      currentNav = tabName;
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById(`tab-${tabName}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      ['home', 'projects', 'studio', 'assets', 'analytics'].forEach(view => {
+        const el = document.getElementById(`view-${view}`);
+        if (el) {
+          if (view === tabName) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+      if (tabName === 'home') loadHomeData();
+      if (tabName === 'projects') loadProjectsTable();
+      if (tabName === 'assets') loadAssetsGrid();
+      if (tabName === 'analytics') renderAnalyticsChart();
+    }
+
+    // Step Switcher in Studio
+    function setStudioStep(stepNum) {
+      currentStudioStep = stepNum;
+      document.querySelectorAll('.step-pill').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById(`stepBtn-${stepNum}`);
+      if (btn) btn.classList.add('active');
+
+      [1, 2, 3, 4].forEach(s => {
+        const el = document.getElementById(`studioStep-${s}`);
+        if (el) {
+          if (s === stepNum) el.classList.remove('hidden');
+          else el.classList.add('hidden');
+        }
+      });
+    }
+
+    // Load Home Data (Projects & Queue)
+    async function loadHomeData() {
+      try {
+        const res = await fetch('/api/projects');
+        const projects = await res.json();
+        
+        const listEl = document.getElementById('homeProjectsList');
+        if (!projects || projects.length === 0) {
+          listEl.innerHTML = '<div class="text-center py-6 text-xs text-slate-500">Belum ada projek. Tekan "Cipta Video" untuk bermula.</div>';
+          return;
+        }
+
+        // Update Resume Card with most recent project
+        const latest = projects[0];
+        document.getElementById('resumeTitle').textContent = latest.title;
+        document.getElementById('resumeMeta').textContent = `Versi ${latest.version} • ${latest.scene_count} Babak • Kemas kini: ${new Date(latest.updated_at).toLocaleTimeString()}`;
+        document.getElementById('resumeBtn').onclick = () => openProject(latest.id);
+
+        listEl.innerHTML = projects.slice(0, 5).map(p => `
+          <div onclick="openProject('${p.id}')" class="p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 flex items-center justify-between cursor-pointer transition">
+            <div class="space-y-0.5">
+              <div class="font-bold text-xs text-white">${p.title}</div>
+              <div class="text-[10px] text-slate-400">v${p.version} • ${p.scene_count} Babak • ${p.total_duration}s</div>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono ${p.status === 'COMPLETED' ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-300'}">${p.status}</span>
+          </div>
+        `).join('');
+
+        // Load Queue
+        const qRes = await fetch('/api/jobs');
+        const jobs = await qRes.json();
+        const qList = document.getElementById('homeQueueList');
+        document.getElementById('queueCount').textContent = `${jobs.length} Job`;
+        if (jobs && jobs.length > 0) {
+          qList.innerHTML = jobs.slice(0, 4).map(j => `
+            <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5 text-xs">
+              <div class="flex items-center justify-between font-mono text-[10px]">
+                <span class="text-slate-400">${j.type}</span>
+                <span class="${j.state === 'COMPLETED' ? 'text-emerald-400' : j.state === 'RUNNING' ? 'text-amber-400' : 'text-slate-400'} font-bold">${j.state}</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                <div class="h-full bg-red-500" style="width: ${Math.round(j.progress * 100)}%"></div>
+              </div>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.error("loadHomeData error:", e);
+      }
+    }
+
+    // Load Projects Table
+    async function loadProjectsTable() {
+      try {
+        const res = await fetch('/api/projects');
+        const projects = await res.json();
+        const tbody = document.getElementById('projectsTableBody');
+        if (!projects || projects.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-slate-500">Tiada projek disimpan dalam SQLite.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = projects.map(p => `
+          <tr class="hover:bg-slate-900/50 transition">
+            <td class="px-4 py-3 font-semibold text-white">${p.title}</td>
+            <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300">${p.status}</span></td>
+            <td class="px-4 py-3 font-mono">${p.scene_count}</td>
+            <td class="px-4 py-3 font-mono">${p.total_duration}s</td>
+            <td class="px-4 py-3 font-mono">v${p.version}</td>
+            <td class="px-4 py-3 font-mono text-slate-400">${new Date(p.updated_at).toLocaleDateString()}</td>
+            <td class="px-4 py-3 text-right space-x-2">
+              <button onclick="openProject('${p.id}')" class="text-blue-400 hover:underline">Buka</button>
+              <button onclick="exportProject('${p.id}')" class="text-amber-400 hover:underline">Eksport</button>
+              <button onclick="deleteProject('${p.id}')" class="text-red-400 hover:underline">Padam</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        console.error("loadProjectsTable error:", e);
+      }
+    }
+
+    // Create New Project in SQLite
+    async function createNewProject() {
+      try {
+        const defaultTitle = `Kempen Donut ${new Date().toLocaleDateString('ms-MY')}`;
+        const res = await fetch('/api/projects', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: defaultTitle,
+            language: "ms",
+            brand_kit_id: "brand_dohnut_default",
+            brief: { product: "Doh-Nut Salted Egg Lava", goal: "Craving boost" }
+          })
+        });
+        const proj = await res.json();
+        await openProject(proj.id);
+        return proj;
+      } catch (e) {
+        console.error("Gagal mencipta projek: " + e);
+        return null;
+      }
+    }
+
+    // Open Existing Project
+    async function openProject(projectId) {
+      try {
+        const res = await fetch(`/api/projects/${projectId}`);
+        const proj = await res.json();
+        activeProjectId = proj.id;
+        activeProjectVersion = proj.version;
+
+        document.getElementById('activeProjectTitle').textContent = proj.title;
+        document.getElementById('briefTitle').value = proj.title;
+        document.getElementById('briefLanguage').value = proj.language || 'ms';
+        if (proj.brief && proj.brief.product) document.getElementById('briefProduct').value = proj.brief.product;
+        if (proj.brief && proj.brief.goal) document.getElementById('briefGoal').value = proj.brief.goal;
+
+        // Populate scenes
+        if (proj.scenes && proj.scenes.length >= 4) {
+          document.getElementById('sceneScript-1').value = proj.scenes[0].script;
+          document.getElementById('sceneScript-2').value = proj.scenes[1].script;
+          document.getElementById('sceneScript-3').value = proj.scenes[2].script;
+          document.getElementById('sceneScript-4').value = proj.scenes[3].script;
+        } else {
+          selectScriptVariation(0);
+        }
+
+        updateCombinedScriptPreview();
+        switchNav('studio');
+      } catch (e) {
+        console.error("Gagal membuka projek: " + e);
+      }
+    }
+
+    // Save Brief & Go Next
+    async function saveBriefAndNext() {
+      if (!activeProjectId) {
+        await createNewProject();
+      }
+      if (!activeProjectId) return;
+      const title = document.getElementById('briefTitle').value || "Projek Tanpa Nama";
+      const product = document.getElementById('briefProduct').value;
+      const lang = document.getElementById('briefLanguage').value;
+      const goal = document.getElementById('briefGoal').value;
+
+      try {
+        document.getElementById('studioSaveStatus').textContent = "Menyimpan...";
+        const res = await fetch(`/api/projects/${activeProjectId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            language: lang,
+            version: activeProjectVersion,
+            brief: { product: product, goal: goal }
+          })
+        });
+        if (res.ok) {
+          const updated = await res.json();
+          activeProjectVersion = updated.version;
+          document.getElementById('studioSaveStatus').textContent = "Disimpan (v" + activeProjectVersion + ")";
+        }
+      } catch (e) {
+        console.error("Ralat autosave: " + e);
+      } finally {
+        setStudioStep(2);
+      }
+    }
+
+    // Select script variation
+    function selectScriptVariation(idx) {
+      currentScriptVariationIndex = idx;
+      [0, 1, 2].forEach(i => {
+        const btn = document.getElementById(`varBtn-${i}`);
+        if (btn) {
+          if (i === idx) btn.className = "p-2.5 rounded-xl border border-red-500/50 bg-red-950/20 text-left text-xs space-y-1";
+          else btn.className = "p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left text-xs space-y-1";
+        }
+      });
+      const template = SCRIPT_VARIATIONS[idx];
+      document.getElementById('sceneScript-1').value = template.scenes[0];
+      document.getElementById('sceneScript-2').value = template.scenes[1];
+      document.getElementById('sceneScript-3').value = template.scenes[2];
+      document.getElementById('sceneScript-4').value = template.scenes[3];
+      updateCombinedScriptPreview();
+    }
+
+    function onScriptEdited() {
+      clearTimeout(scriptTimer);
+      scriptTimer = setTimeout(() => {
+        updateCombinedScriptPreview();
+      }, 500);
+    }
+
+    function updateCombinedScriptPreview() {
+      const s1 = document.getElementById('sceneScript-1').value;
+      const s2 = document.getElementById('sceneScript-2').value;
+      const s3 = document.getElementById('sceneScript-3').value;
+      const s4 = document.getElementById('sceneScript-4').value;
+      const fullText = [s1, s2, s3, s4].filter(Boolean).join(' ');
+
+      const words = fullText.trim().split(/\s+/).filter(Boolean);
+      const estSec = Math.round(words.length / 2.2);
+      document.getElementById('totalScriptWords').textContent = `${words.length} perkataan (~${estSec} saat)`;
+      document.getElementById('fullScriptDisplay').textContent = fullText || "Tiada teks skrip.";
+
+      // Update phone live teleprompter text
+      const hookText = s1 || words.slice(0, 8).join(' ') || "Doh-Nut Salted Egg Lava!";
+      document.getElementById('phoneSubtitleText').textContent = hookText;
+    }
+
+    // Evaluate Script via Jev
+    async function evaluateCurrentScript() {
+      const s1 = document.getElementById('sceneScript-1').value;
+      const s2 = document.getElementById('sceneScript-2').value;
+      const s3 = document.getElementById('sceneScript-3').value;
+      const s4 = document.getElementById('sceneScript-4').value;
+      const fullText = [s1, s2, s3, s4].join(' ');
+
+      try {
+        const res = await fetch('/api/score', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ script: fullText })
+        });
+        const evalData = await res.json();
+        document.getElementById('liveJevScore').textContent = `${evalData.virality_score} / 10`;
+        document.getElementById('liveJevTier').textContent = evalData.tier;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Save scenes & proceed
+    async function saveScenesAndNext() {
+      updateCombinedScriptPreview();
+      setStudioStep(3);
+    }
+
+    // Toggle Phone Playback
+    function togglePhonePlayback() {
+      const v = document.getElementById('phoneVideoPlayer');
+      const btn = document.getElementById('phonePlayBtn');
+      if (v.paused) {
+        v.play();
+        btn.textContent = "⏸️ Jeda Video";
+        isPhonePlaying = true;
+      } else {
+        v.pause();
+        btn.textContent = "▶️ Main Video";
+        isPhonePlaying = false;
+      }
+    }
+
+    function togglePhoneAudio() {
+      const v = document.getElementById('phoneVideoPlayer');
+      const btn = document.getElementById('phoneAudioBtn');
+      const visualizer = document.getElementById('dynamicAudioVisualizer');
+      if (v.muted) {
+        v.muted = false;
+        btn.textContent = "🔊 Tutup Suara";
+        visualizer.classList.remove('hidden');
+      } else {
+        v.muted = true;
+        btn.textContent = "🔇 Buka Suara";
+        visualizer.classList.add('hidden');
+      }
+    }
+
+    function toggleSafeZone(checked) {
+      const overlay = document.getElementById('safeZoneOverlay');
+      if (checked) overlay.classList.remove('hidden');
+      else overlay.classList.add('hidden');
+    }
+
+    function updatePreviewBgVideo() {
+      const sel = document.getElementById('bgVideoSelect').value;
+      const v = document.getElementById('phoneVideoPlayer');
+      v.src = `/videos/${sel}`;
+      if (isPhonePlaying) v.play();
+    }
+
+    // Start Async Render Job
+    async function startRenderJob() {
+      if (!activeProjectId) {
+        alert("Sila pilih atau simpan projek terlebih dahulu.");
+        return;
+      }
+
+      const voice = document.getElementById('voiceSelect').value;
+      const bgVideo = document.getElementById('bgVideoSelect').value;
+      const btn = document.getElementById('startRenderBtn');
+      const progressContainer = document.getElementById('renderProgressContainer');
+      const progressBar = document.getElementById('renderProgressBar');
+      const progressText = document.getElementById('renderPercent');
+      const statusText = document.getElementById('renderStatusText');
+      const resultContainer = document.getElementById('renderResultContainer');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      progressContainer.classList.remove('hidden');
+      resultContainer.classList.add('hidden');
+
+      try {
+        const res = await fetch(`/api/jobs/render-project/${activeProjectId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ voice: voice, bg_video: bgVideo })
+        });
+        const jobInit = await res.json();
+        const jobId = jobInit.job_id;
+
+        // Poll job progress
+        const pollInterval = setInterval(async () => {
+          try {
+            const jRes = await fetch(`/api/jobs/${jobId}`);
+            const job = await jRes.json();
+            const pct = Math.round(job.progress * 100);
+            progressBar.style.width = pct + '%';
+            progressText.textContent = pct + '%';
+            statusText.textContent = `Status: ${job.state}...`;
+
+            if (job.state === 'COMPLETED') {
+              clearInterval(pollInterval);
+              btn.disabled = false;
+              btn.classList.remove('opacity-50');
+              progressContainer.classList.add('hidden');
+              resultContainer.classList.remove('hidden');
+              if (job.output_ids && job.output_ids.length > 0) {
+                const vidUrl = job.output_ids[0];
+                document.getElementById('downloadVideoBtn').href = vidUrl;
+                // Update phone player with rendered result
+                const v = document.getElementById('phoneVideoPlayer');
+                v.src = vidUrl;
+                v.play();
+              }
+            } else if (job.state === 'FAILED') {
+              clearInterval(pollInterval);
+              btn.disabled = false;
+              btn.classList.remove('opacity-50');
+              alert(`Render gagal: ${job.error_message || 'Ralat tidak diketahui'}`);
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }, 1500);
+
+      } catch (e) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        alert("Gagal memulakan render: " + e);
+      }
+    }
+
+    // Load Assets Grid
+    async function loadAssetsGrid() {
+      try {
+        const res = await fetch('/api/assets');
+        const assets = await res.json();
+        const grid = document.getElementById('assetGrid');
+        if (!assets || assets.length === 0) {
+          grid.innerHTML = '<div class="text-center py-12 col-span-full text-slate-500 text-xs">Tiada aset dimuat naik lagi.</div>';
+          return;
+        }
+        grid.innerHTML = assets.map(a => `
+          <div class="glass-card p-3 space-y-2 border-slate-800">
+            <div class="h-28 rounded-lg bg-black/40 flex items-center justify-center overflow-hidden">
+              ${a.type === 'video' ? `<video src="${a.internal_path}" class="h-full object-cover"></video>` : `<img src="${a.internal_path}" class="h-full object-cover">`}
+            </div>
+            <div class="text-xs font-bold text-white truncate">${a.filename}</div>
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400">
+              <span>${a.type.toUpperCase()}</span>
+              <span>${a.duration ? a.duration + 's' : (a.dimensions || '')}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    async function uploadMediaFile(file) {
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const res = await fetch('/api/assets/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const asset = await res.json();
+        loadAssetsGrid();
+      } catch (e) {
+        alert("Gagal memuat naik fail: " + e);
+      }
+    }
+
+    // Analytics Chart.js Scatter Plot
+    let scatterChart = null;
+    async function renderAnalyticsChart() {
+      try {
+        const res = await fetch('/api/videos?limit=363');
+        const videos = await res.json();
+        const positiveVideos = videos.filter(v => v.views > 0);
+
+        const dataPoints = positiveVideos.map((v, i) => ({
+          x: v.duration_sec || 30,
+          y: v.views,
+          title: v.title,
+          likes: v.likes
+        }));
+
+        const ctx = document.getElementById('scatterChartCanvas').getContext('2d');
+        if (scatterChart) scatterChart.destroy();
+
+        scatterChart = new Chart(ctx, {
+          type: 'scatter',
+          data: {
+            datasets: [{
+              label: '67 Video Bertontonan Positif (Khairul Aming)',
+              data: dataPoints,
+              backgroundColor: 'rgba(239, 68, 68, 0.7)',
+              borderColor: '#ef4444',
+              pointRadius: 6,
+              pointHoverRadius: 9
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: { title: { display: true, text: 'Durasi Video (Saat)', color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+              y: { type: 'logarithmic', title: { display: true, text: 'Tontonan (Skala Log)', color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            },
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(ctx) {
+                    const raw = ctx.raw;
+                    return `${raw.title.slice(0, 35)}... | ${raw.y.toLocaleString()} tontonan`;
+                  }
+                }
+              }
+            }
+          }
+        });
+      } catch (e) {
+        console.error("renderAnalyticsChart error:", e);
+      }
+    }
+
+    // THREE.JS PROCEDURAL 3D DONUT IN HERO BANNER
+    function initThreeJsHeroDonut() {
+      const container = document.getElementById('donutHeroCanvas');
+      if (!container || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+      camera.position.z = 5;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(220, 220);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Procedural Donut Dough
+      const doughGeo = new THREE.TorusGeometry(1.2, 0.6, 24, 48);
+      const doughMat = new THREE.MeshStandardMaterial({
+        color: 0xd97706,
+        roughness: 0.6,
+        metalness: 0.1
+      });
+      const donutMesh = new THREE.Mesh(doughGeo, doughMat);
+      scene.add(donutMesh);
+
+      // Procedural Strawberry Glaze
+      const glazeGeo = new THREE.TorusGeometry(1.22, 0.58, 20, 48, Math.PI * 1.8);
+      const glazeMat = new THREE.MeshStandardMaterial({
+        color: 0xef4444,
+        roughness: 0.2,
+        metalness: 0.3
+      });
+      const glazeMesh = new THREE.Mesh(glazeGeo, glazeMat);
+      glazeMesh.rotation.x = Math.PI / 12;
+      scene.add(glazeMesh);
+
+      // Studio Lighting
+      const lightKey = new THREE.DirectionalLight(0xffffff, 1.2);
+      lightKey.position.set(5, 5, 5);
+      scene.add(lightKey);
+
+      const lightFill = new THREE.DirectionalLight(0xf59e0b, 0.8);
+      lightFill.position.set(-5, -2, 2);
+      scene.add(lightFill);
+
+      const lightAmb = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(lightAmb);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        donutMesh.rotation.x += 0.006;
+        donutMesh.rotation.y += 0.01;
+        glazeMesh.rotation.x += 0.006;
+        glazeMesh.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+
+    // Initial load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadHomeData();
+      initThreeJsHeroDonut();
+    });
+  </script>
+</body>
+</html>
