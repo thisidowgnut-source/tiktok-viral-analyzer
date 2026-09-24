@@ -1,0 +1,184 @@
+[
+  {
+    "id": "plugin_tiktok_shop",
+    "name": "TikTok Shop Direct Syncer",
+    "category": "E-Dagang",
+    "icon": "🛍️",
+    "author": "ByteDance Partner SDK",
+    "version": "v2.4.0",
+    "rating": 4.9,
+    "installs": "48.2k",
+    "verified": true,
+    "description": "Menyegerakkan katalog produk TikTok Shop, harga diskaun promosi, stok langsung, dan link beg kuning terus ke dalam skrip video.",
+    "features": [
+      "Sinkronisasi harga promosi automatik",
+      "Penyuntikan CTA 'Beg Kuning' berpenukaran tinggi",
+      "Notifikasi stok habis semasa penjanaan skrip"
+    ],
+    "installed": true,
+    "enabled": true,
+    "config": {
+      "shop_id": "SHOP_MY_994821",
+      "auto_sync": true
+    }
+  },
+  {
+    "id": "plugin_elevenlabs",
+    "name": "ElevenLabs SOTA Voice Engine",
+    "category": "Audio & Suara",
+    "icon": "🎙️",
+    "author": "ElevenLabs Inc.",
+    "version": "v3.1.2",
+    "rating": 4.95,
+    "installs": "120.5k",
+    "verified": true,
+    "description": "Kloning suara pencipta dan 30+ pilihan suara hyper-realistic ekspresif dengan intonasi emosi tempatan (Melayu & Manglish).",
+    "features": [
+      "Voice cloning suara Khairul Aming & Chef Wan",
+      "Kawalan kestabilan & ekspresi emosi",
+      "Penjanaan audio 24-bit 48kHz lossless"
+    ],
+    "installed": true,
+    "enabled": true,
+    "config": {
+      "model": "eleven_multilingual_v2",
+      "stability": 0.75
+    }
+  },
+  {
+    "id": "plugin_capcut",
+    "name": "CapCut Project Exporter",
+    "category": "Video & Imej",
+    "icon": "✂️",
+    "author": "CapCut Creative Hub",
+    "version": "v1.8.4",
+    "rating": 4.85,
+    "installs": "95.1k",
+    "verified": true,
+    "description": "Mengeksport draf timeline CapCut (.draft) dengan potongan babak, sari kata dinamik, dan penanda rentak muzik secara automatik.",
+    "features": [
+      "Eksport draf CapCut PC dan Mobile terus",
+      "Penanda beat muzik untuk transisi tepat",
+      "Import klip B-roll ke track sekunder"
+    ],
+    "installed": true,
+    "enabled": true,
+    "config": {
+      "export_format": "draft_json",
+      "include_subtitles": true
+    }
+  },
+  {
+    "id": "plugin_whisper",
+    "name": "Whisper Kinetic Subtitles AI",
+    "category": "Audio & Suara",
+    "icon": "💬",
+    "author": "OpenAI / SOTA Subtitles",
+    "version": "v2.0.1",
+    "rating": 4.9,
+    "installs": "76.4k",
+    "verified": true,
+    "description": "Menjana sari kata gaya TikTok & Instagram Reels dengan warna serlahan (karaoke highlight) berasaskan penjajaran paras perkataan.",
+    "features": [
+      "Word-level timestamp synchronization",
+      "Gaya teks neon, pop-in, dan border hitam tebal",
+      "Sokongan slanga Melayu dan dialek tempatan"
+    ],
+    "installed": true,
+    "enabled": true,
+    "config": {
+      "highlight_color": "#FACC15",
+      "max_words_per_line": 4
+    }
+  },
+  {
+    "id": "plugin_midjourney",
+    "name": "Flux & Midjourney B-Roll Generator",
+    "category": "Video & Imej",
+    "icon": "🎨",
+    "author": "Generative Media Lab",
+    "version": "v2.2.0",
+    "rating": 4.8,
+    "installs": "63.8k",
+    "verified": true,
+    "description": "Menjana imej fotorealistik 9:16 untuk B-roll makanan, close-up lava meleleh, dan pembungkusan produk terus dari babak skrip.",
+    "features": [
+      "Nisbah aspek 9:16 menegak asli",
+      "Pencahayaan dramatik studio makanan",
+      "Prompt automatik berasaskan sensory cues"
+    ],
+    "installed": false,
+    "enabled": false,
+    "config": {
+      "quality": "ultra",
+      "aspect_ratio": "9:16"
+    }
+  },
+  {
+    "id": "plugin_seo_radar",
+    "name": "TikTok Trend & SEO Radar",
+    "category": "Penyelidikan & SEO",
+    "icon": "📡",
+    "author": "ViralGrowth AI",
+    "version": "v3.0.0",
+    "rating": 4.92,
+    "installs": "84.3k",
+    "verified": true,
+    "description": "Mengimbas kata kunci carian TikTok Search terkini, audio lagu trending di Malaysia, dan kadar lonjakan hashtag #ResepiViral.",
+    "features": [
+      "Pengesanan 100 audio paling viral di Malaysia",
+      "Ramalan kedudukan carian TikTok SEO",
+      "Cadangan hashtag berdaya saing rendah tapi volum tinggi"
+    ],
+    "installed": true,
+    "enabled": true,
+    "config": {
+      "region": "MY",
+      "category": "Food & Beverage"
+    }
+  },
+  {
+    "id": "plugin_canva",
+    "name": "Canva Brand Kit Synchronizer",
+    "category": "Video & Imej",
+    "icon": "📐",
+    "author": "Canva Connect",
+    "version": "v1.4.2",
+    "rating": 4.75,
+    "installs": "52.0k",
+    "verified": true,
+    "description": "Menghubungkan fail logo, warna jenama rasmi Doh-Nut, dan tipografi terus daripada Canva Enterprise Team.",
+    "features": [
+      "Penyelarasan palet warna jenama automatik",
+      "Import aset SVG logo dan maskot Doh Boy",
+      "Eksport thumbnail video terus ke Canva"
+    ],
+    "installed": false,
+    "enabled": false,
+    "config": {
+      "team_id": "team_dohnut_brand"
+    }
+  },
+  {
+    "id": "plugin_shopify",
+    "name": "Shopify Live Inventory & Orders",
+    "category": "E-Dagang",
+    "icon": "🛒",
+    "author": "Shopify Developers",
+    "version": "v2.1.0",
+    "rating": 4.88,
+    "installs": "41.6k",
+    "verified": true,
+    "description": "Memaparkan kiraan stok langsung, jumlah pesanan hari ini, dan menjana kupon diskaun unik untuk penonton video TikTok.",
+    "features": [
+      "Pembuatan kod kupon dinamik (cth: DOHNUT10)",
+      "Kiraan stok langsung untuk urgensi 'Tinggal 12 box sahaja!'",
+      "Webhook pesanan masuk masa nyata"
+    ],
+    "installed": false,
+    "enabled": false,
+    "config": {
+      "shop_domain": "dohnut-bakery.myshopify.com"
+    }
+  }
+]

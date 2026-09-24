@@ -130,6 +130,35 @@ async def run_e2e_test():
         await page.click("#tab-btn-hub")
         await page.wait_for_timeout(1000)
 
+        # 6. Verify New SOTA Tabs: Computer Use, Marketplace, MCP Servers & Artifacts
+        print("[10] Switching to Computer Use / Browser Studio...")
+        await page.click("#tab-btn-browser")
+        await page.wait_for_selector("#browserViewportImg", timeout=5000)
+        await page.wait_for_timeout(1000)
+        await page.screenshot(path=str(ARTIFACT_DIR / "sota_19_computer_use_studio.png"))
+        print("    Saved screenshot: sota_19_computer_use_studio.png")
+
+        print("[11] Switching to Marketplace & Plugins...")
+        await page.click("#tab-btn-marketplace")
+        await page.wait_for_selector("#pluginsListGrid", timeout=5000)
+        await page.wait_for_timeout(1000)
+        await page.screenshot(path=str(ARTIFACT_DIR / "sota_20_marketplace_plugins.png"))
+        print("    Saved screenshot: sota_20_marketplace_plugins.png")
+
+        print("[12] Switching to MCP Servers Manager...")
+        await page.click("#tab-btn-mcp")
+        await page.wait_for_selector("#mcpServersGrid", timeout=5000)
+        await page.wait_for_timeout(1000)
+        await page.screenshot(path=str(ARTIFACT_DIR / "sota_21_mcp_servers.png"))
+        print("    Saved screenshot: sota_21_mcp_servers.png")
+
+        print("[13] Opening Claude-Style Artifacts Drawer...")
+        await page.click("button:has-text('Artifacts')")
+        await page.wait_for_selector("#artifactsDrawer:not(.hidden)", timeout=5000)
+        await page.wait_for_timeout(1000)
+        await page.screenshot(path=str(ARTIFACT_DIR / "sota_22_artifacts_drawer.png"))
+        print("    Saved screenshot: sota_22_artifacts_drawer.png")
+
         await browser.close()
 
     print("\n--- E2E Validation Summary ---")

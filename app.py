@@ -34,6 +34,9 @@ from api.projects_router import router as projects_router
 from api.assets_router import router as assets_router
 from api.jobs_router import router as jobs_router
 from api.integrations_router import router as integrations_router
+from api.marketplace_router import router as marketplace_router
+from api.mcp_router import router as mcp_router
+from api.browser_use_router import router as browser_use_router
 
 from app_core.config import (
     BASE_DIR,
@@ -64,6 +67,9 @@ app.include_router(projects_router)
 app.include_router(assets_router)
 app.include_router(jobs_router)
 app.include_router(integrations_router)
+app.include_router(marketplace_router)
+app.include_router(mcp_router)
+app.include_router(browser_use_router)
 
 @app.on_event("startup")
 def startup_event():

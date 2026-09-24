@@ -94,6 +94,53 @@
       transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform-origin: 120px 120px;
     }
+
+    /* Bento Grid Dashboard */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 1023px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 639px) { .bento-grid { grid-template-columns: 1fr; } }
+    .bento-span-1 { grid-column: span 1; }
+    .bento-span-2 { grid-column: span 2; }
+    .bento-span-3 { grid-column: span 3; }
+    .bento-span-4 { grid-column: span 4; }
+    @media (max-width: 639px) {
+      .bento-span-2, .bento-span-3, .bento-span-4 { grid-column: span 1; }
+    }
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .bento-span-3, .bento-span-4 { grid-column: span 2; }
+    }
+
+    /* Stat Card Hover */
+    .bento-stat-card {
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+    .bento-stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* AG-UI Feature Card */
+    .agui-feature-card {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
+    }
+    .agui-feature-card:hover {
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    .agui-feature-card .agui-icon {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .agui-feature-card:hover .agui-icon {
+      transform: scale(1.15) rotate(-5deg);
+    }
+
+    /* Pulse dot for live status */
+    @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col custom-scroll relative">
@@ -122,42 +169,76 @@
           </div>
         </div>
 
-        <!-- PWA Install Button (Dynamic) -->
-        <button id="pwaInstallBtn" onclick="installPWA()" class="hidden px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-lg text-xs font-bold shadow-lg shadow-emerald-600/30 flex items-center gap-1.5 transition-all">
-          <span>📲 Pasang App</span>
-        </button>
+        <!-- Right Side Controls: Model Selector, Deep Research, Artifacts & PWA Install -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- SOTA Model Selector -->
+          <div class="relative">
+            <select id="globalModelSelector" onchange="switchModel(this.value)" class="bg-slate-900 border border-slate-700 hover:border-slate-600 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:ring-1 focus:ring-red-500 font-medium cursor-pointer transition">
+              <option value="gemini-3.8-flash">⚡ Gemini 3.8 Flash</option>
+              <option value="claude-3.7-sonnet">🧠 Claude 3.7 Sonnet (Thinking)</option>
+              <option value="gpt-4.5-ultra">🚀 GPT-4.5 Ultra</option>
+              <option value="deepseek-r1">🎯 DeepSeek R1</option>
+              <option value="typesafe-jev">🛡️ TypeSafe Jev (Sub-ms)</option>
+            </select>
+          </div>
+
+          <!-- Web Search / Deep Research Toggle -->
+          <button id="deepResearchToggleBtn" onclick="toggleDeepResearch()" title="Mod Carian Web Masa Nyata" class="px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+            <span>🌐 Web Search</span>
+          </button>
+
+          <!-- Claude-Style Artifacts Drawer Toggle -->
+          <button onclick="toggleArtifactsDrawer()" title="Buka Panel Artifacts" class="px-2.5 py-1.5 rounded-lg border border-purple-500/30 bg-purple-950/30 hover:bg-purple-900/40 text-purple-300 text-xs font-bold flex items-center gap-1.5 transition shadow-sm">
+            <span>📜 Artifacts</span>
+          </button>
+
+          <!-- PWA Install Button (Dynamic) -->
+          <button id="pwaInstallBtn" onclick="installPWA()" class="hidden px-3 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-lg text-xs font-bold shadow-lg shadow-emerald-600/30 flex items-center gap-1.5 transition-all">
+            <span>📲 Pasang</span>
+          </button>
+        </div>
       </div>
 
       <!-- Navigation Tabs -->
-      <nav class="flex flex-wrap items-center p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1">
-        <button onclick="switchTab('studio')" id="tab-btn-studio" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-all text-slate-300 hover:text-white">
+      <nav class="flex flex-wrap items-center p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1 overflow-x-auto custom-scroll max-w-full">
+        <button onclick="switchTab('studio')" id="tab-btn-studio" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-all text-slate-300 hover:text-white shrink-0">
           🎬 Studio 9:16
         </button>
-        <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-white">
+        <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-white shrink-0">
           🏠 Utama
         </button>
-        <button onclick="switchTab('projects')" id="tab-btn-projects" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+        <button onclick="switchTab('browser')" id="tab-btn-browser" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-cyan-400 hover:text-white shrink-0">
+          🖥️ Computer Use
+        </button>
+        <button onclick="switchTab('marketplace')" id="tab-btn-marketplace" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-emerald-400 hover:text-white shrink-0">
+          🧩 Marketplace
+        </button>
+        <button onclick="switchTab('mcp')" id="tab-btn-mcp" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-amber-400 hover:text-white shrink-0">
+          ⚡ MCP Servers
+        </button>
+        <button onclick="switchTab('projects')" id="tab-btn-projects" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white shrink-0">
           📁 Projek
         </button>
-        <button onclick="switchTab('dohnut')" id="tab-btn-dohnut" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-amber-400 hover:text-white">
-          🍩 Doh-Nut Showcase
+        <button onclick="switchTab('dohnut')" id="tab-btn-dohnut" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-amber-400 hover:text-white shrink-0">
+          🍩 Doh-Nut
         </button>
-        <button onclick="switchTab('a2a')" id="tab-btn-a2a" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-purple-400 hover:text-white">
-          🤖 A2A Multi-Agent
+        <button onclick="switchTab('a2a')" id="tab-btn-a2a" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-purple-400 hover:text-white shrink-0">
+          🤖 A2A
         </button>
-        <button onclick="switchTab('scorer')" id="tab-btn-scorer" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+        <button onclick="switchTab('scorer')" id="tab-btn-scorer" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white shrink-0">
           ⚡ Jev Scorer
         </button>
-        <button onclick="switchTab('generator')" id="tab-btn-generator" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+        <button onclick="switchTab('generator')" id="tab-btn-generator" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white shrink-0">
           📜 Teleprompter
         </button>
-        <button onclick="switchTab('hub')" id="tab-btn-hub" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+        <button onclick="switchTab('hub')" id="tab-btn-hub" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white shrink-0">
           📊 363 Hub
         </button>
-        <button onclick="switchTab('assets')" id="tab-btn-assets" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+        <button onclick="switchTab('assets')" id="tab-btn-assets" class="tab-btn px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white shrink-0">
           🗂️ Aset
         </button>
-        <button onclick="openTeleprompter()" class="px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-rose-600/20 text-rose-400 border border-rose-500/30 hover:bg-rose-600/30 flex items-center gap-1 transition-all">
+        <button onclick="openTeleprompter()" class="px-2.5 py-1.5 rounded-lg text-xs md:text-sm font-bold bg-rose-600/20 text-rose-400 border border-rose-500/30 hover:bg-rose-600/30 flex items-center gap-1 transition-all shrink-0">
           <span>🎥 Prompter</span>
         </button>
       </nav>
@@ -555,11 +636,11 @@
     </section>
     </div>
 
-    <!-- ==================== TAB HOME: OVERVIEW DASHBOARD ==================== -->
+    <!-- ==================== TAB HOME: BENTO DASHBOARD ==================== -->
     <div id="tab-home" class="space-y-6">
-<section id="view-home" class="space-y-8">
-      
-      <!-- HERO BANNER -->
+    <section id="view-home" class="space-y-6">
+
+      <!-- ROW 1: HERO BANNER (full-width) -->
       <div class="glass-card p-6 lg:p-8 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border-amber-500/20 bg-gradient-to-r from-slate-900 via-rose-950/20 to-slate-900">
         <div class="space-y-3 z-10 max-w-xl">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
@@ -578,62 +659,307 @@
             </button>
           </div>
         </div>
-
-        <!-- 3D DONUT CANVAS PREVIEW -->
         <div id="donutHeroCanvas" class="w-56 h-56 relative rounded-2xl flex items-center justify-center cursor-grab active:cursor-grabbing">
           <!-- Three.js Canvas mounts here -->
         </div>
       </div>
 
-      <!-- LAST MODIFIED / RESUME CARD -->
-      <div id="resumeCard" class="glass-card p-5 border-blue-500/30 bg-blue-950/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-2xl">
-            🎬
+      <!-- ROW 2: BENTO STATS (4 stat cards) -->
+      <div class="bento-grid">
+        <div class="bento-span-1 bento-stat-card glass-card p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Jumlah Video</span>
+            <span class="w-8 h-8 rounded-lg bg-red-500/15 border border-red-500/30 flex items-center justify-center text-base">🎬</span>
           </div>
-          <div>
-            <div class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-wider">Sambung Projek Terakhir</div>
-            <div id="resumeTitle" class="text-base font-bold text-white">Memuatkan projek...</div>
-            <div id="resumeMeta" class="text-xs text-slate-400">Versi 1 • Dikemas kini baru-baru ini</div>
-          </div>
+          <div id="statTotalVideos" class="text-2xl font-extrabold text-white font-mono">363</div>
+          <div class="text-[10px] text-slate-500 font-mono">Dataset KA-363</div>
         </div>
-        <button id="resumeBtn" onclick="resumeLastProject()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
-          Sambung Edit ➔
-        </button>
+
+        <div class="bento-span-1 bento-stat-card glass-card p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Jumlah Tontonan</span>
+            <span class="w-8 h-8 rounded-lg bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-base">👁️</span>
+          </div>
+          <div id="statTotalViews" class="text-2xl font-extrabold text-white font-mono">213.4M</div>
+          <div class="text-[10px] text-emerald-400 font-mono">↗ Trending positif</div>
+        </div>
+
+        <div class="bento-span-1 bento-stat-card glass-card p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Jumlah Likes</span>
+            <span class="w-8 h-8 rounded-lg bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-base">❤️</span>
+          </div>
+          <div id="statTotalLikes" class="text-2xl font-extrabold text-white font-mono">18.7M</div>
+          <div class="text-[10px] text-slate-500 font-mono">Engagement rate tinggi</div>
+        </div>
+
+        <div class="bento-span-1 bento-stat-card glass-card p-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Jumlah Shares</span>
+            <span class="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-base">🔄</span>
+          </div>
+          <div id="statTotalShares" class="text-2xl font-extrabold text-white font-mono">1.35M</div>
+          <div class="text-[10px] text-slate-500 font-mono">Viral multiplier aktif</div>
+        </div>
       </div>
 
-      <!-- RECENT PROJECTS & RENDER QUEUE DUAL GRID -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- RECENT PROJECTS (2 COLUMNS) -->
-        <div class="lg:col-span-2 glass-card p-5 space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h3 class="font-bold text-sm text-white flex items-center gap-2">
-              <span>📁</span> Projek Terkini (Disimpan dalam SQLite)
-            </h3>
-            <button onclick="switchNav('projects')" class="text-xs text-red-400 hover:underline">Lihat Semua</button>
+      <!-- ROW 3: RESUME + RENDER QUEUE (2+2 split) -->
+      <div class="bento-grid">
+        <div id="resumeCard" class="bento-span-2 glass-card p-5 border-blue-500/30 bg-blue-950/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-2xl">
+              🎬
+            </div>
+            <div>
+              <div class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-wider">Sambung Projek Terakhir</div>
+              <div id="resumeTitle" class="text-base font-bold text-white">Memuatkan projek...</div>
+              <div id="resumeMeta" class="text-xs text-slate-400">Versi 1 • Dikemas kini baru-baru ini</div>
+            </div>
           </div>
-
-          <div id="homeProjectsList" class="space-y-2.5 max-h-80 overflow-y-auto custom-scroll pr-1">
-            <div class="text-center py-8 text-xs text-slate-500">Memuatkan projek daripada SQLite...</div>
-          </div>
+          <button id="resumeBtn" onclick="resumeLastProject()" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition">
+            Sambung Edit ➔
+          </button>
         </div>
 
-        <!-- RENDER QUEUE (1 COLUMN) -->
-        <div class="glass-card p-5 space-y-4">
+        <div class="bento-span-2 glass-card p-5 space-y-4">
           <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <h3 class="font-bold text-sm text-white flex items-center gap-2">
               <span>⚙️</span> Barisan Render (Queue)
             </h3>
-            <span id="queueCount" class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">0 Job</span>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+              <span id="queueCount" class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">0 Job</span>
+            </div>
           </div>
+          <div id="homeQueueList" class="space-y-3 max-h-48 overflow-y-auto custom-scroll">
+            <div class="text-center py-6 text-xs text-slate-500">Tiada job render aktif dalam barisan.</div>
+          </div>
+        </div>
+      </div>
 
-          <div id="homeQueueList" class="space-y-3 max-h-80 overflow-y-auto custom-scroll">
-            <div class="text-center py-8 text-xs text-slate-500">Tiada job render aktif dalam barisan.</div>
+      <!-- ROW 4: PROJECTS (3 col) + HOOK DIST (1 col) -->
+      <div class="bento-grid">
+        <div class="bento-span-3 glass-card p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="font-bold text-sm text-white flex items-center gap-2">
+              <span>📁</span> Projek Terkini
+            </h3>
+            <button onclick="switchNav('projects')" class="text-xs text-red-400 hover:underline">Lihat Semua →</button>
+          </div>
+          <div id="homeProjectsList" class="space-y-2.5 max-h-72 overflow-y-auto custom-scroll pr-1">
+            <div class="text-center py-8 text-xs text-slate-500">Memuatkan projek daripada SQLite...</div>
           </div>
         </div>
 
+        <div class="bento-span-1 glass-card p-5 space-y-4">
+          <div class="border-b border-slate-800 pb-3">
+            <h3 class="font-bold text-sm text-white flex items-center gap-2">
+              <span>📊</span> Taburan Hook
+            </h3>
+          </div>
+          <div id="hookDistribution" class="space-y-2.5">
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-300">🍳 Craving Sensory</span>
+                <span class="text-slate-400 font-mono">113</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800"><div class="h-full rounded-full bg-red-500" style="width:31%"></div></div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-300">🌍 Visual Travel</span>
+                <span class="text-slate-400 font-mono">155</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800"><div class="h-full rounded-full bg-blue-500" style="width:43%"></div></div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-300">🎥 Behind Scenes</span>
+                <span class="text-slate-400 font-mono">62</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800"><div class="h-full rounded-full bg-amber-500" style="width:17%"></div></div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-300">📖 Tutorial Hack</span>
+                <span class="text-slate-400 font-mono">29</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800"><div class="h-full rounded-full bg-emerald-500" style="width:8%"></div></div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="text-slate-300">⚡ Shock Challenge</span>
+                <span class="text-slate-400 font-mono">4</span>
+              </div>
+              <div class="w-full h-1.5 rounded-full bg-slate-800"><div class="h-full rounded-full bg-purple-500" style="width:1%"></div></div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- ROW 5: AG-UI PROTOCOL FEATURES SHOWCASE -->
+      <div class="glass-card p-6 space-y-5 border-red-500/20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+          <div class="space-y-1">
+            <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-red-500/15 border border-red-500/30 flex items-center justify-center text-sm">🔗</span>
+              AG-UI Protocol
+            </h2>
+            <p class="text-xs text-slate-400">Agent-User Interaction Protocol — Standard terbuka untuk menghubungkan agen AI dengan antara muka pengguna secara masa nyata.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span> AKTIF
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 text-[10px] font-mono">v1.0</span>
+          </div>
+        </div>
+
+        <!-- AG-UI Protocol Stack -->
+        <div class="flex flex-wrap items-center gap-2 text-[10px] font-mono">
+          <span class="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-400 font-bold">MCP — Tools & Data</span>
+          <span class="text-slate-600">+</span>
+          <span class="px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 font-bold">A2A — Agent Coordination</span>
+          <span class="text-slate-600">+</span>
+          <span class="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 font-bold">AG-UI — User Interface</span>
+        </div>
+
+        <!-- 7 AG-UI Feature Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+
+          <!-- 1. Shared State -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center text-lg">🔄</div>
+              <div>
+                <div class="text-xs font-bold text-white">Shared State</div>
+                <div class="text-[10px] text-blue-400 font-mono">STATE_DELTA</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Sinkronisasi dua hala antara keadaan agen dan UI — kedua-dua pihak sentiasa selaras sepanjang sesi.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Bidirectional sync</span>
+            </div>
+          </div>
+
+          <!-- 2. Tool-Based GenUI -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center text-lg">🛠️</div>
+              <div>
+                <div class="text-xs font-bold text-white">Tool-Based GenUI</div>
+                <div class="text-[10px] text-amber-400 font-mono">TOOL_CALL_START</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Agen memicu rendering komponen UI tersuai (widget, carta, borang) berdasarkan panggilan alat secara dinamik.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Dynamic widget render</span>
+            </div>
+          </div>
+
+          <!-- 3. Subgraphs -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-violet-500/20 border border-purple-500/30 flex items-center justify-center text-lg">🌐</div>
+              <div>
+                <div class="text-xs font-bold text-white">Subgraphs</div>
+                <div class="text-[10px] text-purple-400 font-mono">NESTED_FLOW</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Menguruskan aliran kerja agen bersarang dan modular — mengekalkan konteks merentas sub-sistem yang kompleks.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Modular agent graphs</span>
+            </div>
+          </div>
+
+          <!-- 4. Agentic Chat -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/30 flex items-center justify-center text-lg">💬</div>
+              <div>
+                <div class="text-xs font-bold text-white">Agentic Chat</div>
+                <div class="text-[10px] text-emerald-400 font-mono">TEXT_MESSAGE</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Perbualan masa nyata di mana agen menstrim respons, menunjukkan rantaian pemikiran, dan berkolaborasi secara langsung.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Real-time streaming</span>
+            </div>
+          </div>
+
+          <!-- 5. Human in the Loop -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500/20 to-red-500/20 border border-rose-500/30 flex items-center justify-center text-lg">🤝</div>
+              <div>
+                <div class="text-xs font-bold text-white">Human in the Loop</div>
+                <div class="text-[10px] text-rose-400 font-mono">HITL_GATE</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Agen boleh menjeda pelaksanaan untuk mendapatkan pengesahan manusia — kawalan dan ketelusan untuk tugasan berisiko tinggi.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Approval checkpoint</span>
+            </div>
+          </div>
+
+          <!-- 6. Agentic GenUI -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-sky-500/20 border border-cyan-500/30 flex items-center justify-center text-lg">🎨</div>
+              <div>
+                <div class="text-xs font-bold text-white">Agentic GenUI</div>
+                <div class="text-[10px] text-cyan-400 font-mono">UI_GENERATE</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">UI generatif berkuasa agen — antara muka menyesuaikan diri secara automatik berdasarkan konteks dan keputusan agen masa nyata.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Context-adaptive UI</span>
+            </div>
+          </div>
+
+          <!-- 7. Predictive Updates -->
+          <div class="agui-feature-card glass-card p-4 space-y-3 border-slate-700/50 cursor-default">
+            <div class="flex items-center gap-3">
+              <div class="agui-icon w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500/20 to-lime-500/20 border border-yellow-500/30 flex items-center justify-center text-lg">⚡</div>
+              <div>
+                <div class="text-xs font-bold text-white">Predictive Updates</div>
+                <div class="text-[10px] text-yellow-400 font-mono">OPTIMISTIC_UI</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Kemas kini optimistik — UI memaparkan data sementara segera semasa agen masih memproses di latar belakang.</p>
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 pulse-dot"></span>
+              <span class="text-[9px] text-slate-500 font-mono">Zero-wait UX</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ROW 6: QUICK ACTIONS (2 cards) -->
+      <div class="bento-grid">
+        <div class="bento-span-2 bento-stat-card glass-card p-5 flex items-center gap-4 cursor-pointer hover:border-red-500/30" onclick="createNewProject()">
+          <div class="w-12 h-12 rounded-xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-xl shrink-0">⚡</div>
+          <div class="space-y-0.5">
+            <div class="text-sm font-bold text-white">Cipta Video Baharu</div>
+            <div class="text-[11px] text-slate-400">Mulakan projek dari awal dengan wizard 4-langkah: Brief → Skrip → Preview → Export.</div>
+          </div>
+        </div>
+        <div class="bento-span-2 bento-stat-card glass-card p-5 flex items-center gap-4 cursor-pointer hover:border-amber-500/30" onclick="switchNav('dohnut')">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xl shrink-0">🍩</div>
+          <div class="space-y-0.5">
+            <div class="text-sm font-bold text-white">DOH-NUT™ Brand Kit</div>
+            <div class="text-[11px] text-slate-400">Lihat 31 perisa, kampanye viral playbook, dan aset jenama sedia guna untuk kandungan.</div>
+          </div>
+        </div>
+      </div>
+
     </section>
     </div>
 
@@ -1487,6 +1813,269 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- ==================== TAB BROWSER: COMPUTER USE & BROWSER STUDIO ==================== -->
+    <div id="tab-browser" class="space-y-6 hidden">
+      <section id="view-browser" class="space-y-6">
+        
+        <!-- HEADER & CAPABILITIES BANNER -->
+        <div class="glass-card p-6 border-cyan-500/20 bg-gradient-to-r from-slate-900 via-cyan-950/20 to-slate-900 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="space-y-1 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold">
+              <span>🖥️</span> Built-in SOTA Computer Use &amp; Browser Engine
+            </div>
+            <h2 class="text-xl lg:text-2xl font-extrabold text-white">Browser &amp; Computer Use Studio</h2>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Kawalan autonomi pelayar penuh seperti ChatGPT Desktop &amp; Claude Computer Use. Navigasi web, klik elemen, taip teks, ekstrak data tren, dan laksanakan misi penyelidikan secara berautonomi dengan profil kalis kunci Singleton.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700 text-xs font-mono">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
+              <span id="browserEngineBadge" class="text-slate-200">Playwright 1280x720</span>
+            </div>
+            <button onclick="navigateBrowserUrl()" class="px-3.5 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow-lg shadow-cyan-600/30 transition">
+              🔄 Segarkan Paparan
+            </button>
+          </div>
+        </div>
+
+        <!-- MAIN BROWSER DESKTOP WINDOW (Bento Layout) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- LEFT 8 COLS: VIRTUAL BROWSER VIEWPORT -->
+          <div class="lg:col-span-8 glass-card border-slate-700/60 overflow-hidden flex flex-col">
+            <!-- Browser Chrome Bar -->
+            <div class="bg-slate-950/90 border-b border-slate-800 p-3 flex flex-wrap items-center gap-2">
+              <div class="flex items-center gap-1.5 mr-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+              </div>
+              <div class="flex items-center gap-1">
+                <button onclick="runSingleAction('press', {key: 'Alt+Left'})" title="Undur" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 flex items-center justify-center text-xs">←</button>
+                <button onclick="runSingleAction('press', {key: 'Alt+Right'})" title="Maju" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 flex items-center justify-center text-xs">→</button>
+                <button onclick="navigateBrowserUrl()" title="Muat semula" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 flex items-center justify-center text-xs">↻</button>
+              </div>
+
+              <!-- Address Bar -->
+              <div class="flex-1 min-w-[200px] flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-3 py-1">
+                <span class="text-emerald-400 text-xs font-mono">🔒</span>
+                <input type="text" id="browserUrlInput" value="https://www.tiktok.com/explore" class="bg-transparent text-white text-xs w-full focus:outline-none font-mono" placeholder="Masukkan URL cth: https://www.google.com" onkeydown="if(event.key==='Enter') navigateBrowserUrl()">
+              </div>
+              <button onclick="navigateBrowserUrl()" class="px-3 py-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition">
+                Layari ➔
+              </button>
+            </div>
+
+            <!-- Page Title Bar -->
+            <div class="bg-slate-900/60 px-4 py-1.5 border-b border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <span id="browserPageTitle" class="truncate font-semibold text-slate-200">TikTok Explore • Algoritma Media Sosial</span>
+              <div class="flex items-center gap-3">
+                <span class="text-cyan-400">Viewport: 1280x720 (16:9)</span>
+                <button onclick="runSingleAction('screenshot')" class="text-amber-400 hover:underline">📸 Tangkap Skrin</button>
+              </div>
+            </div>
+
+            <!-- Viewport Screen Canvas -->
+            <div class="relative bg-slate-950 flex items-center justify-center p-2 min-h-[460px] overflow-hidden group">
+              <img id="browserViewportImg" src="/static/browser_screenshots/latest_viewport.png" alt="Virtual Browser Screen" class="w-full h-auto max-h-[500px] object-contain rounded-lg border border-slate-800 shadow-2xl transition duration-300">
+              
+              <!-- Live Interaction Hint Overlay -->
+              <div class="absolute bottom-4 right-4 bg-slate-950/85 backdrop-blur border border-slate-700 rounded-xl px-3 py-1.5 text-[10px] text-slate-300 font-mono flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 pulse-dot"></span>
+                <span>Interaksi Maya: Tetikus fizikal anda 100% bebas</span>
+              </div>
+            </div>
+
+            <!-- Quick Action Bar -->
+            <div class="p-3 bg-slate-900/80 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div class="flex items-center gap-2">
+                <button onclick="runSingleAction('scroll', {scroll_y: 400})" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">⬇️ Skrol Bawah</button>
+                <button onclick="runSingleAction('scroll', {scroll_y: -400})" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">⬆️ Skrol Atas</button>
+                <button onclick="runSingleAction('extract', {selector: 'body'})" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700">📋 Ekstrak Teks</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
+                  <input type="checkbox" id="hitlGateCheckbox" checked class="rounded accent-cyan-500">
+                  <span>HITL: Pengesahan Manusia Aktif</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT 4 COLS: AUTONOMOUS AGENT DECK & AUDIT LOG -->
+          <div class="lg:col-span-4 space-y-4">
+            
+            <!-- Autonomous Mission Box (ChatGPT Desktop Style) -->
+            <div class="glass-card p-5 space-y-3 border-cyan-500/30">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                  <span>🚀</span> Misi Ejen Autonomi
+                </h3>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-500/30 font-bold">GPT-6 ASTRA</span>
+              </div>
+              <p class="text-xs text-slate-400">
+                Berikan matlamat berautonomi. Ejen akan merancang tindakan, membuka laman web, dan mengekstrak jawapan secara berantai.
+              </p>
+              <textarea id="browserGoalInput" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white placeholder-slate-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none" placeholder="Contoh: Cari 3 video TikTok viral berkaitan resepi donut sourdough Khairul Aming, ekstrak hook pembukaan dan kata kunci carian..."></textarea>
+              
+              <!-- Quick Preset Missions -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button onclick="setBrowserPresetGoal('Cari trend TikTok terkini #resepi & donut di Malaysia')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-300 border border-slate-700">🍩 Trend TikTok MY</button>
+                <button onclick="setBrowserPresetGoal('Buka Google Trends Malaysia dan ekstrak carian topik bakeri 24 jam')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-300 border border-slate-700">📈 Google Trends F&amp;B</button>
+                <button onclick="setBrowserPresetGoal('Semak harga produk pesaing bakeri donat di TikTok Shop')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] text-slate-300 border border-slate-700">🛒 Pesaing TikTok Shop</button>
+              </div>
+
+              <button id="runBrowserTaskBtn" onclick="runAutonomousBrowserTask()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-lg shadow-cyan-600/30 flex items-center justify-center gap-2 transition">
+                <span>⚡</span> Jalankan Misi Berautonomi
+              </button>
+            </div>
+
+            <!-- Manual Action Console -->
+            <div class="glass-card p-5 space-y-3">
+              <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                <span>🎮</span> Tindakan Manual Pantas
+              </h3>
+              <div class="space-y-2 text-xs">
+                <div>
+                  <label class="text-[10px] font-mono text-slate-400 block mb-1">CSS Selector Elemen:</label>
+                  <input type="text" id="manualSelectorInput" placeholder="input[type='search'], button.submit" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-white font-mono text-xs">
+                </div>
+                <div>
+                  <label class="text-[10px] font-mono text-slate-400 block mb-1">Teks untuk Ditaip:</label>
+                  <input type="text" id="manualTextInput" placeholder="Kata kunci carian..." class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-white text-xs">
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                  <button onclick="runManualActionClick()" class="py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs">🖱️ Klik</button>
+                  <button onclick="runManualActionType()" class="py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs">⌨️ Taip &amp; Hantar</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Execution Audit Trail & Step Log -->
+            <div class="glass-card p-5 space-y-3">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                  <span>📜</span> Log Tindakan &amp; Audit Trail
+                </h3>
+                <span id="browserLogCount" class="text-[10px] font-mono text-slate-400">0 tindakan</span>
+              </div>
+              <div id="browserStepLogsList" class="space-y-2 max-h-56 overflow-y-auto custom-scroll pr-1 text-xs">
+                <div class="text-center py-6 text-slate-500 text-[11px]">Belum ada tindakan dijalankan. Sila layari URL atau jalankan misi berautonomi.</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+
+    <!-- ==================== TAB MARKETPLACE: PLUGINS & STORE ==================== -->
+    <div id="tab-marketplace" class="space-y-6 hidden">
+      <section id="view-marketplace" class="space-y-6">
+
+        <!-- HEADER BANNER -->
+        <div class="glass-card p-6 border-emerald-500/20 bg-gradient-to-r from-slate-900 via-emerald-950/20 to-slate-900 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="space-y-1 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+              <span>🧩</span> ChatGPT &amp; Claude Style Plugins Marketplace
+            </div>
+            <h2 class="text-xl lg:text-2xl font-extrabold text-white">Marketplace &amp; Plugins Ekosistem</h2>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Tingkatkan kuasa ViralStudio dengan plugin rasmi dan komuniti: integrasi katalog TikTok Shop, suara ElevenLabs Neural, eksport draf CapCut, dan radar carian SEO TikTok.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-emerald-400 text-xs font-mono font-bold">
+              8 Plugin Sedia Ada
+            </span>
+          </div>
+        </div>
+
+        <!-- SEARCH & CATEGORY FILTER -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 glass-card p-4">
+          <!-- Category Pills -->
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button onclick="filterPluginsCategory('Semua')" class="plugin-cat-btn active px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white transition">Semua</button>
+            <button onclick="filterPluginsCategory('Audio & Suara')" class="plugin-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white transition">🎙️ Audio &amp; Suara</button>
+            <button onclick="filterPluginsCategory('E-Dagang')" class="plugin-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white transition">🛍️ E-Dagang</button>
+            <button onclick="filterPluginsCategory('Video & Imej')" class="plugin-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white transition">🎨 Video &amp; Imej</button>
+            <button onclick="filterPluginsCategory('Penyelidikan & SEO')" class="plugin-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white transition">📡 Penyelidikan &amp; SEO</button>
+          </div>
+
+          <!-- Search Input -->
+          <div class="w-full sm:w-72">
+            <input type="text" id="pluginSearchInput" oninput="filterPluginsSearch(this.value)" placeholder="Cari plugin..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+          </div>
+        </div>
+
+        <!-- PLUGINS GRID -->
+        <div id="pluginsListGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="col-span-full text-center py-12 text-slate-500 text-xs">Memuatkan katalog plugin marketplace...</div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- ==================== TAB MCP: MODEL CONTEXT PROTOCOL SERVERS ==================== -->
+    <div id="tab-mcp" class="space-y-6 hidden">
+      <section id="view-mcp" class="space-y-6">
+
+        <!-- HEADER BANNER -->
+        <div class="glass-card p-6 border-amber-500/20 bg-gradient-to-r from-slate-900 via-amber-950/20 to-slate-900 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="space-y-1 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
+              <span>⚡</span> Model Context Protocol (MCP) Standard
+            </div>
+            <h2 class="text-xl lg:text-2xl font-extrabold text-white">MCP Servers &amp; Tools Manager</h2>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Standard protokol Claude Desktop &amp; OpenAI untuk menghubungkan ejen pintar dengan persekitaran fail tempatan, pangkalan data SQLite, carian Brave Web, dan enjin keputusan pantas Jev System One.
+            </p>
+          </div>
+          <button onclick="openAddMcpServerModal()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-black text-xs shadow-lg shadow-amber-600/30 flex items-center gap-1.5 transition">
+            <span>+</span> Tambah MCP Server
+          </button>
+        </div>
+
+        <!-- MCP SERVERS CARDS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="mcpServersGrid">
+          <div class="col-span-full text-center py-12 text-slate-500 text-xs">Memuatkan status sambungan MCP Servers...</div>
+        </div>
+
+        <!-- TOOLS DISCOVERY & INTERACTIVE CALL SANDBOX -->
+        <div class="glass-card p-6 space-y-4">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="font-bold text-base text-white flex items-center gap-2">
+                <span>🛠️</span> Senarai Alatan MCP (Tools Catalog)
+              </h3>
+              <p class="text-xs text-slate-400">Pilih mana-mana alat untuk menguji panggilan secara langsung dalam sandbox interaktif.</p>
+            </div>
+            <input type="text" id="mcpToolSearchInput" oninput="filterMcpTools(this.value)" placeholder="Tapis alatan..." class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 w-full sm:w-60 focus:outline-none focus:ring-1 focus:ring-amber-500">
+          </div>
+
+          <div id="mcpToolsTableContainer" class="overflow-x-auto custom-scroll">
+            <table class="w-full text-left text-xs">
+              <thead class="text-slate-400 uppercase text-[10px] font-mono bg-slate-900/80 border-b border-slate-800">
+                <tr>
+                  <th class="px-4 py-3">Nama Alat</th>
+                  <th class="px-4 py-3">Server MCP</th>
+                  <th class="px-4 py-3">Penerangan</th>
+                  <th class="px-4 py-3 text-right">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody id="mcpToolsTableBody" class="divide-y divide-slate-800">
+                <tr><td colspan="4" class="text-center py-8 text-slate-500">Memuatkan katalog alatan...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
     </div>
 
   </main>
@@ -2956,8 +3545,8 @@
   
 
 
-    // Unified switchTab function supporting ALL 9 tabs
-    const ALL_TAB_IDS = ['studio', 'home', 'projects', 'dohnut', 'a2a', 'scorer', 'generator', 'hub', 'assets'];
+    // Unified switchTab function supporting ALL 12 tabs
+    const ALL_TAB_IDS = ['studio', 'home', 'projects', 'dohnut', 'a2a', 'scorer', 'generator', 'hub', 'assets', 'browser', 'marketplace', 'mcp'];
     function switchTab(tabId) {
       ALL_TAB_IDS.forEach(t => {
         const el = document.getElementById('tab-' + t);
@@ -2972,17 +3561,31 @@
         if (btn) {
           if (t === tabId) {
             btn.classList.add('active', 'text-white');
-            btn.classList.remove('text-slate-300', 'text-slate-400');
+            btn.classList.remove('text-slate-300', 'text-slate-400', 'text-amber-400', 'text-purple-400', 'text-cyan-400', 'text-emerald-400');
           } else {
             btn.classList.remove('active', 'text-white');
             if (t === 'dohnut') btn.classList.add('text-amber-400');
             else if (t === 'a2a') btn.classList.add('text-purple-400');
+            else if (t === 'browser') btn.classList.add('text-cyan-400');
+            else if (t === 'marketplace') btn.classList.add('text-emerald-400');
+            else if (t === 'mcp') btn.classList.add('text-amber-400');
             else btn.classList.add('text-slate-300');
           }
         }
       });
       if (tabId === 'home') loadHomeData();
       if (tabId === 'projects') loadProjectsTable();
+      if (tabId === 'browser') {
+        loadBrowserStatus();
+        loadBrowserHistory();
+      }
+      if (tabId === 'marketplace') {
+        loadMarketplacePlugins();
+      }
+      if (tabId === 'mcp') {
+        loadMcpServers();
+        loadMcpTools();
+      }
       if (tabId === 'hub' && typeof scatterChart !== 'undefined' && scatterChart) {
         scatterChart.resize();
       }
@@ -3059,6 +3662,25 @@
     // Load Home Data (Projects & Queue)
     async function loadHomeData() {
       try {
+        // Fetch stats for Bento stat cards
+        const statsRes = await fetch('/api/stats');
+        const stats = await statsRes.json();
+        const fmtNum = (n) => {
+          if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+          if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+          if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+          return n.toLocaleString();
+        };
+        const svEl = document.getElementById('statTotalVideos');
+        const svwEl = document.getElementById('statTotalViews');
+        const slEl = document.getElementById('statTotalLikes');
+        const ssEl = document.getElementById('statTotalShares');
+        if (svEl) svEl.textContent = fmtNum(stats.total_videos || 363);
+        if (svwEl) svwEl.textContent = fmtNum(stats.total_views || 0);
+        if (slEl) slEl.textContent = fmtNum(stats.total_likes || 0);
+        if (ssEl) ssEl.textContent = fmtNum(stats.total_shares || 0);
+
+        // Fetch projects
         const res = await fetch('/api/projects');
         const projects = await res.json();
         
@@ -3533,6 +4155,683 @@
       }
     }
 
+    /* =========================================================================
+       SOTA MULTI-MODEL, DEEP RESEARCH & CLAUDE ARTIFACTS CONTROLLER
+       ========================================================================= */
+    let currentGlobalModel = 'gemini-3.8-flash';
+    let isDeepResearchActive = true;
+
+    function switchModel(modelKey) {
+      currentGlobalModel = modelKey;
+      const modelNames = {
+        'gemini-3.8-flash': '⚡ Gemini 3.8 Flash (Frontier Speed)',
+        'claude-3.7-sonnet': '🧠 Claude 3.7 Sonnet (Hybrid Thinking)',
+        'gpt-4.5-ultra': '🚀 GPT-4.5 Ultra (Frontier Reasoning)',
+        'deepseek-r1': '🎯 DeepSeek R1 (Open Reasoning)',
+        'typesafe-jev': '🛡️ TypeSafe Jev System One (Sub-ms)'
+      };
+      showToast(`Model ditukar kepada: ${modelNames[modelKey] || modelKey}`, 'info');
+    }
+
+    function toggleDeepResearch() {
+      isDeepResearchActive = !isDeepResearchActive;
+      const btn = document.getElementById('deepResearchToggleBtn');
+      if (btn) {
+        if (isDeepResearchActive) {
+          btn.classList.add('border-emerald-500/50', 'bg-emerald-950/30', 'text-emerald-300');
+          btn.classList.remove('border-slate-700', 'bg-slate-900', 'text-slate-300');
+          showToast('🌐 Web Search & Deep Research: DIAKTIFKAN', 'success');
+        } else {
+          btn.classList.remove('border-emerald-500/50', 'bg-emerald-950/30', 'text-emerald-300');
+          btn.classList.add('border-slate-700', 'bg-slate-900', 'text-slate-300');
+          showToast('🌐 Web Search: DINYAHAKTIFKAN (Mod Terasing)', 'info');
+        }
+      }
+    }
+
+    // Artifacts Slide-Over Drawer
+    let currentArtifactTab = 'preview';
+    let currentArtifactData = {
+      title: 'Pelan Skrip Video 9:16 (Doh-Nut Nutella Lava)',
+      type: 'HTML / Dynamic Card Component',
+      previewHtml: `
+        <div class="space-y-3">
+          <div class="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 font-mono text-xs flex items-center justify-between">
+            <span>✓ VERIFIED BY JEV SYSTEM ONE</span>
+            <span>SKOR: 9.7/10</span>
+          </div>
+          <h3 class="text-sm font-bold text-white">🍫 Formula Hook Sensori 3-Saat</h3>
+          <p class="text-xs text-slate-300 italic">"Sound on! Dengar bunyi krup-krap kerak doh panas ni sebelum lava Nutella dia memancut..."</p>
+          <div class="grid grid-cols-3 gap-2 text-[10px] font-mono">
+            <div class="p-2 bg-slate-800 rounded">Hook: 0-3s</div>
+            <div class="p-2 bg-slate-800 rounded">Core Value: 3-10s</div>
+            <div class="p-2 bg-slate-800 rounded">Beg Kuning: 10-15s</div>
+          </div>
+        </div>
+      `,
+      code: `// Artifact: Video Script Matrix (JSON)\n{\n  "campaign": "Doh-Nut Nutella Lava",\n  "hook_type": "CRAVING_SENSORY",\n  "expected_retention_3s": "89.4%",\n  "aspect_ratio": "9:16",\n  "tts_voice": "ms-MY-YasminNeural",\n  "call_to_action": "Tekan beg kuning di bawah sekarang!"\n}`,
+      doc: `### Penerangan Seni Bina Skrip\nSkrip ini dihasilkan mengikut tanda aras analitik 363 video Khairul Aming dengan kadar retensi 3 saat pertama melebihi 85%.`
+    };
+
+    function toggleArtifactsDrawer() {
+      const drawer = document.getElementById('artifactsDrawer');
+      if (drawer) {
+        drawer.classList.toggle('hidden');
+        if (!drawer.classList.contains('hidden')) {
+          renderArtifactViews();
+        }
+      }
+    }
+
+    function switchArtifactTab(tab) {
+      currentArtifactTab = tab;
+      ['preview', 'code', 'doc'].forEach(t => {
+        const btn = document.getElementById(`artTabBtn-${t}`);
+        const view = document.getElementById(`artView-${t}`);
+        if (btn) {
+          if (t === tab) {
+            btn.classList.add('bg-purple-600', 'text-white');
+            btn.classList.remove('bg-slate-800', 'text-slate-400');
+          } else {
+            btn.classList.remove('bg-purple-600', 'text-white');
+            btn.classList.add('bg-slate-800', 'text-slate-400');
+          }
+        }
+        if (view) {
+          if (t === tab) view.classList.remove('hidden');
+          else view.classList.add('hidden');
+        }
+      });
+    }
+
+    function renderArtifactViews() {
+      document.getElementById('artifactTitle').innerText = currentArtifactData.title;
+      document.getElementById('artifactMeta').innerText = currentArtifactData.type;
+      document.getElementById('artifactRenderBox').innerHTML = currentArtifactData.previewHtml;
+      document.getElementById('artifactCodeBox').textContent = currentArtifactData.code;
+    }
+
+    function copyArtifactContent() {
+      navigator.clipboard.writeText(currentArtifactData.code).then(() => {
+        showToast('Kod Artifact berjaya disalin ke papan klip!', 'success');
+      }).catch(() => {
+        showToast('Gagal menyalin kod.', 'error');
+      });
+    }
+
+
+    /* =========================================================================
+       SOTA COMPUTER USE & BROWSER STUDIO CONTROLLER
+       ========================================================================= */
+    async function loadBrowserStatus() {
+      try {
+        const res = await fetch('/api/browser/status');
+        const data = await res.json();
+        const badge = document.getElementById('browserEngineBadge');
+        const urlInput = document.getElementById('browserUrlInput');
+        const titleEl = document.getElementById('browserPageTitle');
+        const img = document.getElementById('browserViewportImg');
+
+        if (badge) badge.innerText = data.playwright_available ? 'Playwright Chromium (1280x720)' : 'Virtual Sandbox Viewport';
+        if (urlInput && data.current_url) urlInput.value = data.current_url;
+        if (titleEl && data.page_title) titleEl.innerText = data.page_title;
+        if (img && data.latest_screenshot) {
+          img.src = data.latest_screenshot + '?t=' + Date.now();
+        }
+      } catch (e) {
+        console.error("loadBrowserStatus error:", e);
+      }
+    }
+
+    async function loadBrowserHistory() {
+      try {
+        const res = await fetch('/api/browser/history');
+        const history = await res.json();
+        const listEl = document.getElementById('browserStepLogsList');
+        const countEl = document.getElementById('browserLogCount');
+        if (countEl) countEl.innerText = `${history.length} tindakan`;
+
+        if (!listEl) return;
+        if (!history || history.length === 0) {
+          listEl.innerHTML = '<div class="text-center py-6 text-slate-500 text-[11px]">Belum ada tindakan dijalankan. Sila layari URL atau jalankan misi berautonomi.</div>';
+          return;
+        }
+
+        listEl.innerHTML = history.slice().reverse().map(h => `
+          <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1 text-xs">
+            <div class="flex items-center justify-between font-mono text-[10px]">
+              <span class="text-cyan-400 font-bold uppercase tracking-wider">${h.action}</span>
+              <span class="text-slate-500">${h.timestamp} · ${h.latency_ms || 10}ms</span>
+            </div>
+            <div class="text-white text-[11px] truncate">${h.details || h.url || h.selector || ''}</div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error("loadBrowserHistory error:", e);
+      }
+    }
+
+    async function navigateBrowserUrl() {
+      const urlInput = document.getElementById('browserUrlInput');
+      if (!urlInput) return;
+      const url = urlInput.value.trim();
+      if (!url) return;
+
+      showToast(`Ejen sedang melayari: ${url}...`, 'info');
+      try {
+        const res = await fetch('/api/browser/navigate', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({url: url, wait_seconds: 2})
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Ralat navigasi');
+
+        document.getElementById('browserPageTitle').innerText = data.title;
+        const img = document.getElementById('browserViewportImg');
+        if (img && data.screenshot) img.src = data.screenshot + '?t=' + Date.now();
+
+        showToast(`Berjaya membuka ${data.title}!`, 'success');
+        loadBrowserHistory();
+      } catch (e) {
+        showToast(`Ralat navigasi pelayar: ${e.message}`, 'error');
+      }
+    }
+
+    async function runSingleAction(action_type, extraParams = {}) {
+      try {
+        showToast(`Melaksanakan tindakan pelayar: ${action_type}...`, 'info');
+        const payload = {action_type: action_type, ...extraParams};
+        const res = await fetch('/api/browser/action', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Ralat tindakan');
+
+        const img = document.getElementById('browserViewportImg');
+        if (img && data.screenshot) img.src = data.screenshot + '?t=' + Date.now();
+
+        showToast(data.details || `Tindakan ${action_type} selesai!`, 'success');
+        loadBrowserHistory();
+      } catch (e) {
+        showToast(`Ralat: ${e.message}`, 'error');
+      }
+    }
+
+    function runManualActionClick() {
+      const sel = document.getElementById('manualSelectorInput').value.trim();
+      if (!sel) {
+        showToast('Sila masukkan selector elemen (cth: button.submit)', 'warning');
+        return;
+      }
+      runSingleAction('click', {selector: sel});
+    }
+
+    function runManualActionType() {
+      const sel = document.getElementById('manualSelectorInput').value.trim() || "input[type='search']";
+      const txt = document.getElementById('manualTextInput').value.trim();
+      if (!txt) {
+        showToast('Sila masukkan teks untuk ditaip', 'warning');
+        return;
+      }
+      runSingleAction('type', {selector: sel, text: txt});
+    }
+
+    function setBrowserPresetGoal(goalText) {
+      const el = document.getElementById('browserGoalInput');
+      if (el) el.value = goalText;
+    }
+
+    async function runAutonomousBrowserTask() {
+      const goalInput = document.getElementById('browserGoalInput');
+      if (!goalInput) return;
+      const goal = goalInput.value.trim();
+      if (!goal) {
+        showToast('Sila masukkan matlamat misi ejen terlebih dahulu.', 'warning');
+        return;
+      }
+
+      const btn = document.getElementById('runBrowserTaskBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span> Sedang Menjalankan Misi Berautonomi...';
+      }
+
+      showToast(`Ejen memulakan misi berautonomi: "${goal.slice(0, 35)}..."`, 'info');
+
+      try {
+        const res = await fetch('/api/browser/task', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({goal: goal, max_steps: 5})
+        });
+        const report = await res.json();
+        if (!res.ok) throw new Error(report.detail || 'Ralat pelaksanaan misi');
+
+        showToast(`Misi berjaya disiapkan! ${report.total_steps} langkah direkodkan.`, 'success');
+        loadBrowserStatus();
+        loadBrowserHistory();
+
+        // Feed results into Artifacts drawer
+        currentArtifactData = {
+          title: `Laporan Misi Computer Use: ${goal.slice(0, 30)}...`,
+          type: 'Audit Report / Step Logs',
+          previewHtml: `
+            <div class="space-y-3">
+              <div class="p-3 rounded-lg bg-cyan-950/40 border border-cyan-500/30 text-cyan-400 font-mono text-xs">
+                ✓ STATUS MISI: ${report.status} (${report.execution_time_ms}ms)
+              </div>
+              <p class="text-xs text-slate-200 font-bold">${report.final_conclusion}</p>
+              <div class="space-y-2">
+                ${report.steps.map(s => `
+                  <div class="p-2.5 rounded bg-slate-800 text-xs flex items-center justify-between">
+                    <span>Langkah ${s.step}: ${s.description}</span>
+                    <span class="text-emerald-400 font-mono text-[10px]">${s.status}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `,
+          code: JSON.stringify(report, null, 2),
+          doc: `Laporan pelaksanaan berautonomi menggunakan enjin Playwright / UniversalChromeAgent.`
+        };
+        toggleArtifactsDrawer();
+
+      } catch (e) {
+        showToast(`Ralat misi: ${e.message}`, 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<span>⚡</span> Jalankan Misi Berautonomi';
+        }
+      }
+    }
+
+
+    /* =========================================================================
+       SOTA MARKETPLACE & PLUGINS CONTROLLER
+       ========================================================================= */
+    let currentPluginsList = [];
+    let activePluginFilter = 'Semua';
+
+    async function loadMarketplacePlugins(category = 'Semua') {
+      try {
+        activePluginFilter = category;
+        const url = category && category !== 'Semua' ? `/api/plugins?category=${encodeURIComponent(category)}` : '/api/plugins';
+        const res = await fetch(url);
+        currentPluginsList = await res.json();
+        renderPluginsGrid(currentPluginsList);
+      } catch (e) {
+        console.error("loadMarketplacePlugins error:", e);
+      }
+    }
+
+    function renderPluginsGrid(plugins) {
+      const grid = document.getElementById('pluginsListGrid');
+      if (!grid) return;
+      if (!plugins || plugins.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-500 text-xs">Tiada plugin ditemui untuk kriteria ini.</div>';
+        return;
+      }
+
+      grid.innerHTML = plugins.map(p => `
+        <div class="glass-card p-5 space-y-4 border-slate-700/60 flex flex-col justify-between hover:border-emerald-500/40 transition">
+          <div class="space-y-3">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-2.5">
+                <span class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xl shrink-0">${p.icon || '🧩'}</span>
+                <div>
+                  <h4 class="font-bold text-xs text-white leading-tight">${p.name}</h4>
+                  <div class="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono mt-0.5">
+                    <span>${p.author}</span>
+                    ${p.verified ? '<span class="text-cyan-400" title="Disahkan">✓</span>' : ''}
+                  </div>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[9px] font-mono ${p.enabled ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-400'} font-bold">
+                ${p.enabled ? 'AKTIF' : 'MATI'}
+              </span>
+            </div>
+
+            <p class="text-[11px] text-slate-300 leading-relaxed">${p.description}</p>
+
+            <div class="space-y-1 pt-1">
+              ${(p.features || []).slice(0, 2).map(f => `
+                <div class="text-[10px] text-slate-400 flex items-center gap-1.5">
+                  <span class="text-emerald-400">✓</span>
+                  <span class="truncate">${f}</span>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] font-mono text-slate-400 pt-1 border-t border-slate-800/80">
+              <span>⭐ ${p.rating}</span>
+              <span>📥 ${p.installs} pasang</span>
+              <span class="text-slate-500">${p.version}</span>
+            </div>
+          </div>
+
+          <div class="pt-2 flex items-center gap-2">
+            <button onclick="toggleMarketplacePlugin('${p.id}')" class="flex-1 py-1.5 rounded-lg text-xs font-bold transition ${p.installed ? 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700' : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20'}">
+              ${p.installed ? (p.enabled ? 'Matikan' : 'Hidupkan') : 'Pasang Plugin'}
+            </button>
+            <button onclick="openPluginConfig('${p.id}')" title="Konfigurasi Tetapan" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs">
+              ⚙️
+            </button>
+            <button onclick="runPluginTest('${p.id}')" title="Uji Keupayaan Langsung" class="p-1.5 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-bold">
+              ⚡ Uji
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterPluginsCategory(cat) {
+      document.querySelectorAll('.plugin-cat-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-600', 'text-white', 'active');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+        if (btn.innerText.includes(cat) || (cat === 'Semua' && btn.innerText === 'Semua')) {
+          btn.classList.add('bg-emerald-600', 'text-white', 'active');
+          btn.classList.remove('bg-slate-800', 'text-slate-300');
+        }
+      });
+      loadMarketplacePlugins(cat);
+    }
+
+    function filterPluginsSearch(keyword) {
+      const q = keyword.toLowerCase().trim();
+      if (!q) {
+        renderPluginsGrid(currentPluginsList);
+        return;
+      }
+      const filtered = currentPluginsList.filter(p => 
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q) ||
+        p.author.toLowerCase().includes(q)
+      );
+      renderPluginsGrid(filtered);
+    }
+
+    async function toggleMarketplacePlugin(pluginId) {
+      try {
+        const res = await fetch(`/api/plugins/${pluginId}/toggle`, {method: 'POST'});
+        const data = await res.json();
+        showToast(`Status plugin ${data.plugin.name} dikemas kini!`, 'success');
+        loadMarketplacePlugins(activePluginFilter);
+      } catch (e) {
+        showToast(`Ralat kemas kini plugin: ${e.message}`, 'error');
+      }
+    }
+
+    function openPluginConfig(pluginId) {
+      const p = currentPluginsList.find(x => x.id === pluginId);
+      if (!p) return;
+      document.getElementById('configPluginId').value = p.id;
+      document.getElementById('configPluginIcon').innerText = p.icon || '⚙️';
+      document.getElementById('configPluginTitle').innerText = `Konfigurasi: ${p.name}`;
+      document.getElementById('configPluginAuthor').innerText = `${p.author} • ${p.version}`;
+      document.getElementById('configJsonInput').value = JSON.stringify(p.config || {}, null, 2);
+      document.getElementById('pluginConfigModal').classList.remove('hidden');
+    }
+
+    function closePluginConfigModal() {
+      document.getElementById('pluginConfigModal').classList.add('hidden');
+    }
+
+    async function savePluginConfig() {
+      const pluginId = document.getElementById('configPluginId').value;
+      const jsonStr = document.getElementById('configJsonInput').value;
+      let parsed = {};
+      try {
+        parsed = JSON.parse(jsonStr);
+      } catch (e) {
+        showToast('Ralat format JSON tidak sah!', 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/plugins/${pluginId}/configure`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({config: parsed})
+        });
+        const data = await res.json();
+        showToast('Konfigurasi plugin berjaya disimpan!', 'success');
+        closePluginConfigModal();
+        loadMarketplacePlugins(activePluginFilter);
+      } catch (e) {
+        showToast(`Ralat menyimpan konfigurasi: ${e.message}`, 'error');
+      }
+    }
+
+    async function runPluginTest(pluginId) {
+      showToast('Menjalankan capability test untuk plugin...', 'info');
+      try {
+        const res = await fetch(`/api/plugins/${pluginId}/run`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({action: 'execute', params: {}})
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Ralat pelaksanaan plugin');
+
+        showToast(`Plugin ${data.plugin} berjaya dipanggil!`, 'success');
+        
+        // Feed into Artifacts drawer to show rich results!
+        currentArtifactData = {
+          title: `Hasil Pelaksanaan Plugin: ${data.plugin}`,
+          type: 'Plugin Execution Output / JSON Payload',
+          previewHtml: `
+            <div class="space-y-3">
+              <div class="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+                ✓ PANGGILAN BERJAYA: ${data.plugin} [${data.action}]
+              </div>
+              <pre class="bg-black/80 p-3 rounded text-[11px] font-mono text-slate-200 overflow-x-auto">${JSON.stringify(data.result, null, 2)}</pre>
+            </div>
+          `,
+          code: JSON.stringify(data, null, 2),
+          doc: `Keputusan simulasi kemampuan plugin dalam persekitaran langsung.`
+        };
+        toggleArtifactsDrawer();
+      } catch (e) {
+        showToast(`Ralat: ${e.message}`, 'error');
+      }
+    }
+
+
+    /* =========================================================================
+       SOTA MCP (MODEL CONTEXT PROTOCOL) SERVERS CONTROLLER
+       ========================================================================= */
+    let currentMcpServers = [];
+    let currentMcpTools = [];
+
+    async function loadMcpServers() {
+      try {
+        const res = await fetch('/api/mcp/servers');
+        currentMcpServers = await res.json();
+        const grid = document.getElementById('mcpServersGrid');
+        if (!grid) return;
+
+        grid.innerHTML = currentMcpServers.map(s => `
+          <div class="glass-card p-5 space-y-3 border-amber-500/30 flex flex-col justify-between hover:border-amber-500/60 transition">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xl shrink-0">${s.icon || '⚡'}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 font-bold">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+                  ${s.status.toUpperCase()}
+                </span>
+              </div>
+              <h4 class="font-bold text-sm text-white">${s.name}</h4>
+              <p class="text-xs text-slate-400 leading-relaxed">${s.description}</p>
+            </div>
+            <div class="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <span>Ping: <strong class="text-emerald-400">${s.latency_ms}ms</strong></span>
+              <span>Alatan: <strong class="text-white">${s.tools_count}</strong></span>
+              <span class="text-slate-500">${s.transport}</span>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {
+        console.error("loadMcpServers error:", e);
+      }
+    }
+
+    async function loadMcpTools() {
+      try {
+        const res = await fetch('/api/mcp/tools');
+        currentMcpTools = await res.json();
+        renderMcpToolsTable(currentMcpTools);
+      } catch (e) {
+        console.error("loadMcpTools error:", e);
+      }
+    }
+
+    function renderMcpToolsTable(tools) {
+      const tbody = document.getElementById('mcpToolsTableBody');
+      if (!tbody) return;
+      if (!tools || tools.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-slate-500">Tiada alatan MCP ditemui.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = tools.map(t => `
+        <tr class="hover:bg-slate-900/60 transition">
+          <td class="px-4 py-3 font-mono font-bold text-amber-400 text-xs flex items-center gap-2">
+            <span>⚡</span>
+            <span>${t.name}</span>
+          </td>
+          <td class="px-4 py-3 text-slate-300 font-semibold text-xs">${t.server_name}</td>
+          <td class="px-4 py-3 text-slate-400 text-xs">${t.description}</td>
+          <td class="px-4 py-3 text-right">
+            <button onclick="openMcpToolModal('${t.server_id}', '${t.name}')" class="px-3 py-1 rounded-lg bg-amber-600/20 hover:bg-amber-600/40 text-amber-300 border border-amber-500/30 text-xs font-bold transition">
+              ⚡ Uji Panggilan
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterMcpTools(keyword) {
+      const q = keyword.toLowerCase().trim();
+      if (!q) {
+        renderMcpToolsTable(currentMcpTools);
+        return;
+      }
+      const filtered = currentMcpTools.filter(t => 
+        t.name.toLowerCase().includes(q) ||
+        t.server_name.toLowerCase().includes(q) ||
+        t.description.toLowerCase().includes(q)
+      );
+      renderMcpToolsTable(filtered);
+    }
+
+    function openMcpToolModal(serverId, toolName) {
+      const tool = currentMcpTools.find(t => t.name === toolName && t.server_id === serverId) || {name: toolName, server_name: serverId, description: ""};
+      document.getElementById('mcpModalServerId').value = serverId;
+      document.getElementById('mcpModalToolKey').value = toolName;
+      document.getElementById('mcpModalToolName').innerText = `Tool: ${toolName}`;
+      document.getElementById('mcpModalServerName').innerText = tool.server_name || serverId;
+      document.getElementById('mcpModalToolDesc').innerText = tool.description || 'Penerangan tool MCP.';
+      
+      // Default sample args based on tool
+      let defaultArgs = {};
+      if (toolName === 'jev_classify') {
+        defaultArgs = {text: "Doh-Nut Salted Egg Lava meleleh panas-panas bila digigit!", categories: ["CRAVING_SENSORY", "VISUAL_TRAVEL_VLOG", "QUICK_TUTORIAL_HACK"]};
+      } else if (toolName === 'jev_score') {
+        defaultArgs = {text: "Sound on! Dengar krup-krap doh sebelum lava meleleh...", rubric: ["P1: Critical", "P2: Good", "P3: Low"]};
+      } else if (toolName === 'web_search') {
+        defaultArgs = {query: "trend bakeri donut viral Malaysia 2026", count: 3};
+      } else if (toolName === 'db_query') {
+        defaultArgs = {sql: "SELECT title, status, version FROM projects LIMIT 5"};
+      } else {
+        defaultArgs = {text: "sample input"};
+      }
+      document.getElementById('mcpModalArgsInput').value = JSON.stringify(defaultArgs, null, 2);
+      document.getElementById('mcpModalResultOutput').textContent = "Tekan 'Uji Panggilan Tool' di bawah untuk melihat output.";
+      document.getElementById('mcpModalLatency').textContent = "Latency: -";
+
+      document.getElementById('mcpToolModal').classList.remove('hidden');
+    }
+
+    function closeMcpToolModal() {
+      document.getElementById('mcpToolModal').classList.add('hidden');
+    }
+
+    async function executeMcpToolCall() {
+      const serverId = document.getElementById('mcpModalServerId').value;
+      const toolName = document.getElementById('mcpModalToolKey').value;
+      const argsStr = document.getElementById('mcpModalArgsInput').value;
+      let args = {};
+      try {
+        args = JSON.parse(argsStr);
+      } catch (e) {
+        showToast('Ralat format JSON argumen tidak sah!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('mcpRunToolBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⏳</span> Memanggil Tool...';
+
+      try {
+        const res = await fetch('/api/mcp/call', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({server_id: serverId, tool_name: toolName, arguments: args})
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Ralat panggilan MCP Tool');
+
+        document.getElementById('mcpModalLatency').textContent = `Latency: ${data.latency_ms}ms (${data.status.toUpperCase()})`;
+        document.getElementById('mcpModalResultOutput').textContent = JSON.stringify(data.result, null, 2);
+        showToast(`Tool ${toolName} berjaya dipanggil dalam ${data.latency_ms}ms!`, 'success');
+      } catch (e) {
+        document.getElementById('mcpModalResultOutput').textContent = `RALAT: ${e.message}`;
+        showToast(`Ralat: ${e.message}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡</span> Uji Panggilan Tool';
+      }
+    }
+
+    function openAddMcpServerModal() {
+      document.getElementById('mcpAddServerModal').classList.remove('hidden');
+    }
+
+    function closeAddMcpServerModal() {
+      document.getElementById('mcpAddServerModal').classList.add('hidden');
+    }
+
+    async function submitAddMcpServer() {
+      const name = document.getElementById('addMcpNameInput').value.trim();
+      const transport = document.getElementById('addMcpTransportSelect').value;
+      const url = document.getElementById('addMcpUrlInput').value.trim();
+      const desc = document.getElementById('addMcpDescInput').value.trim();
+
+      if (!name || !url) {
+        showToast('Sila lengkapkan nama server dan URL/arahan', 'warning');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/mcp/servers/add', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name: name, transport: transport, url_or_cmd: url, description: desc})
+        });
+        const data = await res.json();
+        showToast(`MCP Server "${name}" berjaya disambungkan!`, 'success');
+        closeAddMcpServerModal();
+        loadMcpServers();
+        loadMcpTools();
+      } catch (e) {
+        showToast(`Ralat menambah server: ${e.message}`, 'error');
+      }
+    }
     
 </script>
 
@@ -3732,6 +5031,176 @@
             </button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== CLAUDE-STYLE ARTIFACTS SLIDE-OVER DRAWER ==================== -->
+  <div id="artifactsDrawer" class="hidden fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-slate-950/95 backdrop-blur-xl border-l border-slate-800 shadow-2xl flex flex-col transition-all duration-300">
+    <!-- Drawer Header -->
+    <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/60">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-sm">📜</span>
+        <div>
+          <h3 id="artifactTitle" class="text-sm font-bold text-white">Live Artifact: Pelan Skrip Video 9:16</h3>
+          <span id="artifactMeta" class="text-[10px] text-purple-400 font-mono">HTML / JavaScript Component • Interaktif</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="copyArtifactContent()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs border border-slate-700 flex items-center gap-1">
+          <span>📋</span> Salin
+        </button>
+        <button onclick="toggleArtifactsDrawer()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-sm font-bold">
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Drawer Navigation Tabs -->
+    <div class="flex items-center gap-2 px-4 py-2 border-b border-slate-800 bg-slate-900/30 text-xs">
+      <button onclick="switchArtifactTab('preview')" id="artTabBtn-preview" class="px-3 py-1 rounded-lg font-bold bg-purple-600 text-white">Pratonton Visual</button>
+      <button onclick="switchArtifactTab('code')" id="artTabBtn-code" class="px-3 py-1 rounded-lg font-semibold bg-slate-800 text-slate-400 hover:text-white">Kod Sumber</button>
+      <button onclick="switchArtifactTab('doc')" id="artTabBtn-doc" class="px-3 py-1 rounded-lg font-semibold bg-slate-800 text-slate-400 hover:text-white">Dokumentasi</button>
+    </div>
+
+    <!-- Drawer Content Area -->
+    <div class="flex-1 overflow-y-auto p-4 custom-scroll space-y-4">
+      <div id="artView-preview" class="space-y-4">
+        <div class="glass-card p-4 border-slate-800">
+          <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">✦ Komponen UI Interaktif (Generated)</h4>
+          <div id="artifactRenderBox" class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-3">
+            <!-- Dynamic artifact preview mounts here -->
+          </div>
+        </div>
+      </div>
+
+      <div id="artView-code" class="hidden space-y-2">
+        <pre class="bg-black/80 p-4 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-400 overflow-x-auto custom-scroll leading-relaxed" id="artifactCodeBox">// Tiada kod artifact aktif</pre>
+      </div>
+
+      <div id="artView-doc" class="hidden space-y-3 text-xs text-slate-300 leading-relaxed" id="artifactDocBox">
+        <div class="glass-card p-4 space-y-2">
+          <h5 class="font-bold text-white">Seni Bina Artifacts (Claude-Style)</h5>
+          <p>Artifacts membolehkan ejen menjana komponen kod penuh, rajah arkitektur Mermaid, dan dokumen markdown tanpa mencemarkan aliran perbualan chat.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== PLUGIN CONFIG MODAL ==================== -->
+  <div id="pluginConfigModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none" onclick="if(event.target===this) closePluginConfigModal()">
+    <div class="glass-card w-full max-w-lg p-6 space-y-5 border-emerald-500/30 bg-slate-950/95" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span id="configPluginIcon" class="text-xl">⚙️</span>
+          <div>
+            <h3 id="configPluginTitle" class="font-bold text-base text-white">Konfigurasi Plugin</h3>
+            <span id="configPluginAuthor" class="text-[10px] text-slate-400 font-mono">Author</span>
+          </div>
+        </div>
+        <button onclick="closePluginConfigModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <input type="hidden" id="configPluginId">
+        <div>
+          <label class="text-[11px] font-semibold text-slate-300 block mb-1">API Key / Token Rahsia:</label>
+          <input type="password" id="configApiKeyInput" placeholder="sk-live-..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="text-[11px] font-semibold text-slate-300 block mb-1">Konfigurasi Tambahan (JSON):</label>
+          <textarea id="configJsonInput" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" placeholder='{"auto_sync": true, "quality": "high"}'></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+        <button onclick="closePluginConfigModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold">Batal</button>
+        <button onclick="savePluginConfig()" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-600/30">Simpan Tetapan</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== MCP TOOL EXECUTION SANDBOX MODAL ==================== -->
+  <div id="mcpToolModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none" onclick="if(event.target===this) closeMcpToolModal()">
+    <div class="glass-card w-full max-w-xl p-6 space-y-4 border-amber-500/30 bg-slate-950/95" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🛠️</span>
+          <div>
+            <h3 id="mcpModalToolName" class="font-bold text-base text-white">Tool Sandbox</h3>
+            <span id="mcpModalServerName" class="text-[10px] text-amber-400 font-mono">Server</span>
+          </div>
+        </div>
+        <button onclick="closeMcpToolModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center">✕</button>
+      </div>
+
+      <p id="mcpModalToolDesc" class="text-xs text-slate-300 leading-relaxed">Penerangan tool.</p>
+
+      <input type="hidden" id="mcpModalServerId">
+      <input type="hidden" id="mcpModalToolKey">
+
+      <div class="space-y-2 text-xs">
+        <label class="text-[11px] font-semibold text-slate-300 block">Argumen Input (JSON):</label>
+        <textarea id="mcpModalArgsInput" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-emerald-400 font-mono text-xs focus:ring-1 focus:ring-amber-500 focus:outline-none" placeholder='{"text": "Sample text", "categories": ["A", "B"]}'></textarea>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <div class="flex items-center justify-between">
+          <label class="text-[11px] font-semibold text-slate-300">Hasil Output Pelaksanaan:</label>
+          <span id="mcpModalLatency" class="text-[10px] font-mono text-slate-400">Latency: -</span>
+        </div>
+        <pre id="mcpModalResultOutput" class="bg-black/90 p-3 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-300 overflow-x-auto custom-scroll max-h-40">Tekan 'Uji Panggilan Tool' di bawah untuk melihat output.</pre>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+        <button onclick="closeMcpToolModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold">Tutup</button>
+        <button onclick="executeMcpToolCall()" id="mcpRunToolBtn" class="px-5 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 text-xs font-black shadow-lg shadow-amber-600/30 flex items-center gap-1.5">
+          <span>⚡</span> Uji Panggilan Tool
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== MCP ADD SERVER MODAL ==================== -->
+  <div id="mcpAddServerModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 select-none" onclick="if(event.target===this) closeAddMcpServerModal()">
+    <div class="glass-card w-full max-w-lg p-6 space-y-4 border-amber-500/30 bg-slate-950/95" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="font-bold text-base text-white flex items-center gap-2">
+          <span>🔌</span> Sambung MCP Server Baharu
+        </h3>
+        <button onclick="closeAddMcpServerModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="text-[11px] font-semibold text-slate-300 block mb-1">Nama Server:</label>
+          <input type="text" id="addMcpNameInput" placeholder="cth: Custom Notion MCP" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white text-xs">
+        </div>
+        <div>
+          <label class="text-[11px] font-semibold text-slate-300 block mb-1">Jenis Pengangkutan (Transport):</label>
+          <select id="addMcpTransportSelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white text-xs">
+            <option value="stdio">stdio (Local Command)</option>
+            <option value="sse">SSE (Server-Sent Events HTTP URL)</option>
+            <option value="websocket">WebSocket</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[11px] font-semibold text-slate-300 block mb-1">URL Endpoint / Arahan CLI:</label>
+          <input type="text" id="addMcpUrlInput" placeholder="https://mcp.example.com/sse atau npx -y @modelcontextprotocol/server" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono text-xs">
+        </div>
+        <div>
+          <label class="text-[11px] font-semibold text-slate-300 block mb-1">Penerangan Ringkas:</label>
+          <input type="text" id="addMcpDescInput" placeholder="Tujuan server..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white text-xs">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+        <button onclick="closeAddMcpServerModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold">Batal</button>
+        <button onclick="submitAddMcpServer()" class="px-5 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 text-xs font-black shadow-lg shadow-amber-600/30">Sambungkan Server</button>
       </div>
     </div>
   </div>
