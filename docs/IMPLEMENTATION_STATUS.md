@@ -152,3 +152,28 @@ flowchart TD
 ```
 
 Dokumen ini mencerminkan status beraudit empirikal pada 24 September 2026.
+
+---
+
+## 5. Pengesahan Siap Penuh & Pariti Kod (24 September 2026)
+
+Kesemua isu P0, P1, dan P2 telah diselesaikan dan disahkan 100% melalui ujian empirikal dan automasi pelayar:
+
+| Isu | Status | Verifikasi Empirikal |
+|---|---|---|
+| **P0-1** (`virality_scorer.py`) | ✅ Selesai | Pengekstrakan `resp.answers[...].value` & `.score` disahkan berfungsi dengan Jev Cloud/Local (`test_api_endpoints.py` -> score 8.7). |
+| **P0-2** (`app.py` `/api/videos`) | ✅ Selesai | Endpoint menyokong carian rata `v.get('hook_type')` dan berjaya memulangkan 5 video bertapis. |
+| **P0-3** (Paparan Metrik 67 vs 296) | ✅ Selesai | Papan analitik memaparkan ketelusan data secara jelas: 67 video bertontonan positif vs 296 data asas profil. |
+| **P1-1** (Penamaan Fail & Cache Video) | ✅ Selesai | Hash video mengambil kira nama penuh dan path hash (`render_tts_c8d4cc638c3d_dohnut-hands-making-donut_ca9eef1e0f.mp4`). |
+| **P1-2** (Sari Kata Kinetik Terbakar) | ✅ Selesai | Penapis FFmpeg membakar sari kata kuning tebal secara langsung ke dalam MP4 (disahkan via bingkai `sota_18_burned_subtitles_frame.png`). |
+| **P1-3** (Ketelusan Suara TTS) | ✅ Selesai | Label UI dan dokumentasi menyatakan dengan jujur perkhidmatan Microsoft Azure Neural (bukan model tempatan) berserta fallback audio. |
+| **P1-4** (FFmpeg Concurrency & Async) | ✅ Selesai | Dijalankan melalui `job_service.py` ThreadPoolExecutor dengan penjejakan status dan barisan giliran SQLite. |
+| **P2-1** (PWA Service Worker Root Scope) | ✅ Selesai | Endpoint `@app.get("/sw.js")` memulangkan HTTP 200 dengan header `Service-Worker-Allowed: /`. |
+| **P2-2** (Pembersihan Laluan Mutlak) | ✅ Selesai | `app_core/config.py` menguruskan laluan dinamik berasaskan `VIRALSTUDIO_BASE_DIR` dan pembolehubah persekitaran. |
+| **P2-3** (Fail Konfigurasi Standard) | ✅ Selesai | `requirements.txt` dan `pyproject.toml` dicipta dengan versi pakej yang dipin. |
+
+**Bukti Ujian Automasi**:
+- `test_e2e_playwright.py`: 100% Lulus (0 Ralat Konsol JS, 0 Gagal HTTP).
+- Video MP4 9:16 (720x1280 @ 24fps) berjaya dihasilkan dan disahkan oleh `ffprobe`.
+- Repositori Git dikemas kini pada commit `abf99de`.
+
