@@ -9,20 +9,26 @@ from pathlib import Path
 # Base project directory
 BASE_DIR = Path(os.getenv("VIRALSTUDIO_BASE_DIR", Path(__file__).resolve().parent.parent))
 
-# Storage and assets directories
-DATA_DIR = BASE_DIR / "data"
-DATA_DIR.mkdir(parents=True, exist_ok=True)
+IS_VERCEL = bool(os.getenv("VERCEL"))
 
-DB_PATH = Path(os.getenv("VIRALSTUDIO_DB_PATH", DATA_DIR / "viralstudio.db"))
+if IS_VERCEL:
+    DATA_DIR = Path("/tmp/data")
+    DB_PATH = Path(os.getenv("VIRALSTUDIO_DB_PATH", DATA_DIR / "viralstudio.db"))
+    STATIC_DIR = BASE_DIR / "static"
+    EXPORTS_DIR = Path("/tmp/exports")
+    UPLOADS_DIR = Path("/tmp/uploads")
+else:
+    DATA_DIR = BASE_DIR / "data"
+    DB_PATH = Path(os.getenv("VIRALSTUDIO_DB_PATH", DATA_DIR / "viralstudio.db"))
+    STATIC_DIR = BASE_DIR / "static"
+    EXPORTS_DIR = STATIC_DIR / "exports"
+    UPLOADS_DIR = STATIC_DIR / "uploads"
 
-STATIC_DIR = BASE_DIR / "static"
-STATIC_DIR.mkdir(parents=True, exist_ok=True)
-
-EXPORTS_DIR = STATIC_DIR / "exports"
-EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
-
-UPLOADS_DIR = STATIC_DIR / "uploads"
-UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+for d in (DATA_DIR, EXPORTS_DIR, UPLOADS_DIR):
+    try:
+        d.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        pass
 
 # Sibling projects with graceful relative resolution
 DOHNUT_PUBLIC_DIR = Path(

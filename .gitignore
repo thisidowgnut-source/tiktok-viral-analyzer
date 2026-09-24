@@ -23,4 +23,5 @@ scratch/
 data/*.db
 data/*.db-wal
 data/*.db-shm
+.vercel/
 

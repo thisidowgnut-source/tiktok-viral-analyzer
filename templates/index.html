@@ -119,10 +119,10 @@
 
       <!-- Navigation Tabs -->
       <nav class="flex flex-wrap items-center p-1 bg-slate-900 border border-slate-800 rounded-xl gap-1">
-        <button onclick="switchTab('studio')" id="tab-btn-studio" class="tab-btn active px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-all text-white">
+        <button onclick="switchTab('studio')" id="tab-btn-studio" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-all text-slate-300 hover:text-white">
           🎬 Studio 9:16
         </button>
-        <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+        <button onclick="switchTab('home')" id="tab-btn-home" class="tab-btn active px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-white">
           🏠 Utama
         </button>
         <button onclick="switchTab('projects')" id="tab-btn-projects" class="tab-btn px-3 py-1.5 rounded-lg text-xs md:text-sm font-semibold transition-all text-slate-300 hover:text-white">
@@ -158,8 +158,8 @@
 
     
     <!-- ==================== TAB STUDIO: SOTA 9:16 VERTICAL WORKFLOW ==================== -->
-    <div id="tab-studio" class="space-y-6">
-<section id="view-studio" class="hidden space-y-6">
+    <div id="tab-studio" class="space-y-6 hidden">
+<section id="view-studio" class="space-y-6">
       
       <!-- STEP INDICATOR -->
       <div class="glass-card p-3 flex items-center justify-between overflow-x-auto custom-scroll">
@@ -537,7 +537,7 @@
     </div>
 
     <!-- ==================== TAB HOME: OVERVIEW DASHBOARD ==================== -->
-    <div id="tab-home" class="space-y-6 hidden">
+    <div id="tab-home" class="space-y-6">
 <section id="view-home" class="space-y-8">
       
       <!-- HERO BANNER -->
@@ -620,7 +620,7 @@
 
     <!-- ==================== TAB PROJECTS: SQLITE REPOSITORY ==================== -->
     <div id="tab-projects" class="space-y-6 hidden">
-<section id="view-projects" class="hidden space-y-6">
+<section id="view-projects" class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-5">
         <div>
           <h2 class="text-xl font-bold text-white">Pengurusan Projek</h2>
@@ -664,7 +664,7 @@
 
     <!-- ==================== TAB ASSETS: MEDIA LIBRARY ==================== -->
     <div id="tab-assets" class="space-y-6 hidden">
-<section id="view-assets" class="hidden space-y-6">
+<section id="view-assets" class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-5">
         <div>
           <h2 class="text-xl font-bold text-white">Perpustakaan Aset Media</h2>
@@ -1596,29 +1596,8 @@
       });
     }
 
-    // Tab Switching
-    function switchTab(tabId) {
-      const tabs = ['hub', 'dohnut', 'a2a', 'scorer', 'generator'];
-      tabs.forEach(t => {
-        const el = document.getElementById('tab-' + t);
-        const btn = document.getElementById('tab-btn-' + t);
-        if (t === tabId) {
-          el.classList.remove('hidden');
-          btn.classList.add('active');
-          btn.classList.remove('text-slate-400');
-        } else {
-          el.classList.add('hidden');
-          btn.classList.remove('active');
-          btn.classList.add('text-slate-400');
-        }
-      });
-      if (tabId === 'hub' && scatterChart) {
-        scatterChart.resize();
-      }
-      if (tabId === 'dohnut') {
-        setTimeout(initThreeDonut, 50);
-      }
-    }
+    // (Tab switching handled by master switchTab at bottom of script)
+
 
     // Hook Color Mapping
     const HOOK_COLORS = {
@@ -2979,9 +2958,13 @@
       });
       if (tabId === 'home') loadHomeData();
       if (tabId === 'projects') loadProjectsTable();
-      if (tabId === 'assets') loadAssetsGrid();
-      if (tabId === 'hub') renderHub();
-      if (tabId === 'dohnut') renderDohnutArsenal();
+      if (tabId === 'hub' && typeof scatterChart !== 'undefined' && scatterChart) {
+        scatterChart.resize();
+      }
+      if (tabId === 'dohnut') {
+        if (typeof renderDohnutCampaigns === 'function') renderDohnutCampaigns();
+        if (typeof initThreeDonut === 'function') setTimeout(initThreeDonut, 50);
+      }
     }
     function switchNav(navId) {
       switchTab(navId);
@@ -3029,29 +3012,8 @@
       }
     ];
 
-    // Navigation Switcher
-    function switchNav(tabName) {
-      currentNav = tabName;
-      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById(`tab-${tabName}`);
-      if (activeBtn) activeBtn.classList.add('active');
+    // (switchNav is unified into master switchTab)
 
-      ['home', 'projects', 'studio', 'assets', 'analytics'].forEach(view => {
-        const el = document.getElementById(`view-${view}`);
-        if (el) {
-          if (view === tabName) {
-            el.classList.remove('hidden');
-          } else {
-            el.classList.add('hidden');
-          }
-        }
-      });
-
-      if (tabName === 'home') loadHomeData();
-      if (tabName === 'projects') loadProjectsTable();
-      if (tabName === 'assets') loadAssetsGrid();
-      if (tabName === 'analytics') renderAnalyticsChart();
-    }
 
     // Step Switcher in Studio
     function setStudioStep(stepNum) {
@@ -3467,8 +3429,7 @@
       }
     }
 
-    // Analytics Chart.js Scatter Plot
-    let scatterChart = null;
+    // Analytics Chart.js Scatter Plot (reusing scatterChart instance)
     async function renderAnalyticsChart() {
       try {
         const res = await fetch('/api/videos?limit=363');

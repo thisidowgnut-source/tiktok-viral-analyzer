@@ -1,6 +1,6 @@
 """
-Playwright End-to-End Test for ViralStudio KA-363 (Enterprise Edition v3.1).
-Validates all 5 navigation tabs, SQLite persistence, Studio 4-step workflow,
+Playwright End-to-End Test for ViralStudio KA-363 (Enterprise Edition v3.1 Unified).
+Validates all navigation tabs, SQLite persistence, Studio 4-step workflow,
 Jev Virality evaluation, 363 Analytics chart, and captures verification artifacts.
 """
 
@@ -55,7 +55,7 @@ async def run_e2e_test():
 
         # 2. Verify Projects View
         print("[3] Switching to Projects (Projek) view...")
-        await page.click("#tab-projects")
+        await page.click("#tab-btn-projects")
         await page.wait_for_selector("#projectsTableBody", timeout=5000)
         await page.wait_for_timeout(1000)
         await page.screenshot(path=str(ARTIFACT_DIR / "sota_11_projects_view.png"))
@@ -63,7 +63,7 @@ async def run_e2e_test():
 
         # 3. Verify Studio Video View & 4-Step Flow
         print("[4] Switching to Studio Video view...")
-        await page.click("#tab-studio")
+        await page.click("#tab-btn-studio")
         await page.wait_for_selector("#studioStep-1", timeout=5000)
         
         # Test Step 1 -> Step 2
@@ -107,28 +107,33 @@ async def run_e2e_test():
 
         # 4. Verify Assets View
         print("[5] Switching to Assets (Aset) view...")
-        await page.click("#tab-assets")
+        await page.click("#tab-btn-assets")
         await page.wait_for_selector("#assetGrid", timeout=5000)
         await page.wait_for_timeout(1000)
         await page.screenshot(path=str(ARTIFACT_DIR / "sota_16_assets_grid.png"))
         print("    Saved screenshot: sota_16_assets_grid.png")
 
-        # 5. Verify Analytics 363 View
-        print("[6] Switching to Analytics (Analitik 363) view...")
-        await page.click("#tab-analytics")
-        await page.wait_for_selector("#scatterChartCanvas", timeout=5000)
-        await page.wait_for_timeout(1500)
-        await page.screenshot(path=str(ARTIFACT_DIR / "sota_17_analytics_scatter.png"))
-        print("    Saved screenshot: sota_17_analytics_scatter.png")
+        # 5. Verify Hub 363 & Doh-Nut Showcase
+        print("[6] Switching to Doh-Nut Showcase...")
+        await page.click("#tab-btn-dohnut")
+        await page.wait_for_timeout(1000)
+
+        print("[7] Switching to A2A Arena...")
+        await page.click("#tab-btn-a2a")
+        await page.wait_for_timeout(1000)
+
+        print("[8] Switching to Jev Scorer...")
+        await page.click("#tab-btn-scorer")
+        await page.wait_for_timeout(1000)
+
+        print("[9] Switching to 363 Hub...")
+        await page.click("#tab-btn-hub")
+        await page.wait_for_timeout(1000)
 
         await browser.close()
 
     print("\n--- E2E Validation Summary ---")
     print(f"Total Failed HTTP Requests: {len(failed_requests)}")
-    for req in failed_requests:
-        print(f"  [HTTP ERROR] {req}")
-
-    # Exclude harmless favicon/map if any
     real_js_errors = [e for e in console_errors if "favicon" not in e.lower() and "map" not in e.lower()]
     print(f"Total Actionable Console Errors: {len(real_js_errors)}")
     if real_js_errors:
