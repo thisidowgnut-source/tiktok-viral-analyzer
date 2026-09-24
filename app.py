@@ -35,13 +35,15 @@ from api.assets_router import router as assets_router
 from api.jobs_router import router as jobs_router
 from api.integrations_router import router as integrations_router
 
-BASE_DIR = Path(os.getenv("VIRALSTUDIO_BASE_DIR", Path(__file__).resolve().parent))
-STATIC_DIR = BASE_DIR / "static"
-EXPORTS_DIR = STATIC_DIR / "exports"
-EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
-UPLOADS_DIR = STATIC_DIR / "uploads"
-UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
-DATA_363_PATH = BASE_DIR / "khairulaming_all_363_analysis.json"
+from app_core.config import (
+    BASE_DIR,
+    STATIC_DIR,
+    EXPORTS_DIR,
+    UPLOADS_DIR,
+    DATASET_363_PATH,
+    IS_VERCEL
+)
+DATA_363_PATH = DATASET_363_PATH
 
 app = FastAPI(
     title="ViralStudio KA-363",
@@ -65,7 +67,10 @@ app.include_router(integrations_router)
 
 @app.on_event("startup")
 def startup_event():
-    run_migrations()
+    try:
+        run_migrations()
+    except Exception as e:
+        print(f"[STARTUP] Migration notice: {e}")
 
 # Mount static folder for PWA, uploads and exports
 if STATIC_DIR.exists():
